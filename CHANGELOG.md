@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- PDF reports: the report HTML now asks for exact print colours (`print-color-adjust: exact`), so the coloured table headers and cards print on iOS and Android through the `printing` package as they do in Chromium. Same change as the Node SDK 0.9.1; the Dart and Node HTML stay byte-for-byte identical.
 - New optional parameters the API already reads (same additions as the Node SDK): `purpose`, `topN`, `birthDate` and `ayanamsa` on `muhurta.bestTime`; `at` on `dasha.charCurrent` and `lalkitab.dashaCurrent`; `week` on `reports.horoscopeWeekly`; `ayanamsa` on `calendar.*` and `planetMoments.ingress` / `combustionWindow`; Western `orb*` overrides, `rulership`, `houseSystem` for pairs, `compositeMethod`, and `relocateLat` / `relocateLon` on returns.
 
 ## 0.1.0 — 2026-11-14
