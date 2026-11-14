@@ -19,12 +19,14 @@ class CalendarApi {
   Future<T> adhikMaas<T>({
     required int year,
     String? tz,
+    Ayanamsa? ayanamsa,
     Lang? lang,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('year', year)
       ..put('tz', tz)
+      ..put('ayanamsa', ayanamsa?.wire)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/calendar/adhik-maas', $q, options);
@@ -38,12 +40,14 @@ class CalendarApi {
   Future<T> month<T>({
     required String date,
     required String tz,
+    Ayanamsa? ayanamsa,
     Lang? lang,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('date', date)
       ..put('tz', tz)
+      ..put('ayanamsa', ayanamsa?.wire)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/calendar/month', $q, options);
@@ -57,12 +61,14 @@ class CalendarApi {
   Future<T> ritu<T>({
     required String date,
     required String tz,
+    Ayanamsa? ayanamsa,
     Lang? lang,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('date', date)
       ..put('tz', tz)
+      ..put('ayanamsa', ayanamsa?.wire)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/calendar/ritu', $q, options);
@@ -76,12 +82,14 @@ class CalendarApi {
   Future<T> samvatsara<T>({
     required String date,
     required String tz,
+    Ayanamsa? ayanamsa,
     Lang? lang,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('date', date)
       ..put('tz', tz)
+      ..put('ayanamsa', ayanamsa?.wire)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/calendar/samvatsara', $q, options);

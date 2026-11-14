@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- New optional parameters the API already reads (same additions as the Node SDK): `purpose`, `topN`, `birthDate` and `ayanamsa` on `muhurta.bestTime`; `at` on `dasha.charCurrent` and `lalkitab.dashaCurrent`; `week` on `reports.horoscopeWeekly`; `ayanamsa` on `calendar.*` and `planetMoments.ingress` / `combustionWindow`; Western `orb*` overrides, `rulership`, `houseSystem` for pairs, `compositeMethod`, and `relocateLat` / `relocateLon` on returns.
+
 ## 0.1.0 — 2026-11-14
 
 First release of the official Dart and Flutter SDK.

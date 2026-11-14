@@ -13,7 +13,10 @@ class MuhurtaApi {
 
   final ClientCore _c;
 
-  /// Best-scoring general muhurta window in a date range. Each `factors\[\]`
+  /// Best-scoring muhurta windows in a date range. `purpose` is `general`
+  /// (default), `vivah`, `graha_pravesh` or `naamkaran`; `topN` (1-20, default
+  /// 5) sets how many windows come back; `birthDate` (YYYY-MM-DD) weights the
+  /// windows by the person's tara bala and chandra bala. Each `factors\[\]`
   /// item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and
   /// `value` follow `lang`.
   ///
@@ -24,6 +27,10 @@ class MuhurtaApi {
     required String tz,
     required String startDate,
     required String endDate,
+    String? purpose,
+    int? topN,
+    String? birthDate,
+    Ayanamsa? ayanamsa,
     Lang? lang,
     RequestOptions? options,
   }) {
@@ -33,6 +40,10 @@ class MuhurtaApi {
       ..put('tz', tz)
       ..put('start_date', startDate)
       ..put('end_date', endDate)
+      ..put('purpose', purpose)
+      ..put('top_n', topN)
+      ..put('birth_date', birthDate)
+      ..put('ayanamsa', ayanamsa?.wire)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/muhurta/best-time', $q, options);

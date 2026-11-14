@@ -285,6 +285,15 @@
     ]
    },
    {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
     "name": "lang",
     "type": "Lang",
     "required": false,
@@ -320,6 +329,15 @@
     "source": "extra",
     "wires": [
      "tz"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "ayanamsa"
     ]
    },
    {
@@ -361,6 +379,15 @@
     ]
    },
    {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
     "name": "lang",
     "type": "Lang",
     "required": false,
@@ -396,6 +423,15 @@
     "source": "extra",
     "wires": [
      "tz"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "ayanamsa"
     ]
    },
    {
@@ -2299,7 +2335,7 @@
   "method": "charCurrent",
   "path": "/v1/dasha/char/current",
   "shape": "birth",
-  "desc": "Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows.",
+  "desc": "Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows (optionally at a custom moment `at`, UTC).",
   "params": [
    {
     "name": "birth",
@@ -2340,6 +2376,15 @@
     "source": "base",
     "wires": [
      "house_system"
+    ]
+   },
+   {
+    "name": "at",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "at"
     ]
    },
    {
@@ -4010,7 +4055,7 @@
   "method": "dashaCurrent",
   "path": "/v1/lalkitab/dasha/current",
   "shape": "birth",
-  "desc": "Currently active Lal Kitab dasha planet and period window.",
+  "desc": "Currently active Lal Kitab dasha planet and period window (optionally at a custom moment `at`, UTC).",
   "params": [
    {
     "name": "birth",
@@ -4051,6 +4096,15 @@
     "source": "base",
     "wires": [
      "house_system"
+    ]
+   },
+   {
+    "name": "at",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "at"
     ]
    },
    {
@@ -5310,7 +5364,7 @@
   "method": "bestTime",
   "path": "/v1/muhurta/best-time",
   "shape": "muhurta",
-  "desc": "Best-scoring general muhurta window in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "desc": "Best-scoring muhurta windows in a date range. `purpose` is `general` (default), `vivah`, `graha_pravesh` or `naamkaran`; `topN` (1-20, default 5) sets how many windows come back; `birthDate` (YYYY-MM-DD) weights the windows by the person's tara bala and chandra bala. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "params": [
    {
     "name": "lat",
@@ -5355,6 +5409,42 @@
     "source": "base",
     "wires": [
      "end_date"
+    ]
+   },
+   {
+    "name": "purpose",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "purpose"
+    ]
+   },
+   {
+    "name": "topN",
+    "type": "int",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "top_n"
+    ]
+   },
+   {
+    "name": "birthDate",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "birth_date"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "ayanamsa"
     ]
    },
    {
@@ -11011,6 +11101,15 @@
     ]
    },
    {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
     "name": "lang",
     "type": "Lang",
     "required": false,
@@ -11073,6 +11172,15 @@
     "source": "extra",
     "wires": [
      "max_days"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "ayanamsa"
     ]
    },
    {
@@ -12189,7 +12297,7 @@
   "method": "horoscopeWeekly",
   "path": "/v1/reports/horoscope/weekly",
   "shape": "rashi",
-  "desc": "Generate a detailed weekly horoscope report for a Moon sign — structured report covering the week's planetary movement, day-by-day highlights, and focus areas.",
+  "desc": "Generate a detailed weekly horoscope report for a Moon sign — structured report covering the week's planetary movement, day-by-day highlights, and focus areas. `week` is an ISO week such as `2026-W47` (default: the current week).",
   "params": [
    {
     "name": "rashi",
@@ -12217,6 +12325,15 @@
     "wires": [
      "lang",
      "locale"
+    ]
+   },
+   {
+    "name": "week",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "week"
     ]
    }
   ]
@@ -14297,6 +14414,69 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "compositeMethod",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "composite_method"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -14353,6 +14533,78 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
+   },
+   {
+    "name": "compositeMethod",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "composite_method"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -14409,6 +14661,33 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
+   },
+   {
+    "name": "compositeMethod",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "composite_method"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -14465,6 +14744,24 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "compositeMethod",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "composite_method"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -14521,6 +14818,60 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -14577,6 +14928,69 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -14633,6 +15047,24 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -14689,6 +15121,15 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -15773,6 +16214,15 @@
     "wires": [
      "house_system"
     ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
    }
   ]
  },
@@ -15856,6 +16306,51 @@
     "source": "base",
     "wires": [
      "house_system"
+    ]
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
     ]
    }
   ]
@@ -16031,6 +16526,60 @@
     "source": "base",
     "wires": [
      "house_system"
+    ]
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
     ]
    }
   ]
@@ -16391,6 +16940,15 @@
     "wires": [
      "house_system"
     ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
    }
   ]
  },
@@ -16565,6 +17123,15 @@
     "source": "base",
     "wires": [
      "house_system"
+    ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
     ]
    }
   ]
@@ -17320,6 +17887,51 @@
     "wires": [
      "age_in_years"
     ]
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
    }
   ]
  },
@@ -17508,6 +18120,33 @@
     "wires": [
      "from"
     ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
+   },
+   {
+    "name": "relocateLat",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "relocate_lat"
+    ]
+   },
+   {
+    "name": "relocateLon",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "relocate_lon"
+    ]
    }
   ]
  },
@@ -17609,6 +18248,33 @@
     "source": "extra",
     "wires": [
      "return_year"
+    ]
+   },
+   {
+    "name": "rulership",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "rulership"
+    ]
+   },
+   {
+    "name": "relocateLat",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "relocate_lat"
+    ]
+   },
+   {
+    "name": "relocateLon",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "relocate_lon"
     ]
    }
   ]
@@ -17763,6 +18429,51 @@
     "wires": [
      "age_in_years"
     ]
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
    }
   ]
  },
@@ -17870,6 +18581,60 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -17926,6 +18691,60 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -17982,6 +18801,60 @@
       "personB.lon"
      ]
     }
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house_system"
+    ]
    }
   ]
  },
@@ -18234,6 +19107,51 @@
     "source": "base",
     "wires": [
      "ayanamsa"
+    ]
+   },
+   {
+    "name": "orbConjunction",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_conjunction"
+    ]
+   },
+   {
+    "name": "orbOpposition",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_opposition"
+    ]
+   },
+   {
+    "name": "orbTrine",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_trine"
+    ]
+   },
+   {
+    "name": "orbSquare",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_square"
+    ]
+   },
+   {
+    "name": "orbSextile",
+    "type": "num",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "orb_sextile"
     ]
    }
   ]

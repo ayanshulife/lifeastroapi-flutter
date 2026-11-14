@@ -85,20 +85,23 @@ class ReportsApi {
 
   /// Generate a detailed weekly horoscope report for a Moon sign — structured
   /// report covering the week's planetary movement, day-by-day highlights, and
-  /// focus areas.
+  /// focus areas. `week` is an ISO week such as `2026-W47` (default: the
+  /// current week).
   ///
   /// `GET /v1/reports/horoscope/weekly`
   Future<T> horoscopeWeekly<T>({
     required String rashi,
     String? date,
     Lang? lang,
+    String? week,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('rashi', rashi.trim().toLowerCase())
       ..put('date', date)
       ..put('lang', lang?.code)
-      ..put('locale', lang?.code);
+      ..put('locale', lang?.code)
+      ..put('week', week);
     return _c.request<T>('/v1/reports/horoscope/weekly', $q, options);
   }
 

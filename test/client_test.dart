@@ -1275,6 +1275,76 @@ void main() {
       expect(q['tz'], 'Asia/Kolkata');
     });
   });
+
+  group('optional params the API reads (added to the manifest)', () {
+    Future<Map<String, String>> query(
+        Future<Object?> Function(LifeAstro) call) async {
+      final m = mock((_) => reply({}));
+      await call(m.client);
+      return m.calls.single.url.queryParameters;
+    }
+
+    test('muhurta.bestTime: purpose, top_n, birth_date, ayanamsa', () async {
+      final q = await query((c) => c.muhurta.bestTime(
+          lat: 19.076,
+          lon: 72.8777,
+          tz: 'Asia/Kolkata',
+          startDate: '2027-01-15',
+          endDate: '2027-01-31',
+          purpose: 'vivah',
+          topN: 3,
+          birthDate: '1990-01-15',
+          ayanamsa: Ayanamsa.raman));
+      expect(q['purpose'], 'vivah');
+      expect(q['top_n'], '3');
+      expect(q['birth_date'], '1990-01-15');
+      expect(q['ayanamsa'], 'raman');
+    });
+
+    test('`at` on char / Lal Kitab current dasha, `week` on the weekly report',
+        () async {
+      var q = await query(
+          (c) => c.dasha.charCurrent(birth: birth, at: '2027-01-15T06:00:00Z'));
+      expect(q['at'], '2027-01-15T06:00:00Z');
+      q = await query(
+          (c) => c.lalkitab.dashaCurrent(birth: birth, at: '2027-01-15'));
+      expect(q['at'], '2027-01-15');
+      q = await query(
+          (c) => c.reports.horoscopeWeekly(rashi: 'Aries', week: '2026-W47'));
+      expect(q['week'], '2026-W47');
+    });
+
+    test('Western orbs, rulership, house system, composite, relocation',
+        () async {
+      var q = await query((c) => c.western.natal
+          .chart(birth: birth, orbTrine: 6, rulership: 'traditional'));
+      expect(q['orb_trine'], '6');
+      expect(q['rulership'], 'traditional');
+      q = await query((c) => c.western.synastry.aspects(
+          personA: birth,
+          personB: birth,
+          houseSystem: HouseSystem.koch,
+          orbConjunction: 8));
+      expect(q['house_system'], 'koch');
+      expect(q['orb_conjunction'], '8');
+      q = await query((c) => c.western.composite.chart(
+          personA: birth, personB: birth, compositeMethod: 'midpoint_cusps'));
+      expect(q['composite_method'], 'midpoint_cusps');
+      q = await query((c) => c.western.returns.solar(
+          birth: birth,
+          returnYear: 2027,
+          relocateLat: 51.5,
+          relocateLon: -0.12));
+      expect(q['relocate_lat'], '51.5');
+      expect(q['relocate_lon'], '-0.12');
+    });
+
+    test('ayanamsa on calendar.ritu', () async {
+      final q = await query((c) => c.calendar.ritu(
+          date: '2027-01-15', tz: 'Asia/Kolkata', ayanamsa: Ayanamsa.raman));
+      expect(q['ayanamsa'], 'raman');
+    });
+  });
 }
 
 class _CloseTracking extends http.BaseClient {

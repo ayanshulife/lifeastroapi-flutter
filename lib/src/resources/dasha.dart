@@ -65,13 +65,15 @@ class DashaApi {
   }
 
   /// Currently running Char Dasha (Jaimini) period stack — active mahadasha and
-  /// antardasha signs with date windows.
+  /// antardasha signs with date windows (optionally at a custom moment `at`,
+  /// UTC).
   ///
   /// `GET /v1/dasha/char/current`
   Future<T> charCurrent<T>({
     required BirthInput birth,
     Ayanamsa? ayanamsa,
     HouseSystem? houseSystem,
+    String? at,
     Lang? lang,
     RequestOptions? options,
   }) {
@@ -83,6 +85,7 @@ class DashaApi {
       ..put('lon', birth.lon)
       ..put('ayanamsa', ayanamsa?.wire)
       ..put('house_system', houseSystem?.wire)
+      ..put('at', at)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/dasha/char/current', $q, options);

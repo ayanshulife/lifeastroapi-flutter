@@ -60,13 +60,15 @@ class LalkitabApi {
     return _c.request<T>('/v1/lalkitab/dasha', $q, options);
   }
 
-  /// Currently active Lal Kitab dasha planet and period window.
+  /// Currently active Lal Kitab dasha planet and period window (optionally at a
+  /// custom moment `at`, UTC).
   ///
   /// `GET /v1/lalkitab/dasha/current`
   Future<T> dashaCurrent<T>({
     required BirthInput birth,
     Ayanamsa? ayanamsa,
     HouseSystem? houseSystem,
+    String? at,
     Lang? lang,
     RequestOptions? options,
   }) {
@@ -78,6 +80,7 @@ class LalkitabApi {
       ..put('lon', birth.lon)
       ..put('ayanamsa', ayanamsa?.wire)
       ..put('house_system', houseSystem?.wire)
+      ..put('at', at)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/lalkitab/dasha/current', $q, options);

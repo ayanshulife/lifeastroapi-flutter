@@ -40,21 +40,25 @@ final Map<String, Invoker> invokers = {
   'calendar.adhikMaas': (c, i, [o]) => c.calendar.adhikMaas(
       year: asInt(i['year'])!,
       tz: asStr(i['tz']),
+      ayanamsa: asAyanamsa(i['ayanamsa']),
       lang: asLang(i['lang']),
       options: o),
   'calendar.month': (c, i, [o]) => c.calendar.month(
       date: asStr(i['date'])!,
       tz: asStr(i['tz'])!,
+      ayanamsa: asAyanamsa(i['ayanamsa']),
       lang: asLang(i['lang']),
       options: o),
   'calendar.ritu': (c, i, [o]) => c.calendar.ritu(
       date: asStr(i['date'])!,
       tz: asStr(i['tz'])!,
+      ayanamsa: asAyanamsa(i['ayanamsa']),
       lang: asLang(i['lang']),
       options: o),
   'calendar.samvatsara': (c, i, [o]) => c.calendar.samvatsara(
       date: asStr(i['date'])!,
       tz: asStr(i['tz'])!,
+      ayanamsa: asAyanamsa(i['ayanamsa']),
       lang: asLang(i['lang']),
       options: o),
   'calendar.solstices': (c, i, [o]) => c.calendar.solstices(
@@ -251,6 +255,7 @@ final Map<String, Invoker> invokers = {
       birth: asBirth(i['birth'])!,
       ayanamsa: asAyanamsa(i['ayanamsa']),
       houseSystem: asHouseSystem(i['houseSystem']),
+      at: asStr(i['at']),
       lang: asLang(i['lang']),
       options: o),
   'dasha.charMaha': (c, i, [o]) => c.dasha.charMaha(
@@ -440,6 +445,7 @@ final Map<String, Invoker> invokers = {
       birth: asBirth(i['birth'])!,
       ayanamsa: asAyanamsa(i['ayanamsa']),
       houseSystem: asHouseSystem(i['houseSystem']),
+      at: asStr(i['at']),
       lang: asLang(i['lang']),
       options: o),
   'meta.ayanamsas': (c, i, [o]) => c.meta.ayanamsas(
@@ -560,6 +566,10 @@ final Map<String, Invoker> invokers = {
       tz: asStr(i['tz'])!,
       startDate: asStr(i['startDate'])!,
       endDate: asStr(i['endDate'])!,
+      purpose: asStr(i['purpose']),
+      topN: asInt(i['topN']),
+      birthDate: asStr(i['birthDate']),
+      ayanamsa: asAyanamsa(i['ayanamsa']),
       lang: asLang(i['lang']),
       options: o),
   'muhurta.chandraBala': (c, i, [o]) => c.muhurta.chandraBala(
@@ -1191,6 +1201,7 @@ final Map<String, Invoker> invokers = {
           time: asStr(i['time']),
           tz: asStr(i['tz'])!,
           maxDays: asInt(i['maxDays']),
+          ayanamsa: asAyanamsa(i['ayanamsa']),
           lang: asLang(i['lang']),
           options: o),
   'planetMoments.ingress': (c, i, [o]) => c.planetMoments.ingress(
@@ -1199,6 +1210,7 @@ final Map<String, Invoker> invokers = {
       time: asStr(i['time']),
       tz: asStr(i['tz'])!,
       maxDays: asInt(i['maxDays']),
+      ayanamsa: asAyanamsa(i['ayanamsa']),
       lang: asLang(i['lang']),
       options: o),
   'planetMoments.retrogradeWindow': (c, i, [o]) => c.planetMoments
@@ -1336,6 +1348,7 @@ final Map<String, Invoker> invokers = {
       rashi: asStr(i['rashi'])!,
       date: asStr(i['date']),
       lang: asLang(i['lang']),
+      week: asStr(i['week']),
       options: o),
   'reports.kundliBrihad': (c, i, [o]) => c.reports.kundliBrihad(
       birth: asBirth(i['birth'])!,
@@ -1550,34 +1563,70 @@ final Map<String, Invoker> invokers = {
   'western.composite.aspects': (c, i, [o]) => c.western.composite.aspects(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      compositeMethod: asStr(i['compositeMethod']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.composite.chart': (c, i, [o]) => c.western.composite.chart(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      rulership: asStr(i['rulership']),
+      compositeMethod: asStr(i['compositeMethod']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.composite.houses': (c, i, [o]) => c.western.composite.houses(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      rulership: asStr(i['rulership']),
+      compositeMethod: asStr(i['compositeMethod']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.composite.planets': (c, i, [o]) => c.western.composite.planets(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      compositeMethod: asStr(i['compositeMethod']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.davison.aspects': (c, i, [o]) => c.western.davison.aspects(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.davison.chart': (c, i, [o]) => c.western.davison.chart(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      rulership: asStr(i['rulership']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.davison.houses': (c, i, [o]) => c.western.davison.houses(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      rulership: asStr(i['rulership']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.davison.planets': (c, i, [o]) => c.western.davison.planets(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.dignities.almuten': (c, i, [o]) => c.western.dignities.almuten(
       ascLon: asNum(i['ascLon'])!,
@@ -1708,6 +1757,7 @@ final Map<String, Invoker> invokers = {
   'western.natal.ascendant': (c, i, [o]) => c.western.natal.ascendant(
       birth: asBirth(i['birth'])!,
       houseSystem: asHouseSystem(i['houseSystem']),
+      rulership: asStr(i['rulership']),
       options: o),
   'western.natal.aspectPatterns': (c, i, [o]) => c.western.natal.aspectPatterns(
       birth: asBirth(i['birth'])!,
@@ -1716,6 +1766,11 @@ final Map<String, Invoker> invokers = {
   'western.natal.aspects': (c, i, [o]) => c.western.natal.aspects(
       birth: asBirth(i['birth'])!,
       houseSystem: asHouseSystem(i['houseSystem']),
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
       options: o),
   'western.natal.asteroid': (c, i, [o]) => c.western.natal.asteroid(
       number: asInt(i['number'])!,
@@ -1734,6 +1789,12 @@ final Map<String, Invoker> invokers = {
   'western.natal.chart': (c, i, [o]) => c.western.natal.chart(
       birth: asBirth(i['birth'])!,
       houseSystem: asHouseSystem(i['houseSystem']),
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      rulership: asStr(i['rulership']),
       options: o),
   'western.natal.chartShape': (c, i, [o]) => c.western.natal.chartShape(
       birth: asBirth(i['birth'])!,
@@ -1770,6 +1831,7 @@ final Map<String, Invoker> invokers = {
   'western.natal.houses': (c, i, [o]) => c.western.natal.houses(
       birth: asBirth(i['birth'])!,
       houseSystem: asHouseSystem(i['houseSystem']),
+      rulership: asStr(i['rulership']),
       options: o),
   'western.natal.lilithSet': (c, i, [o]) => c.western.natal.lilithSet(
       birth: asBirth(i['birth'])!,
@@ -1787,6 +1849,7 @@ final Map<String, Invoker> invokers = {
   'western.natal.mc': (c, i, [o]) => c.western.natal.mc(
       birth: asBirth(i['birth'])!,
       houseSystem: asHouseSystem(i['houseSystem']),
+      rulership: asStr(i['rulership']),
       options: o),
   'western.natal.midpoints': (c, i, [o]) => c.western.natal.midpoints(
       birth: asBirth(i['birth'])!,
@@ -1870,6 +1933,11 @@ final Map<String, Invoker> invokers = {
           birth: asBirth(i['birth'])!,
           houseSystem: asHouseSystem(i['houseSystem']),
           ageInYears: asNum(i['ageInYears'])!,
+          orbConjunction: asNum(i['orbConjunction']),
+          orbOpposition: asNum(i['orbOpposition']),
+          orbTrine: asNum(i['orbTrine']),
+          orbSquare: asNum(i['orbSquare']),
+          orbSextile: asNum(i['orbSextile']),
           options: o),
   'western.progressions.lunation': (c, i, [o]) => c.western.progressions
       .lunation(
@@ -1891,6 +1959,9 @@ final Map<String, Invoker> invokers = {
       birth: asBirth(i['birth'])!,
       houseSystem: asHouseSystem(i['houseSystem']),
       from: asStr(i['from'])!,
+      rulership: asStr(i['rulership']),
+      relocateLat: asNum(i['relocateLat']),
+      relocateLon: asNum(i['relocateLon']),
       options: o),
   'western.returns.lunarAspects': (c, i, [o]) => c.western.returns.lunarAspects(
       birth: asBirth(i['birth'])!,
@@ -1901,6 +1972,9 @@ final Map<String, Invoker> invokers = {
       birth: asBirth(i['birth'])!,
       houseSystem: asHouseSystem(i['houseSystem']),
       returnYear: asInt(i['returnYear'])!,
+      rulership: asStr(i['rulership']),
+      relocateLat: asNum(i['relocateLat']),
+      relocateLon: asNum(i['relocateLon']),
       options: o),
   'western.returns.solarAspects': (c, i, [o]) => c.western.returns.solarAspects(
       birth: asBirth(i['birth'])!,
@@ -1917,6 +1991,11 @@ final Map<String, Invoker> invokers = {
           birth: asBirth(i['birth'])!,
           houseSystem: asHouseSystem(i['houseSystem']),
           ageInYears: asNum(i['ageInYears'])!,
+          orbConjunction: asNum(i['orbConjunction']),
+          orbOpposition: asNum(i['orbOpposition']),
+          orbTrine: asNum(i['orbTrine']),
+          orbSquare: asNum(i['orbSquare']),
+          orbSextile: asNum(i['orbSextile']),
           options: o),
   'western.solarArc.planets': (c, i, [o]) => c.western.solarArc.planets(
       birth: asBirth(i['birth'])!,
@@ -1926,14 +2005,32 @@ final Map<String, Invoker> invokers = {
   'western.synastry.aspects': (c, i, [o]) => c.western.synastry.aspects(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.synastry.grid': (c, i, [o]) => c.western.synastry.grid(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.synastry.score': (c, i, [o]) => c.western.synastry.score(
       personA: asBirth(i['personA'])!,
       personB: asBirth(i['personB'])!,
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
+      houseSystem: asHouseSystem(i['houseSystem']),
       options: o),
   'western.transits.calendar': (c, i, [o]) => c.western.transits.calendar(
       birth: asBirth(i['birth'])!,
@@ -1961,6 +2058,11 @@ final Map<String, Invoker> invokers = {
       time: asStr(i['time'])!,
       tz: asStr(i['tz'])!,
       ayanamsa: asAyanamsa(i['ayanamsa']),
+      orbConjunction: asNum(i['orbConjunction']),
+      orbOpposition: asNum(i['orbOpposition']),
+      orbTrine: asNum(i['orbTrine']),
+      orbSquare: asNum(i['orbSquare']),
+      orbSextile: asNum(i['orbSextile']),
       options: o),
   'western.zodiacalReleasing.fortune': (c, i, [o]) =>
       c.western.zodiacalReleasing.fortune(

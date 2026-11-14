@@ -23,6 +23,7 @@ class PlanetMomentsApi {
     required String tz,
     String? time,
     int? maxDays,
+    Ayanamsa? ayanamsa,
     Lang? lang,
     RequestOptions? options,
   }) {
@@ -32,6 +33,7 @@ class PlanetMomentsApi {
       ..put('time', time)
       ..put('tz', tz)
       ..put('max_days', maxDays)
+      ..put('ayanamsa', ayanamsa?.wire)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/planet-moments/combustion-window', $q, options);
@@ -46,6 +48,7 @@ class PlanetMomentsApi {
     required String tz,
     String? time,
     int? maxDays,
+    Ayanamsa? ayanamsa,
     Lang? lang,
     RequestOptions? options,
   }) {
@@ -55,6 +58,7 @@ class PlanetMomentsApi {
       ..put('time', time)
       ..put('tz', tz)
       ..put('max_days', maxDays)
+      ..put('ayanamsa', ayanamsa?.wire)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/planet-moments/ingress', $q, options);

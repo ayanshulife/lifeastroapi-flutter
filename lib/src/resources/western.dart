@@ -231,6 +231,13 @@ class WesternCompositeApi {
   Future<T> aspects<T>({
     required BirthInput personA,
     required BirthInput personB,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    String? compositeMethod,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -243,7 +250,14 @@ class WesternCompositeApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('composite_method', compositeMethod)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/composite/aspects', $q, options);
   }
 
@@ -253,6 +267,14 @@ class WesternCompositeApi {
   Future<T> chart<T>({
     required BirthInput personA,
     required BirthInput personB,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    String? rulership,
+    String? compositeMethod,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -265,7 +287,15 @@ class WesternCompositeApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('rulership', rulership)
+      ..put('composite_method', compositeMethod)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/composite/chart', $q, options);
   }
 
@@ -277,6 +307,9 @@ class WesternCompositeApi {
   Future<T> houses<T>({
     required BirthInput personA,
     required BirthInput personB,
+    String? rulership,
+    String? compositeMethod,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -289,7 +322,10 @@ class WesternCompositeApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('rulership', rulership)
+      ..put('composite_method', compositeMethod)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/composite/houses', $q, options);
   }
 
@@ -300,6 +336,8 @@ class WesternCompositeApi {
   Future<T> planets<T>({
     required BirthInput personA,
     required BirthInput personB,
+    String? compositeMethod,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -312,7 +350,9 @@ class WesternCompositeApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('composite_method', compositeMethod)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/composite/planets', $q, options);
   }
 }
@@ -330,6 +370,12 @@ class WesternDavisonApi {
   Future<T> aspects<T>({
     required BirthInput personA,
     required BirthInput personB,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -342,7 +388,13 @@ class WesternDavisonApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/davison/aspects', $q, options);
   }
 
@@ -354,6 +406,13 @@ class WesternDavisonApi {
   Future<T> chart<T>({
     required BirthInput personA,
     required BirthInput personB,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    String? rulership,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -366,7 +425,14 @@ class WesternDavisonApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('rulership', rulership)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/davison/chart', $q, options);
   }
 
@@ -378,6 +444,8 @@ class WesternDavisonApi {
   Future<T> houses<T>({
     required BirthInput personA,
     required BirthInput personB,
+    String? rulership,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -390,7 +458,9 @@ class WesternDavisonApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('rulership', rulership)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/davison/houses', $q, options);
   }
 
@@ -401,6 +471,7 @@ class WesternDavisonApi {
   Future<T> planets<T>({
     required BirthInput personA,
     required BirthInput personB,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -413,7 +484,8 @@ class WesternDavisonApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/davison/planets', $q, options);
   }
 }
@@ -937,6 +1009,7 @@ class WesternNatalApi {
   Future<T> ascendant<T>({
     required BirthInput birth,
     HouseSystem? houseSystem,
+    String? rulership,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -945,7 +1018,8 @@ class WesternNatalApi {
       ..put('tz', birth.tz)
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
-      ..put('house_system', houseSystem?.wire);
+      ..put('house_system', houseSystem?.wire)
+      ..put('rulership', rulership);
     return _c.request<T>('/v1/western/natal/ascendant', $q, options);
   }
 
@@ -975,6 +1049,11 @@ class WesternNatalApi {
   Future<T> aspects<T>({
     required BirthInput birth,
     HouseSystem? houseSystem,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -983,7 +1062,12 @@ class WesternNatalApi {
       ..put('tz', birth.tz)
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
-      ..put('house_system', houseSystem?.wire);
+      ..put('house_system', houseSystem?.wire)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile);
     return _c.request<T>('/v1/western/natal/aspects', $q, options);
   }
 
@@ -1054,6 +1138,12 @@ class WesternNatalApi {
   Future<T> chart<T>({
     required BirthInput birth,
     HouseSystem? houseSystem,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    String? rulership,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1062,7 +1152,13 @@ class WesternNatalApi {
       ..put('tz', birth.tz)
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
-      ..put('house_system', houseSystem?.wire);
+      ..put('house_system', houseSystem?.wire)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('rulership', rulership);
     return _c.request<T>('/v1/western/natal/chart', $q, options);
   }
 
@@ -1211,6 +1307,7 @@ class WesternNatalApi {
   Future<T> houses<T>({
     required BirthInput birth,
     HouseSystem? houseSystem,
+    String? rulership,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1219,7 +1316,8 @@ class WesternNatalApi {
       ..put('tz', birth.tz)
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
-      ..put('house_system', houseSystem?.wire);
+      ..put('house_system', houseSystem?.wire)
+      ..put('rulership', rulership);
     return _c.request<T>('/v1/western/natal/houses', $q, options);
   }
 
@@ -1288,6 +1386,7 @@ class WesternNatalApi {
   Future<T> mc<T>({
     required BirthInput birth,
     HouseSystem? houseSystem,
+    String? rulership,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1296,7 +1395,8 @@ class WesternNatalApi {
       ..put('tz', birth.tz)
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
-      ..put('house_system', houseSystem?.wire);
+      ..put('house_system', houseSystem?.wire)
+      ..put('rulership', rulership);
     return _c.request<T>('/v1/western/natal/mc', $q, options);
   }
 
@@ -1635,6 +1735,11 @@ class WesternProgressionsApi {
     required BirthInput birth,
     required num ageInYears,
     HouseSystem? houseSystem,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1644,7 +1749,12 @@ class WesternProgressionsApi {
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
       ..put('house_system', houseSystem?.wire)
-      ..put('age_in_years', ageInYears);
+      ..put('age_in_years', ageInYears)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile);
     return _c.request<T>(
         '/v1/western/progressions/aspects-to-natal', $q, options);
   }
@@ -1707,6 +1817,9 @@ class WesternReturnsApi {
     required BirthInput birth,
     required String from,
     HouseSystem? houseSystem,
+    String? rulership,
+    num? relocateLat,
+    num? relocateLon,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1716,7 +1829,10 @@ class WesternReturnsApi {
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
       ..put('house_system', houseSystem?.wire)
-      ..put('from', from);
+      ..put('from', from)
+      ..put('rulership', rulership)
+      ..put('relocate_lat', relocateLat)
+      ..put('relocate_lon', relocateLon);
     return _c.request<T>('/v1/western/returns/lunar', $q, options);
   }
 
@@ -1747,6 +1863,9 @@ class WesternReturnsApi {
     required BirthInput birth,
     required int returnYear,
     HouseSystem? houseSystem,
+    String? rulership,
+    num? relocateLat,
+    num? relocateLon,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1756,7 +1875,10 @@ class WesternReturnsApi {
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
       ..put('house_system', houseSystem?.wire)
-      ..put('return_year', returnYear);
+      ..put('return_year', returnYear)
+      ..put('rulership', rulership)
+      ..put('relocate_lat', relocateLat)
+      ..put('relocate_lon', relocateLon);
     return _c.request<T>('/v1/western/returns/solar', $q, options);
   }
 
@@ -1819,6 +1941,11 @@ class WesternSolarArcApi {
     required BirthInput birth,
     required num ageInYears,
     HouseSystem? houseSystem,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1828,7 +1955,12 @@ class WesternSolarArcApi {
       ..put('lat', birth.lat)
       ..put('lon', birth.lon)
       ..put('house_system', houseSystem?.wire)
-      ..put('age_in_years', ageInYears);
+      ..put('age_in_years', ageInYears)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile);
     return _c.request<T>('/v1/western/solar-arc/aspects-to-natal', $q, options);
   }
 
@@ -1866,6 +1998,12 @@ class WesternSynastryApi {
   Future<T> aspects<T>({
     required BirthInput personA,
     required BirthInput personB,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1878,7 +2016,13 @@ class WesternSynastryApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/synastry/aspects', $q, options);
   }
 
@@ -1889,6 +2033,12 @@ class WesternSynastryApi {
   Future<T> grid<T>({
     required BirthInput personA,
     required BirthInput personB,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1901,7 +2051,13 @@ class WesternSynastryApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/synastry/grid', $q, options);
   }
 
@@ -1911,6 +2067,12 @@ class WesternSynastryApi {
   Future<T> score<T>({
     required BirthInput personA,
     required BirthInput personB,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
+    HouseSystem? houseSystem,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -1923,7 +2085,13 @@ class WesternSynastryApi {
       ..put('personB.time', personB.time)
       ..put('personB.tz', personB.tz)
       ..put('personB.lat', personB.lat)
-      ..put('personB.lon', personB.lon);
+      ..put('personB.lon', personB.lon)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile)
+      ..put('house_system', houseSystem?.wire);
     return _c.request<T>('/v1/western/synastry/score', $q, options);
   }
 }
@@ -2012,6 +2180,11 @@ class WesternTransitsApi {
     required String time,
     required String tz,
     Ayanamsa? ayanamsa,
+    num? orbConjunction,
+    num? orbOpposition,
+    num? orbTrine,
+    num? orbSquare,
+    num? orbSextile,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
@@ -2023,7 +2196,12 @@ class WesternTransitsApi {
       ..put('date', date)
       ..put('time', time)
       ..put('tz', tz)
-      ..put('ayanamsa', ayanamsa?.wire);
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('orb_conjunction', orbConjunction)
+      ..put('orb_opposition', orbOpposition)
+      ..put('orb_trine', orbTrine)
+      ..put('orb_square', orbSquare)
+      ..put('orb_sextile', orbSextile);
     return _c.request<T>('/v1/western/transits/to-natal', $q, options);
   }
 }
