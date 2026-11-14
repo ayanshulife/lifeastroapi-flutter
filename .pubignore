@@ -1,0 +1,13 @@
+# .pubignore replaces .gitignore for `dart pub publish`, so it repeats it.
+.dart_tool/
+.packages
+build/
+pubspec.lock
+doc/api/
+live-dump/
+.env
+.env.*
+.DS_Store
+
+# Large test fixtures (PDF golden HTML); the tests run from the git repo.
+test/fixtures/pdf/

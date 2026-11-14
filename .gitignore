@@ -25,3 +25,9 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# macOS Finder files
+.DS_Store
+
+# Output of `dart run tool/live_sweep.dart` with LIFEASTRO_LIVE_DUMP
+live-dump/

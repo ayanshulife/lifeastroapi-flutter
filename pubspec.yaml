@@ -4,8 +4,8 @@ description: >-
   calendar API (panchang, festivals, kundli, dasha, matching, muhurat) in 10 languages.
 version: 0.1.0
 homepage: https://lifeastroapi.com
-repository: https://github.com/ayanshulife/lifeastroapi-dart
-issue_tracker: https://github.com/ayanshulife/lifeastroapi-dart/issues
+repository: https://github.com/ayanshulife/lifeastroapi-flutter
+issue_tracker: https://github.com/ayanshulife/lifeastroapi-flutter/issues
 documentation: https://lifeastroapi.com/docs/
 topics:
   - astrology
