@@ -103,6 +103,30 @@ final client = LifeAstro(
 client.close(); // closes the HTTP client the SDK created
 ```
 
+## Compatibility
+
+| | |
+|---|---|
+| **Dart / Flutter** | Dart 3.4 or newer, which is Flutter 3.22 or newer. |
+| **Platforms** | Android, iOS, web (JavaScript and WebAssembly), macOS, Windows, Linux, and Dart servers and CLIs. |
+| **Dependencies** | Only [`http`](https://pub.dev/packages/http) 1.5 or newer. No Flutter plugin, no native code, no code generation. |
+| **Build setup** | Nothing to add to Gradle, CocoaPods, `minSdkVersion`, the iOS deployment target or ProGuard. |
+
+A few things belong to your app, as with any package that uses the network:
+
+- **Android:** release builds need `<uses-permission android:name="android.permission.INTERNET"/>`
+  in `android/app/src/main/AndroidManifest.xml` (Flutter adds it to debug builds only).
+- **macOS:** add the `com.apple.security.network.client` entitlement to
+  `macos/Runner/DebugProfile.entitlements` and `Release.entitlements`.
+- **Flutter web:** browsers block direct calls to `api.lifeastroapi.com` from your site (CORS), and
+  the call fails with `LifeAstroConnectionException`. Point `baseUrl` at your own backend, as
+  [Authentication](#authentication) describes; that also keeps your key out of the page.
+- **Other HTTP packages:** the SDK works next to `dio`, `chopper`, `retrofit` and others. If a file
+  imports two packages that both export a name such as `RequestOptions`, import this one with a
+  prefix: `import 'package:lifeastroapi/lifeastroapi.dart' as astro;`.
+- **Your own HTTP stack:** pass `httpClient:` to reuse a client with certificate pinning, a proxy,
+  logging, or `cupertino_http` / `cronet_http`.
+
 ## Inputs
 
 Methods take named parameters. Birth charts are passed as a `BirthInput`; the SDK sends them

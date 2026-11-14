@@ -44,6 +44,12 @@ class ChromePdfEngine implements PdfEngine {
     List<String> args = const [],
     Duration timeout = const Duration(seconds: 30),
   }) async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      throw UnsupportedError(
+          'lifeastroapi/pdf: ChromePdfEngine cannot start a browser on Android '
+          'or iOS. Use GotenbergPdfEngine, or print the render*Html() output '
+          'with the `printing` package (see the README).');
+    }
     final exe = executablePath ?? findChromeExecutable();
     if (exe == null) {
       throw StateError(
