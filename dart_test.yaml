@@ -1,0 +1,4 @@
+tags:
+  # Needs a local Chrome, Chromium or Edge; skipped when none is found.
+  chrome:
+    timeout: 3x

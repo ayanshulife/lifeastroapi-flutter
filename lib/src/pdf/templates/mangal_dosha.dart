@@ -1,0 +1,868 @@
+/// Mangal Dosha report as HTML. Port of the Node SDK's src/pdf/templates/mangalDosha.ts
+/// (byte-identical output, golden-tested).
+library;
+
+import '../js.dart';
+import '../shared.dart';
+
+const _labels = {
+  'en': {
+    'title_mangal': 'Mangal Dosha Report',
+    'born': 'Born',
+    'at': 'at',
+    'generated': 'Generated on',
+    'ascendant': 'Ascendant',
+    'section_diagnostic': 'Diagnostic',
+    'section_cancellation': 'Cancellation',
+    'section_marriage': 'Marriage Implications',
+    'section_remedies': 'Recommended Remedies',
+    'mars_sign': 'Mars Sign',
+    'mars_nakshatra': 'Mars Nakshatra',
+    'mars_houses': 'Mars in House(s)',
+    'pada': 'Pada',
+    'diagnosis': 'Diagnosis',
+    'cancellation_intro':
+        'Classical rules indicate the following cancellations apply to the dosha:',
+    'remedies_intro':
+        'These traditional remedies are commonly recommended. Check your full chart before adopting any:',
+  },
+  'hi': {
+    'title_mangal': 'मंगल दोष रिपोर्ट',
+    'born': 'जन्म',
+    'at': 'समय',
+    'generated': 'तैयार',
+    'ascendant': 'लग्न',
+    'section_diagnostic': 'विश्लेषण',
+    'section_cancellation': 'दोष परिहार',
+    'section_marriage': 'विवाह प्रभाव',
+    'section_remedies': 'अनुशंसित उपाय',
+    'mars_sign': 'मंगल राशि',
+    'mars_nakshatra': 'मंगल नक्षत्र',
+    'mars_houses': 'मंगल भाव',
+    'pada': 'पाद',
+    'diagnosis': 'निदान',
+    'cancellation_intro':
+        'शास्त्रीय नियमों के अनुसार निम्नलिखित कारणों से दोष का परिहार होता है:',
+    'remedies_intro':
+        'मंगल दोष के लिए सामान्यतः अनुशंसित पारंपरिक उपाय निम्नलिखित हैं। कोई भी उपाय अपनाने से पूर्व अपनी कुंडली को पूरी तरह जाँच लीजिए:',
+  },
+  'mr': {
+    'title_mangal': 'मंगळ दोष अहवाल',
+    'born': 'जन्म',
+    'at': 'वेळ',
+    'generated': 'तयार',
+    'ascendant': 'लग्न',
+    'section_diagnostic': 'विश्लेषण',
+    'section_cancellation': 'दोष परिहार',
+    'section_marriage': 'विवाह प्रभाव',
+    'section_remedies': 'शिफारस केलेले उपाय',
+    'mars_sign': 'मंगळ राशी',
+    'mars_nakshatra': 'मंगळ नक्षत्र',
+    'mars_houses': 'मंगळ स्थाने',
+    'pada': 'चरण',
+    'diagnosis': 'निदान',
+    'cancellation_intro':
+        'शास्त्रीय नियमांनुसार खालील कारणांमुळे दोषाचा परिहार होतो:',
+    'remedies_intro':
+        'मंगळ दोषासाठी सामान्यतः शिफारस केले जाणारे पारंपरिक उपाय खालील आहेत. कोणताही उपाय अंगीकारण्यापूर्वी आपली कुंडली पूर्णपणे तपासून घ्या:',
+  },
+  'te': {
+    'title_mangal': 'కుజ దోష నివేదిక',
+    'born': 'జననం',
+    'at': 'సమయం',
+    'generated': 'రూపొందించిన తేదీ',
+    'ascendant': 'లగ్నం',
+    'section_diagnostic': 'విశ్లేషణ',
+    'section_cancellation': 'దోష నివృత్తి',
+    'section_marriage': 'వివాహంపై ప్రభావం',
+    'section_remedies': 'సూచించిన పరిహారాలు',
+    'mars_sign': 'కుజుని రాశి',
+    'mars_nakshatra': 'కుజుని నక్షత్రం',
+    'mars_houses': 'కుజుడు ఉన్న భావం',
+    'pada': 'పాదం',
+    'diagnosis': 'నిర్ధారణ',
+    'cancellation_intro':
+        'శాస్త్ర నియమాల ప్రకారం ఈ కారణాల వల్ల దోషం నివృత్తి అవుతుంది:',
+    'remedies_intro':
+        'కుజ దోషానికి సాధారణంగా సూచించే సంప్రదాయ పరిహారాలు ఇవి. ఏ పరిహారాన్నైనా మొదలుపెట్టే ముందు మీ జాతకాన్ని పూర్తిగా పరిశీలించుకోండి:',
+  },
+  'ta': {
+    'title_mangal': 'செவ்வாய் தோஷ அறிக்கை',
+    'born': 'பிறப்பு',
+    'at': 'நேரம்',
+    'generated': 'தயாரித்த நாள்',
+    'ascendant': 'லக்னம்',
+    'section_diagnostic': 'பகுப்பாய்வு',
+    'section_cancellation': 'தோஷ நிவர்த்தி',
+    'section_marriage': 'திருமணத்தில் தாக்கம்',
+    'section_remedies': 'பரிந்துரைக்கப்பட்ட பரிகாரங்கள்',
+    'mars_sign': 'செவ்வாய் இருக்கும் ராசி',
+    'mars_nakshatra': 'செவ்வாய் இருக்கும் நட்சத்திரம்',
+    'mars_houses': 'செவ்வாய் இருக்கும் வீடு',
+    'pada': 'பாதம்',
+    'diagnosis': 'முடிவு',
+    'cancellation_intro':
+        'சாஸ்திர விதிகளின்படி கீழ்க்காணும் காரணங்களால் தோஷம் நிவர்த்தி ஆகிறது:',
+    'remedies_intro':
+        'செவ்வாய் தோஷத்துக்குப் பொதுவாகப் பரிந்துரைக்கப்படும் பாரம்பரியப் பரிகாரங்கள் இவை. எந்தப் பரிகாரத்தையும் தொடங்கும் முன் உங்கள் ஜாதகத்தை முழுமையாகச் சரிபார்த்துக்கொள்ளுங்கள்:',
+  },
+  'kn': {
+    'title_mangal': 'ಮಂಗಳ ದೋಷ ವರದಿ',
+    'born': 'ಜನನ',
+    'at': 'ಸಮಯ',
+    'generated': 'ತಯಾರಿಸಿದ ದಿನಾಂಕ',
+    'ascendant': 'ಲಗ್ನ',
+    'section_diagnostic': 'ವಿಶ್ಲೇಷಣೆ',
+    'section_cancellation': 'ದೋಷ ನಿವಾರಣೆ',
+    'section_marriage': 'ವಿವಾಹದ ಮೇಲಿನ ಪ್ರಭಾವ',
+    'section_remedies': 'ಶಿಫಾರಸು ಮಾಡಿದ ಪರಿಹಾರಗಳು',
+    'mars_sign': 'ಮಂಗಳನ ರಾಶಿ',
+    'mars_nakshatra': 'ಮಂಗಳನ ನಕ್ಷತ್ರ',
+    'mars_houses': 'ಮಂಗಳನಿರುವ ಭಾವ',
+    'pada': 'ಪಾದ',
+    'diagnosis': 'ನಿರ್ಣಯ',
+    'cancellation_intro':
+        'ಶಾಸ್ತ್ರೀಯ ನಿಯಮಗಳ ಪ್ರಕಾರ ಈ ಕಾರಣಗಳಿಂದ ದೋಷ ನಿವಾರಣೆಯಾಗುತ್ತದೆ:',
+    'remedies_intro':
+        'ಮಂಗಳ ದೋಷಕ್ಕೆ ಸಾಮಾನ್ಯವಾಗಿ ಶಿಫಾರಸು ಮಾಡುವ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಹಾರಗಳು ಇವು. ಯಾವುದೇ ಪರಿಹಾರವನ್ನು ಆರಂಭಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಜಾತಕವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಿಕೊಳ್ಳಿ:',
+  },
+  'ml': {
+    'title_mangal': 'ചൊവ്വാദോഷ റിപ്പോർട്ട്',
+    'born': 'ജനനം',
+    'at': 'സമയം',
+    'generated': 'തയ്യാറാക്കിയ തീയതി',
+    'ascendant': 'ലഗ്നം',
+    'section_diagnostic': 'വിശകലനം',
+    'section_cancellation': 'ദോഷപരിഹാരം',
+    'section_marriage': 'വിവാഹത്തിലെ സ്വാധീനം',
+    'section_remedies': 'നിർദ്ദേശിക്കുന്ന പരിഹാരങ്ങൾ',
+    'mars_sign': 'ചൊവ്വയുടെ രാശി',
+    'mars_nakshatra': 'ചൊവ്വയുടെ നക്ഷത്രം',
+    'mars_houses': 'ചൊവ്വ നിൽക്കുന്ന ഭാവം',
+    'pada': 'പാദം',
+    'diagnosis': 'നിർണയം',
+    'cancellation_intro':
+        'ശാസ്ത്രനിയമങ്ങൾ അനുസരിച്ച് ഈ കാരണങ്ങളാൽ ദോഷത്തിന് പരിഹാരം ഉണ്ടാകുന്നു:',
+    'remedies_intro':
+        'ചൊവ്വാദോഷത്തിന് സാധാരണയായി നിർദ്ദേശിക്കുന്ന പരമ്പരാഗത പരിഹാരങ്ങൾ ഇവയാണ്. ഏതെങ്കിലും പരിഹാരം തുടങ്ങുന്നതിന് മുമ്പ് നിങ്ങളുടെ ജാതകം പൂർണമായി പരിശോധിക്കുക:',
+  },
+  'gu': {
+    'title_mangal': 'મંગળ દોષ રિપોર્ટ',
+    'born': 'જન્મ',
+    'at': 'સમય',
+    'generated': 'તૈયાર',
+    'ascendant': 'લગ્ન',
+    'section_diagnostic': 'વિશ્લેષણ',
+    'section_cancellation': 'દોષ પરિહાર',
+    'section_marriage': 'વિવાહ પર પ્રભાવ',
+    'section_remedies': 'સૂચવેલા ઉપાયો',
+    'mars_sign': 'મંગળ રાશિ',
+    'mars_nakshatra': 'મંગળ નક્ષત્ર',
+    'mars_houses': 'મંગળ ભાવ',
+    'pada': 'પાદ',
+    'diagnosis': 'નિદાન',
+    'cancellation_intro':
+        'શાસ્ત્રીય નિયમો અનુસાર નીચેનાં કારણોથી દોષનો પરિહાર થાય છે:',
+    'remedies_intro':
+        'મંગળ દોષ માટે સામાન્ય રીતે સૂચવાતા પરંપરાગત ઉપાયો નીચે મુજબ છે. કોઈ પણ ઉપાય અપનાવતાં પહેલાં આપની કુંડળીને પૂરેપૂરી તપાસી લેજો:',
+  },
+  'bn': {
+    'title_mangal': 'মাঙ্গলিক দোষ রিপোর্ট',
+    'born': 'জন্ম',
+    'at': 'সময়',
+    'generated': 'তৈরি',
+    'ascendant': 'লগ্ন',
+    'section_diagnostic': 'বিশ্লেষণ',
+    'section_cancellation': 'দোষের পরিহার',
+    'section_marriage': 'বিবাহে প্রভাব',
+    'section_remedies': 'প্রস্তাবিত প্রতিকার',
+    'mars_sign': 'মঙ্গলের রাশি',
+    'mars_nakshatra': 'মঙ্গলের নক্ষত্র',
+    'mars_houses': 'মঙ্গলের ভাব',
+    'pada': 'পাদ',
+    'diagnosis': 'নির্ণয়',
+    'cancellation_intro':
+        'শাস্ত্রীয় নিয়ম অনুযায়ী নিচের কারণগুলোর জন্য দোষের পরিহার হয়:',
+    'remedies_intro':
+        'মাঙ্গলিক দোষের জন্য সাধারণত যে প্রথাগত প্রতিকারগুলোর কথা বলা হয়, সেগুলো নিচে দেওয়া হলো। কোনো প্রতিকার শুরু করার আগে নিজের কুণ্ডলী ভালো করে দেখে নেবেন:',
+  },
+};
+
+const _remedies = {
+  'en': {
+    'purn': [
+      'Recite Hanuman Chalisa daily, especially on Tuesdays.',
+      'Visit a Hanuman temple every Tuesday and offer red flowers + sindoor.',
+      'Donate red lentils, jaggery, or red cloth on Tuesdays.',
+      'Fast on Tuesdays — eat only fruit and milk that day.',
+      'On Tuesday at home, light a lamp before Hanuman ji, chant \'Om Angarakaya Namah\' 108 times and pray for a calm marriage; tradition also names Kumbh Vivah (a symbolic marriage to a peepal tree or kumbh).',
+      'Wear a coral gemstone only after checking the chart — it does not suit everyone.',
+    ],
+    'mild': [
+      'Recite Hanuman Chalisa on Tuesdays.',
+      'Donate red lentils or jaggery on Tuesdays.',
+      'Visit a Hanuman temple regularly.',
+      'Light a mustard-oil lamp before Hanuman idol on Tuesdays.',
+    ],
+    'none': [
+      'No specific Mars-related remedies needed. Continue regular spiritual practices.',
+    ],
+  },
+  'hi': {
+    'purn': [
+      'प्रतिदिन हनुमान चालीसा का पाठ कीजिए, विशेषकर मंगलवार को।',
+      'प्रत्येक मंगलवार को हनुमान मंदिर जाकर लाल पुष्प एवं सिंदूर अर्पित कीजिए।',
+      'मंगलवार को मसूर दाल, गुड़ अथवा लाल वस्त्र का दान कीजिए।',
+      'मंगलवार का व्रत रखिए — केवल फल एवं दूध का सेवन कीजिए।',
+      'मंगलवार को घर पर हनुमान जी के सामने दीपक जलाकर \'ॐ अं अंगारकाय नमः\' का 108 बार जप कीजिए और सुखी विवाह की प्रार्थना कीजिए; परंपरा में कुंभ विवाह (पीपल अथवा कुंभ से प्रतीकात्मक विवाह) का भी उल्लेख मिलता है।',
+      'मूँगा रत्न कुंडली की जाँच के पश्चात ही धारण कीजिए — सभी के लिए उपयुक्त नहीं।',
+    ],
+    'mild': [
+      'मंगलवार को हनुमान चालीसा का पाठ कीजिए।',
+      'मंगलवार को मसूर दाल अथवा गुड़ का दान कीजिए।',
+      'नियमित रूप से हनुमान मंदिर जाइए।',
+      'मंगलवार को हनुमान जी के समक्ष सरसों के तेल का दीपक प्रज्वलित कीजिए।',
+    ],
+    'none': [
+      'विशेष मंगल-सम्बन्धी उपाय आवश्यक नहीं। नियमित आध्यात्मिक अभ्यास जारी रखिए।',
+    ],
+  },
+  'mr': {
+    'purn': [
+      'दररोज हनुमान चालीसाचे पठण करा, विशेषतः मंगळवारी.',
+      'प्रत्येक मंगळवारी हनुमान मंदिरात जाऊन लाल फुले आणि सिंदूर अर्पण करा.',
+      'मंगळवारी मसूर डाळ, गूळ किंवा लाल वस्त्र दान करा.',
+      'मंगळवारचा उपवास करा — फक्त फळे आणि दूध सेवन करा.',
+      'मंगळवारी घरी हनुमानासमोर दिवा लावून \'ॐ अं अंगारकाय नमः\' हा मंत्र 108 वेळा जपा आणि सुखी विवाहासाठी प्रार्थना करा; परंपरेत कुंभ विवाहाचाही (पिंपळाशी किंवा कुंभाशी प्रतीकात्मक विवाह) उल्लेख आढळतो.',
+      'मूंगा रत्न कुंडलीची तपासणी केल्यानंतरच धारण करा — सर्वांसाठी योग्य नसते.',
+    ],
+    'mild': [
+      'मंगळवारी हनुमान चालीसाचे पठण करा.',
+      'मंगळवारी मसूर डाळ किंवा गूळ दान करा.',
+      'नियमितपणे हनुमान मंदिरात जा.',
+      'मंगळवारी हनुमानजींसमोर मोहरीच्या तेलाचा दिवा लावा.',
+    ],
+    'none': [
+      'विशेष मंगळ-संबंधी उपाय आवश्यक नाहीत. नियमित आध्यात्मिक अभ्यास सुरू ठेवा.',
+    ],
+  },
+  'te': {
+    'purn': [
+      'ప్రతిరోజూ హనుమాన్ చాలీసా పఠించండి, ముఖ్యంగా మంగళవారం.',
+      'ప్రతి మంగళవారం హనుమాన్ ఆలయానికి వెళ్లి ఎర్రని పూలు, సిందూరం సమర్పించండి.',
+      'మంగళవారం మసూర్ పప్పు, బెల్లం లేదా ఎర్రని వస్త్రం దానం చేయండి.',
+      'మంగళవారం ఉపవాసం ఉండండి; ఆ రోజు పండ్లు, పాలు మాత్రమే తీసుకోండి.',
+      'మంగళవారం ఇంట్లో హనుమంతుడి ముందు దీపం వెలిగించి \'ఓం అం అంగారకాయ నమః\' 108 సార్లు జపించి సుఖమైన వివాహం కోసం ప్రార్థించండి; సంప్రదాయంలో కుంభ వివాహం (రావి చెట్టుతో లేదా కుంభంతో ప్రతీకాత్మక వివాహం) ప్రస్తావన కూడా ఉంది.',
+      'పగడాన్ని జాతక పరిశీలన తర్వాతే ధరించండి; ఇది అందరికీ సరిపడదు.',
+    ],
+    'mild': [
+      'మంగళవారం హనుమాన్ చాలీసా పఠించండి.',
+      'మంగళవారం మసూర్ పప్పు లేదా బెల్లం దానం చేయండి.',
+      'క్రమం తప్పకుండా హనుమాన్ ఆలయానికి వెళ్లండి.',
+      'మంగళవారం హనుమంతుని ఎదుట ఆవనూనె దీపం వెలిగించండి.',
+    ],
+    'none': [
+      'ప్రత్యేకంగా కుజ సంబంధ పరిహారాలు అవసరం లేదు. మీ నిత్య ఆధ్యాత్మిక సాధనను కొనసాగించండి.',
+    ],
+  },
+  'ta': {
+    'purn': [
+      'தினமும் ஹனுமான் சாலிசா பாராயணம் செய்யுங்கள், குறிப்பாகச் செவ்வாய்க்கிழமை.',
+      'ஒவ்வொரு செவ்வாய்க்கிழமையும் ஆஞ்சநேயர் கோயிலுக்குச் சென்று சிவப்பு மலர்களும் செந்தூரமும் சமர்ப்பியுங்கள்.',
+      'செவ்வாய்க்கிழமை மசூர் பருப்பு, வெல்லம் அல்லது சிவப்பு ஆடையைத் தானம் செய்யுங்கள்.',
+      'செவ்வாய்க்கிழமை விரதம் இருங்கள்; அன்று பழமும் பாலும் மட்டும் உண்ணுங்கள்.',
+      'செவ்வாய்க்கிழமை இல்லத்தில் அனுமன் முன் தீபம் ஏற்றி \'ஓம் அம் அங்காரகாய நமஃ\' என்பதை 108 முறை ஜபித்து, மகிழ்ச்சியான திருமணத்துக்காகப் பிரார்த்தனை செய்யுங்கள்; மரபில் கும்ப விவாகமும் (அரச மரத்துடன் அல்லது கும்பத்துடன் அடையாளத் திருமணம்) குறிப்பிடப்படுகிறது.',
+      'பவளத்தை ஜாதகச் சரிபார்ப்புக்குப் பிறகே அணியுங்கள்; அது எல்லோருக்கும் பொருந்தாது.',
+    ],
+    'mild': [
+      'செவ்வாய்க்கிழமை ஹனுமான் சாலிசா பாராயணம் செய்யுங்கள்.',
+      'செவ்வாய்க்கிழமை மசூர் பருப்பு அல்லது வெல்லம் தானம் செய்யுங்கள்.',
+      'தவறாமல் ஆஞ்சநேயர் கோயிலுக்குச் செல்லுங்கள்.',
+      'செவ்வாய்க்கிழமை ஆஞ்சநேயர் முன் கடுகு எண்ணெய் தீபம் ஏற்றுங்கள்.',
+    ],
+    'none': [
+      'செவ்வாய் தொடர்பான சிறப்புப் பரிகாரம் தேவையில்லை. உங்கள் வழக்கமான ஆன்மிகப் பயிற்சியைத் தொடருங்கள்.',
+    ],
+  },
+  'kn': {
+    'purn': [
+      'ಪ್ರತಿದಿನ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಪಠಿಸಿ, ವಿಶೇಷವಾಗಿ ಮಂಗಳವಾರ.',
+      'ಪ್ರತಿ ಮಂಗಳವಾರ ಹನುಮಂತನ ದೇವಸ್ಥಾನಕ್ಕೆ ಹೋಗಿ ಕೆಂಪು ಹೂವು ಮತ್ತು ಸಿಂಧೂರ ಅರ್ಪಿಸಿ.',
+      'ಮಂಗಳವಾರ ಮಸೂರ್ ಬೇಳೆ, ಬೆಲ್ಲ ಅಥವಾ ಕೆಂಪು ವಸ್ತ್ರವನ್ನು ದಾನ ಮಾಡಿ.',
+      'ಮಂಗಳವಾರ ಉಪವಾಸ ಮಾಡಿ; ಆ ದಿನ ಹಣ್ಣು ಮತ್ತು ಹಾಲು ಮಾತ್ರ ಸೇವಿಸಿ.',
+      'ಮಂಗಳವಾರ ಮನೆಯಲ್ಲಿ ಹನುಮಂತನ ಮುಂದೆ ದೀಪ ಹಚ್ಚಿ \'ಓಂ ಅಂ ಅಂಗಾರಕಾಯ ನಮಃ\' ಮಂತ್ರವನ್ನು 108 ಬಾರಿ ಜಪಿಸಿ, ಸುಖ ದಾಂಪತ್ಯಕ್ಕಾಗಿ ಪ್ರಾರ್ಥಿಸಿ; ಪರಂಪರೆಯಲ್ಲಿ ಕುಂಭ ವಿವಾಹದ (ಅರಳಿ ಮರ ಅಥವಾ ಕುಂಭದೊಂದಿಗೆ ಸಾಂಕೇತಿಕ ವಿವಾಹ) ಉಲ್ಲೇಖವೂ ಇದೆ.',
+      'ಹವಳವನ್ನು ಜಾತಕ ಪರಿಶೀಲನೆಯ ನಂತರವೇ ಧರಿಸಿ; ಇದು ಎಲ್ಲರಿಗೂ ಹೊಂದುವುದಿಲ್ಲ.',
+    ],
+    'mild': [
+      'ಮಂಗಳವಾರ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಪಠಿಸಿ.',
+      'ಮಂಗಳವಾರ ಮಸೂರ್ ಬೇಳೆ ಅಥವಾ ಬೆಲ್ಲ ದಾನ ಮಾಡಿ.',
+      'ನಿಯಮಿತವಾಗಿ ಹನುಮಂತನ ದೇವಸ್ಥಾನಕ್ಕೆ ಹೋಗಿ.',
+      'ಮಂಗಳವಾರ ಹನುಮಂತನ ಎದುರು ಸಾಸಿವೆ ಎಣ್ಣೆಯ ದೀಪ ಹಚ್ಚಿ.',
+    ],
+    'none': [
+      'ಮಂಗಳಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ವಿಶೇಷ ಪರಿಹಾರಗಳ ಅಗತ್ಯವಿಲ್ಲ. ನಿಮ್ಮ ನಿಯಮಿತ ಆಧ್ಯಾತ್ಮಿಕ ಅಭ್ಯಾಸವನ್ನು ಮುಂದುವರಿಸಿ.',
+    ],
+  },
+  'ml': {
+    'purn': [
+      'ദിവസവും ഹനുമാൻ ചാലീസ ജപിക്കുക, പ്രത്യേകിച്ച് ചൊവ്വാഴ്ച.',
+      'എല്ലാ ചൊവ്വാഴ്ചയും ഹനുമാൻ ക്ഷേത്രത്തിൽ പോയി ചുവന്ന പൂക്കളും സിന്ദൂരവും സമർപ്പിക്കുക.',
+      'ചൊവ്വാഴ്ച ചുവന്ന പരിപ്പ് (മസൂർ), ശർക്കര അല്ലെങ്കിൽ ചുവന്ന വസ്ത്രം ദാനം ചെയ്യുക.',
+      'ചൊവ്വാഴ്ച വ്രതം എടുക്കുക; അന്ന് പഴങ്ങളും പാലും മാത്രം കഴിക്കുക.',
+      'ചൊവ്വാഴ്ച വീട്ടിൽ ഹനുമാന്റെ മുന്നിൽ വിളക്ക് കൊളുത്തി \'ഓം അം അംഗാരകായ നമഃ\' 108 തവണ ജപിച്ച് സന്തോഷകരമായ ദാമ്പത്യത്തിനായി പ്രാർഥിക്കുക; പാരമ്പര്യത്തിൽ കുംഭവിവാഹത്തെക്കുറിച്ചും (അരയാലുമായോ കുംഭവുമായോ ഉള്ള പ്രതീകാത്മക വിവാഹം) പരാമർശമുണ്ട്.',
+      'പവിഴം ജാതകപരിശോധനയ്ക്ക് ശേഷം മാത്രം ധരിക്കുക; ഇത് എല്ലാവർക്കും യോജിക്കില്ല.',
+    ],
+    'mild': [
+      'ചൊവ്വാഴ്ച ഹനുമാൻ ചാലീസ ജപിക്കുക.',
+      'ചൊവ്വാഴ്ച ചുവന്ന പരിപ്പ് (മസൂർ) അല്ലെങ്കിൽ ശർക്കര ദാനം ചെയ്യുക.',
+      'പതിവായി ഹനുമാൻ ക്ഷേത്രദർശനം നടത്തുക.',
+      'ചൊവ്വാഴ്ച ഹനുമാന്റെ മുന്നിൽ കടുകെണ്ണ വിളക്ക് കത്തിക്കുക.',
+    ],
+    'none': [
+      'ചൊവ്വയുമായി ബന്ധപ്പെട്ട പ്രത്യേക പരിഹാരങ്ങൾ ആവശ്യമില്ല. നിങ്ങളുടെ പതിവ് ആത്മീയ സാധന തുടരുക.',
+    ],
+  },
+  'gu': {
+    'purn': [
+      'દરરોજ હનુમાન ચાલીસાનો પાઠ કરજો, ખાસ કરીને મંગળવારે.',
+      'દર મંગળવારે હનુમાન મંદિરે જઈને લાલ ફૂલ અને સિંદૂર અર્પણ કરજો.',
+      'મંગળવારે મસૂરની દાળ, ગોળ અથવા લાલ વસ્ત્રનું દાન કરજો.',
+      'મંગળવારનું વ્રત રાખજો; તે દિવસે માત્ર ફળ અને દૂધનું સેવન કરજો.',
+      'મંગળવારે ઘરે હનુમાનજી સામે દીવો પ્રગટાવીને \'ૐ અં અંગારકાય નમઃ\'નો 108 વાર જપ કરજો અને સુખી દાંપત્ય માટે પ્રાર્થના કરજો; પરંપરામાં કુંભ વિવાહ (પીપળા અથવા કુંભ સાથે પ્રતીકાત્મક વિવાહ)નો પણ ઉલ્લેખ મળે છે.',
+      'પરવાળું રત્ન કુંડળીની તપાસ પછી જ ધારણ કરજો; તે બધા માટે યોગ્ય નથી.',
+    ],
+    'mild': [
+      'મંગળવારે હનુમાન ચાલીસાનો પાઠ કરજો.',
+      'મંગળવારે મસૂરની દાળ અથવા ગોળનું દાન કરજો.',
+      'નિયમિત રીતે હનુમાન મંદિરે દર્શન કરજો.',
+      'મંગળવારે હનુમાનજી સમક્ષ સરસવના તેલનો દીવો પ્રગટાવજો.',
+    ],
+    'none': [
+      'મંગળ સંબંધિત વિશેષ ઉપાયોની આવશ્યકતા નથી. આપની નિયમિત આધ્યાત્મિક સાધના ચાલુ રાખજો.',
+    ],
+  },
+  'bn': {
+    'purn': [
+      'প্রতিদিন হনুমান চালিসা পাঠ করুন, বিশেষ করে মঙ্গলবারে।',
+      'প্রতি মঙ্গলবার হনুমান মন্দিরে গিয়ে লাল ফুল আর সিঁদুর অর্পণ করুন।',
+      'মঙ্গলবারে মসুর ডাল, গুড় বা লাল কাপড় দান করুন।',
+      'মঙ্গলবারে ব্রত রাখুন; সেদিন শুধু ফল আর দুধ খাবেন।',
+      'মঙ্গলবারে বাড়িতে হনুমানের সামনে প্রদীপ জ্বেলে \'ওঁ অং অঙ্গারকায় নমঃ\' মন্ত্র 108 বার জপ করুন আর সুখী দাম্পত্যের জন্য প্রার্থনা করুন; প্রথায় কুম্ভ বিবাহের (অশ্বত্থ গাছ বা কুম্ভের সঙ্গে প্রতীকী বিবাহ) কথাও আছে।',
+      'কুণ্ডলী ভালো করে যাচাই না করে প্রবাল ধারণ করবেন না; এটি সবার জন্য উপযুক্ত নয়।',
+    ],
+    'mild': [
+      'মঙ্গলবারে হনুমান চালিসা পাঠ করুন।',
+      'মঙ্গলবারে মসুর ডাল বা গুড় দান করুন।',
+      'নিয়মিত হনুমান মন্দিরে যান।',
+      'মঙ্গলবারে হনুমানের সামনে সর্ষের তেলের প্রদীপ জ্বালান।',
+    ],
+    'none': [
+      'মঙ্গল-সংক্রান্ত বিশেষ প্রতিকারের দরকার নেই। নিয়মিত আধ্যাত্মিক অভ্যাস চালিয়ে যান।',
+    ],
+  },
+};
+
+const _extraCss =
+    '\n.cover .status-badge {\n  display: inline-block; margin-top: 10mm; padding: 4mm 10mm;\n  font-size: 18pt; font-weight: 700; border-radius: 2mm;\n}\n.cover .status-badge.purn      { background: #fef2f2; color: #dc2626; border: 2px solid #dc2626; }\n.cover .status-badge.mild      { background: #fff7ed; color: #ea580c; border: 2px solid #ea580c; }\n.cover .status-badge.none      { background: #f0fdf4; color: #16a34a; border: 2px solid #16a34a; }\n.cover .status-badge.cancelled { background: #fefce8; color: #ca8a04; border: 2px solid #ca8a04; }\n.diagnostic {\n  margin: 4mm 0; padding: 5mm; background: #fafafa; border-left: 3px solid var(--brand-primary);\n}\n.diagnostic dl { margin: 0; }\n.diagnostic dt {\n  font-weight: 600; color: var(--brand-secondary); font-size: 10pt;\n  text-transform: uppercase; letter-spacing: 0.5pt; margin-top: 2mm;\n}\n.diagnostic dd { margin: 0 0 2mm; font-size: 11pt; }\n.cancellation {\n  margin: 4mm 0; padding: 5mm; background: #fefce8; border-left: 3px solid #ca8a04;\n}\n.cancellation ul { margin: 2mm 0 0 6mm; padding: 0; }\n.remedies {\n  margin: 4mm 0; padding: 5mm; background: #fafafa; border-left: 3px solid var(--brand-secondary);\n}\n.remedies ul { margin: 2mm 0 0 6mm; padding: 0; }\n';
+
+/// Status, diagnosis and marriage prose for te / ta / kn / ml / gu / bn
+/// (written from the Hindi).
+class _SouthProse {
+  _SouthProse({
+    required this.badge,
+    required this.severity,
+    required this.fromLagna,
+    required this.fromMoon,
+    required this.diagnosisNone,
+    required this.diagnosis,
+    required this.marriage,
+  });
+
+  final Map<String, String> badge;
+  final Map<String, String> severity;
+  final String Function(String hs) fromLagna;
+  final String Function(String hs) fromMoon;
+  final String diagnosisNone;
+  final String Function(String sign, String houses, String sev) diagnosis;
+  final Map<String, String> marriage;
+}
+
+final _southProse = <String, _SouthProse>{
+  'te': _SouthProse(
+    badge: {
+      'none': 'కుజ దోషం లేదు',
+      'cancelled': 'కుజ దోషం (నివృత్తితో)',
+      'purn': 'పూర్ణ కుజ దోషం',
+      'mild': 'స్వల్ప కుజ దోషం'
+    },
+    severity: {'purn': 'పూర్ణ', 'mild': 'స్వల్ప', 'none': 'లేని'},
+    fromLagna: (String hs) => 'లగ్నం నుండి $hs',
+    fromMoon: (String hs) => 'చంద్రుని నుండి $hs',
+    diagnosisNone:
+        'కుజుడు దోషకారక భావాలలో (1, 4, 7, 8, 12) లేడు, కాబట్టి కుజ దోషం లేదు.',
+    diagnosis: (String sign, String houses, String sev) =>
+        'కుజుడు $signలో ఉన్నాడు (భావం: $houses). ఇది కుజ దోషపు $sev రూపం.',
+    marriage: {
+      'none':
+          'వివాహ దృష్టితో కుజ దోషానికి సంబంధించిన ఆటంకం ఏదీ లేదు. పొంతన సాధారణంగానే చూడవచ్చు.',
+      'cancelled':
+          'కుజ దోషం ఉన్నప్పటికీ, శాస్త్రీయ నివృత్తి వర్తించడం వల్ల దాని ప్రభావం బాగా తగ్గుతుంది. పొంతనలో సాధారణంగా దీనిని పెద్ద ఆటంకంగా పరిగణించరు.',
+      'purn':
+          'పూర్ణ కుజ దోషం వివాహ సంబంధాలలో సవాళ్లు తీసుకురావచ్చు. భాగస్వామి జాతకంలోనూ కుజ దోషం (లేదా సమాన తీవ్రత) ఉంటే ప్రభావం సమతుల్యమవుతుందని సంప్రదాయం చెబుతుంది. ఇద్దరి జాతకాల జాగ్రత్తైన పరిశీలన, సరైన పొంతన ముఖ్యం.',
+      'mild':
+          'స్వల్ప కుజ దోషం ప్రభావం పరిమితంగా ఉంటుంది, అయినా పొంతన చూసేటప్పుడు దీనిని లెక్కలోకి తీసుకోవడం మంచిది. భాగస్వామి జాతకాన్ని కూడా దీనితో కలిపి పరిశీలించండి.'
+    },
+  ),
+  'ta': _SouthProse(
+    badge: {
+      'none': 'செவ்வாய் தோஷம் இல்லை',
+      'cancelled': 'செவ்வாய் தோஷம் (நிவர்த்தியுடன்)',
+      'purn': 'முழு செவ்வாய் தோஷம்',
+      'mild': 'லேசான செவ்வாய் தோஷம்'
+    },
+    severity: {'purn': 'முழு', 'mild': 'லேசான', 'none': 'இல்லாத'},
+    fromLagna: (String hs) => 'லக்னத்திலிருந்து $hs',
+    fromMoon: (String hs) => 'சந்திரனிலிருந்து $hs',
+    diagnosisNone:
+        'செவ்வாய் தோஷம் தரும் வீடுகளில் (1, 4, 7, 8, 12) செவ்வாய் இல்லை, எனவே செவ்வாய் தோஷம் இல்லை.',
+    diagnosis: (String sign, String houses, String sev) =>
+        'செவ்வாய் $sign ராசியில் இருக்கிறார் (வீடு: $houses). இது செவ்வாய் தோஷத்தின் $sev வடிவம்.',
+    marriage: {
+      'none':
+          'திருமணக் கோணத்தில் செவ்வாய் தோஷம் தொடர்பான தடை எதுவும் இல்லை. பொருத்தம் வழக்கம்போல் பார்க்கலாம்.',
+      'cancelled':
+          'செவ்வாய் தோஷம் இருந்தாலும், சாஸ்திர நிவர்த்தி பொருந்துவதால் அதன் தாக்கம் வெகுவாகக் குறைகிறது. பொருத்தம் பார்க்கும்போது பொதுவாக இது பெரிய தடையாகக் கருதப்படுவதில்லை.',
+      'purn':
+          'முழு செவ்வாய் தோஷம் திருமண உறவுகளில் சவால்களைக் கொண்டுவரலாம். துணையின் ஜாதகத்திலும் செவ்வாய் தோஷம் (அல்லது அதே அளவு தீவிரம்) இருந்தால் தாக்கம் சமநிலைப்படும் என்பது மரபு. இருவரின் ஜாதகத்தையும் கவனமாக ஆராய்வதும் சரியான பொருத்தம் பார்ப்பதும் முக்கியம்.',
+      'mild':
+          'லேசான செவ்வாய் தோஷத்தின் தாக்கம் குறைவு, ஆனாலும் பொருத்தம் பார்க்கும்போது இதைக் கணக்கில் எடுப்பது நல்லது. துணையின் ஜாதகத்தையும் இதனுடன் சேர்த்து ஆராயுங்கள்.'
+    },
+  ),
+  'kn': _SouthProse(
+    badge: {
+      'none': 'ಮಂಗಳ ದೋಷ ಇಲ್ಲ',
+      'cancelled': 'ಮಂಗಳ ದೋಷ (ನಿವಾರಣೆಯೊಂದಿಗೆ)',
+      'purn': 'ಪೂರ್ಣ ಮಂಗಳ ದೋಷ',
+      'mild': 'ಅಲ್ಪ ಮಂಗಳ ದೋಷ'
+    },
+    severity: {'purn': 'ಪೂರ್ಣ', 'mild': 'ಅಲ್ಪ', 'none': 'ಇಲ್ಲದ'},
+    fromLagna: (String hs) => 'ಲಗ್ನದಿಂದ $hs',
+    fromMoon: (String hs) => 'ಚಂದ್ರನಿಂದ $hs',
+    diagnosisNone:
+        'ಮಂಗಳ ದೋಷಕಾರಕ ಭಾವಗಳಲ್ಲಿ (1, 4, 7, 8, 12) ಮಂಗಳ ಇಲ್ಲ, ಆದ್ದರಿಂದ ಮಂಗಳ ದೋಷ ಇಲ್ಲ.',
+    diagnosis: (String sign, String houses, String sev) =>
+        'ಮಂಗಳ $sign ರಾಶಿಯಲ್ಲಿದ್ದಾನೆ (ಭಾವ: $houses). ಇದು ಮಂಗಳ ದೋಷದ $sev ರೂಪ.',
+    marriage: {
+      'none':
+          'ವಿವಾಹದ ದೃಷ್ಟಿಯಿಂದ ಮಂಗಳ ದೋಷಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ಯಾವುದೇ ಅಡ್ಡಿ ಇಲ್ಲ. ಜಾತಕ ಹೊಂದಾಣಿಕೆಯನ್ನು ಸಾಮಾನ್ಯವಾಗಿ ನೋಡಬಹುದು.',
+      'cancelled':
+          'ಮಂಗಳ ದೋಷ ಇದ್ದರೂ, ಶಾಸ್ತ್ರೀಯ ನಿವಾರಣೆ ಅನ್ವಯಿಸುವುದರಿಂದ ಅದರ ಪ್ರಭಾವ ಬಹಳಷ್ಟು ಕಡಿಮೆಯಾಗುತ್ತದೆ. ಹೊಂದಾಣಿಕೆಯಲ್ಲಿ ಸಾಮಾನ್ಯವಾಗಿ ಇದನ್ನು ದೊಡ್ಡ ಅಡ್ಡಿಯೆಂದು ಪರಿಗಣಿಸುವುದಿಲ್ಲ.',
+      'purn':
+          'ಪೂರ್ಣ ಮಂಗಳ ದೋಷ ವಿವಾಹ ಸಂಬಂಧಗಳಲ್ಲಿ ಸವಾಲುಗಳನ್ನು ತರಬಹುದು. ಸಂಗಾತಿಯ ಜಾತಕದಲ್ಲೂ ಮಂಗಳ ದೋಷ (ಅಥವಾ ಸಮಾನ ತೀವ್ರತೆ) ಇದ್ದರೆ ಪ್ರಭಾವ ಸಮತೋಲನಗೊಳ್ಳುತ್ತದೆ ಎಂಬುದು ಸಂಪ್ರದಾಯ. ಇಬ್ಬರ ಜಾತಕಗಳ ಎಚ್ಚರಿಕೆಯ ಪರಿಶೀಲನೆ ಮತ್ತು ಸರಿಯಾದ ಹೊಂದಾಣಿಕೆ ಮುಖ್ಯ.',
+      'mild':
+          'ಅಲ್ಪ ಮಂಗಳ ದೋಷದ ಪ್ರಭಾವ ಸೀಮಿತ, ಆದರೂ ಹೊಂದಾಣಿಕೆ ನೋಡುವಾಗ ಇದನ್ನು ಗಣನೆಗೆ ತೆಗೆದುಕೊಳ್ಳುವುದು ಒಳ್ಳೆಯದು. ಸಂಗಾತಿಯ ಜಾತಕವನ್ನೂ ಇದರೊಂದಿಗೆ ಸೇರಿಸಿ ಪರಿಶೀಲಿಸಿ.'
+    },
+  ),
+  'ml': _SouthProse(
+    badge: {
+      'none': 'ചൊവ്വാദോഷം ഇല്ല',
+      'cancelled': 'ചൊവ്വാദോഷം (പരിഹാരത്തോടെ)',
+      'purn': 'പൂർണ ചൊവ്വാദോഷം',
+      'mild': 'അൽപ ചൊവ്വാദോഷം'
+    },
+    severity: {'purn': 'പൂർണ', 'mild': 'അൽപ', 'none': 'ഇല്ലാത്ത'},
+    fromLagna: (String hs) => 'ലഗ്നത്തിൽ നിന്ന് $hs',
+    fromMoon: (String hs) => 'ചന്ദ്രനിൽ നിന്ന് $hs',
+    diagnosisNone:
+        'ചൊവ്വ ദോഷകാരക ഭാവങ്ങളിൽ (1, 4, 7, 8, 12) ഇല്ല, അതിനാൽ ചൊവ്വാദോഷം ഇല്ല.',
+    diagnosis: (String sign, String houses, String sev) =>
+        'ചൊവ്വ $sign രാശിയിലാണ് (ഭാവം: $houses). ഇത് ചൊവ്വാദോഷത്തിന്റെ $sev രൂപമാണ്.',
+    marriage: {
+      'none':
+          'വിവാഹത്തിന്റെ കാര്യത്തിൽ ചൊവ്വാദോഷവുമായി ബന്ധപ്പെട്ട തടസ്സമൊന്നുമില്ല. ജാതകപ്പൊരുത്തം സാധാരണ പോലെ നോക്കാം.',
+      'cancelled':
+          'ചൊവ്വാദോഷം ഉണ്ടെങ്കിലും ശാസ്ത്രീയ പരിഹാരം ബാധകമാകുന്നതിനാൽ അതിന്റെ സ്വാധീനം ഏറെ കുറയുന്നു. പൊരുത്തം നോക്കുമ്പോൾ സാധാരണയായി ഇതിനെ വലിയ തടസ്സമായി കണക്കാക്കാറില്ല.',
+      'purn':
+          'പൂർണ ചൊവ്വാദോഷം വിവാഹബന്ധത്തിൽ വെല്ലുവിളികൾ കൊണ്ടുവരാം. പങ്കാളിയുടെ ജാതകത്തിലും ചൊവ്വാദോഷം (അല്ലെങ്കിൽ തുല്യ തീവ്രത) ഉണ്ടെങ്കിൽ സ്വാധീനം സമതുലിതമാകുമെന്നാണ് പാരമ്പര്യം. ഇരുവരുടെയും ജാതകങ്ങളുടെ ശ്രദ്ധാപൂർവമായ പരിശോധനയും ശരിയായ പൊരുത്തവും പ്രധാനമാണ്.',
+      'mild':
+          'അൽപ ചൊവ്വാദോഷത്തിന്റെ സ്വാധീനം പരിമിതമാണ്, എങ്കിലും പൊരുത്തം നോക്കുമ്പോൾ ഇത് കണക്കിലെടുക്കുന്നതാണ് നല്ലത്. പങ്കാളിയുടെ ജാതകവും ഇതോടൊപ്പം പരിശോധിക്കുക.'
+    },
+  ),
+  'gu': _SouthProse(
+    badge: {
+      'none': 'મંગળ દોષ નથી',
+      'cancelled': 'મંગળ દોષ (પરિહાર સહિત)',
+      'purn': 'પૂર્ણ મંગળ દોષ',
+      'mild': 'અલ્પ મંગળ દોષ'
+    },
+    severity: {'purn': 'પૂર્ણ', 'mild': 'અલ્પ', 'none': 'કોઈ નહીં'},
+    fromLagna: (String hs) => 'લગ્નથી $hs',
+    fromMoon: (String hs) => 'ચંદ્રથી $hs',
+    diagnosisNone:
+        'મંગળ દોષકારક ભાવોમાં (1, 4, 7, 8, 12) નથી, તેથી મંગળ દોષ નથી.',
+    diagnosis: (String sign, String houses, String sev) =>
+        'મંગળ $sign રાશિમાં સ્થિત છે (ભાવ: $houses). આ મંગળ દોષનું $sev સ્વરૂપ છે.',
+    marriage: {
+      'none':
+          'વિવાહની દૃષ્ટિએ મંગળ દોષ સંબંધિત કોઈ અવરોધ નથી. કુંડળી મેળાપ સામાન્ય રીતે કરી શકાય છે.',
+      'cancelled':
+          'મંગળ દોષ ઉપસ્થિત હોવા છતાં શાસ્ત્રીય પરિહાર લાગુ પડતો હોવાથી તેનો પ્રભાવ ઘણો ઘટી જાય છે. કુંડળી મેળાપમાં સામાન્ય રીતે તેને મોટો અવરોધ માનવામાં આવતો નથી.',
+      'purn':
+          'પૂર્ણ મંગળ દોષ વિવાહ સંબંધોમાં પડકારો લાવી શકે છે. પરંપરા મુજબ જીવનસાથીની કુંડળીમાં પણ મંગળ દોષ (અથવા સમાન તીવ્રતા) હોય તો પ્રભાવ સંતુલિત થઈ જાય છે. બંને કુંડળીઓની કાળજીપૂર્વક તપાસ અને યોગ્ય મેળાપ મહત્ત્વનાં છે.',
+      'mild':
+          'અલ્પ મંગળ દોષનો પ્રભાવ મર્યાદિત હોય છે, છતાં કુંડળી મેળાપ કરતી વખતે તેને ધ્યાનમાં રાખવો યોગ્ય છે. જીવનસાથીની કુંડળીને પણ તેની સાથે મેળવીને તપાસી લેજો.'
+    },
+  ),
+  'bn': _SouthProse(
+    badge: {
+      'none': 'মাঙ্গলিক দোষ নেই',
+      'cancelled': 'মাঙ্গলিক দোষ (পরিহারসহ)',
+      'purn': 'পূর্ণ মাঙ্গলিক দোষ',
+      'mild': 'অল্প মাঙ্গলিক দোষ'
+    },
+    severity: {'purn': 'পূর্ণ', 'mild': 'অল্প', 'none': 'কোনোটিই নয়'},
+    fromLagna: (String hs) => 'লগ্ন থেকে $hs',
+    fromMoon: (String hs) => 'চন্দ্র থেকে $hs',
+    diagnosisNone:
+        'মঙ্গল দোষকারক ভাবগুলোতে (1, 4, 7, 8, 12) নেই, তাই মাঙ্গলিক দোষ নেই।',
+    diagnosis: (String sign, String houses, String sev) =>
+        'মঙ্গল $sign রাশিতে আছে (ভাব: $houses)। এটি মাঙ্গলিক দোষের $sev রূপ।',
+    marriage: {
+      'none':
+          'বিবাহের দিক থেকে মাঙ্গলিক দোষ-সংক্রান্ত কোনো বাধা নেই। কুণ্ডলী মিলন স্বাভাবিকভাবে করা যায়।',
+      'cancelled':
+          'মাঙ্গলিক দোষ থাকলেও শাস্ত্রীয় পরিহার প্রযোজ্য হওয়ায় এর প্রভাব অনেকটা কমে যায়। কুণ্ডলী মিলনে সাধারণত একে বড় বাধা বলে ধরা হয় না।',
+      'purn':
+          'পূর্ণ মাঙ্গলিক দোষ দাম্পত্য সম্পর্কে কিছু টানাপোড়েন আনতে পারে। প্রথা অনুযায়ী জীবনসঙ্গীর কুণ্ডলীতেও মাঙ্গলিক দোষ (বা সমান তীব্রতা) থাকলে প্রভাব ভারসাম্যে আসে। দুটি কুণ্ডলী যত্ন করে যাচাই আর উপযুক্ত মিলন গুরুত্বপূর্ণ।',
+      'mild':
+          'অল্প মাঙ্গলিক দোষের প্রভাব সীমিত, তবু কুণ্ডলী মিলনের সময় একে মাথায় রাখা উচিত। জীবনসঙ্গীর কুণ্ডলীও এর সঙ্গে মিলিয়ে দেখে নেবেন।'
+    },
+  ),
+};
+
+String _pickLocale(String loc) =>
+    loc.isNotEmpty && _labels.containsKey(loc) ? loc : 'en';
+
+String _label(String loc, String key) {
+  final m = _labels[_pickLocale(loc)] ?? _labels['en'] ?? const {};
+  final en = _labels['en'] ?? const {};
+  return m[key] ?? en[key] ?? '';
+}
+
+/// CSS class for the cover status badge.
+String _badgeClass(Map<String, Object?> d) {
+  if (!truthy(d['HasDosha'])) return 'none';
+  if (truthy(d['Cancelled'])) return 'cancelled';
+  if (d['Status'] == 'purn') return 'purn';
+  return 'mild';
+}
+
+/// JS `ToNumber` as used by the `h > 0` / `h < 0` comparisons.
+num _jsNumber(Object? v) {
+  if (v == null) return 0;
+  if (v is num) return v;
+  if (v is bool) return v ? 1 : 0;
+  if (v is String || v is List) {
+    final s = jsStr(v).trim();
+    if (s.isEmpty) return 0;
+    return num.tryParse(s) ?? double.nan;
+  }
+  return double.nan;
+}
+
+String _statusBadgeText(String loc, Map<String, Object?> d) {
+  final l = _pickLocale(loc);
+  final south = _southProse[l];
+  if (south != null) {
+    if (!truthy(d['HasDosha'])) {
+      return south.badge['none']!;
+    }
+    if (truthy(d['Cancelled'])) {
+      return south.badge['cancelled']!;
+    }
+    return d['Status'] == 'purn' ? south.badge['purn']! : south.badge['mild']!;
+  }
+  if (!truthy(d['HasDosha'])) {
+    if (l == 'hi') {
+      return 'मंगल दोष नहीं';
+    }
+    if (l == 'mr') {
+      return 'मंगळ दोष नाही';
+    }
+    return 'No Mangal Dosha';
+  }
+  if (truthy(d['Cancelled'])) {
+    if (l == 'hi') {
+      return 'मंगल दोष — परिहार सहित';
+    }
+    if (l == 'mr') {
+      return 'मंगळ दोष — परिहार सहित';
+    }
+    return 'Mangal Dosha (with cancellation)';
+  }
+  if (d['Status'] == 'purn') {
+    if (l == 'hi') {
+      return 'पूर्ण मंगल दोष';
+    }
+    if (l == 'mr') {
+      return 'पूर्ण मंगळ दोष';
+    }
+    return 'Full Mangal Dosha';
+  }
+  if (l == 'hi') {
+    return 'अल्प मंगल दोष';
+  }
+  if (l == 'mr') {
+    return 'अल्प मंगळ दोष';
+  }
+  return 'Mild Mangal Dosha';
+}
+
+/// "purn"/"mild"/"none" → human severity word.
+String _severityLabel(String loc, Object? status) {
+  final l = _pickLocale(loc);
+  final south = _southProse[l];
+  if (south != null) {
+    return status == 'purn'
+        ? south.severity['purn']!
+        : status == 'mild'
+            ? south.severity['mild']!
+            : south.severity['none']!;
+  }
+  if (l == 'hi') {
+    return status == 'purn'
+        ? 'पूर्ण'
+        : status == 'mild'
+            ? 'अल्प'
+            : 'कोई नहीं';
+  }
+  if (l == 'mr') {
+    return status == 'purn'
+        ? 'पूर्ण'
+        : status == 'mild'
+            ? 'अल्प'
+            : 'कोणताही नाही';
+  }
+  return status == 'purn'
+      ? 'full'
+      : status == 'mild'
+          ? 'mild'
+          : 'no';
+}
+
+/// One-paragraph plain-prose diagnosis. `MarsPlacement.sign` is locale-resolved.
+String _diagnosisText(String loc, Map<String, Object?> d) {
+  final l = _pickLocale(loc);
+  final south = _southProse[l];
+  if (south != null) {
+    if (!truthy(d['HasDosha'])) {
+      return south.diagnosisNone;
+    }
+    return south.diagnosis(
+        jsStr(asMap(d['MarsPlacement'])['sign'] ?? ''),
+        _formatHouses(loc, d['HousesOccupied']),
+        _severityLabel(loc, d['Status']));
+  }
+  if (!truthy(d['HasDosha'])) {
+    if (l == 'hi') {
+      return 'मंगल का स्थान दोषकारक भावों (1, 4, 7, 8, 12) में नहीं है, अतः मंगल दोष नहीं है।';
+    }
+    if (l == 'mr') {
+      return 'मंगळाचे स्थान दोषकारक स्थानांमध्ये (1, 4, 7, 8, 12) नाही, त्यामुळे मंगळ दोष नाही.';
+    }
+    return 'Mars does not occupy any of the affected houses (1, 4, 7, 8, 12), so no Mangal Dosha is present.';
+  }
+  final sign = jsStr(asMap(d['MarsPlacement'])['sign'] ?? '');
+  final houses = _formatHouses(loc, d['HousesOccupied']);
+  final sev = _severityLabel(loc, d['Status']);
+  if (l == 'hi') {
+    return 'मंगल $sign राशि में स्थित है तथा $houses भाव में है — यह मंगल दोष का $sev रूप है।';
+  }
+  if (l == 'mr') {
+    return 'मंगळ $sign राशीत आहे आणि $houses स्थानात आहे — हा मंगळ दोषाचा $sev प्रकार आहे.';
+  }
+  return 'Mars sits in $sign, in house $houses — this constitutes a $sev form of Mangal Dosha.';
+}
+
+/// Render the dosha's trigger houses. The API encodes the reference point in
+/// the sign: a positive number is counted from the lagna, a negative one (its
+/// absolute value) from the Moon. Printing the raw number would state the
+/// wrong reference point ("house -4 from the lagna" for "4th from the Moon").
+String _formatHouses(String loc, Object? houses) {
+  final l = _pickLocale(loc);
+  final hs = asList(houses);
+  final lagna = [
+    for (final h in hs)
+      if (_jsNumber(h) > 0) jsStr(h)
+  ];
+  final moon = [
+    for (final h in hs)
+      if (_jsNumber(h) < 0) jsNum(-_jsNumber(h))
+  ];
+  final parts = <String>[];
+  final south = _southProse[l];
+  if (south != null) {
+    if (lagna.isNotEmpty) {
+      parts.add(south.fromLagna(lagna.join(', ')));
+    }
+    if (moon.isNotEmpty) {
+      parts.add(south.fromMoon(moon.join(', ')));
+    }
+  } else if (l == 'hi') {
+    if (lagna.isNotEmpty) {
+      parts.add('लग्न से ${lagna.join(', ')}');
+    }
+    if (moon.isNotEmpty) {
+      parts.add('चंद्र से ${moon.join(', ')}');
+    }
+  } else if (l == 'mr') {
+    if (lagna.isNotEmpty) {
+      parts.add('लग्नापासून ${lagna.join(', ')}');
+    }
+    if (moon.isNotEmpty) {
+      parts.add('चंद्रापासून ${moon.join(', ')}');
+    }
+  } else {
+    if (lagna.isNotEmpty) {
+      parts.add('${lagna.join(', ')} from the lagna');
+    }
+    if (moon.isNotEmpty) {
+      parts.add('${moon.join(', ')} from the Moon');
+    }
+  }
+  return parts.join('; ');
+}
+
+/// Marriage-implications prose, keyed off status + cancellation state.
+String _marriageImplicationsText(String loc, Map<String, Object?> d) {
+  final l = _pickLocale(loc);
+  final south = _southProse[l];
+  if (south != null) {
+    if (!truthy(d['HasDosha'])) {
+      return south.marriage['none']!;
+    }
+    if (truthy(d['Cancelled'])) {
+      return south.marriage['cancelled']!;
+    }
+    return d['Status'] == 'purn'
+        ? south.marriage['purn']!
+        : south.marriage['mild']!;
+  }
+  if (!truthy(d['HasDosha'])) {
+    if (l == 'hi') {
+      return 'विवाह के दृष्टिकोण से मंगल दोष से सम्बंधित कोई बाधा नहीं है। मेल मिलान सामान्य रूप से किया जा सकता है।';
+    }
+    if (l == 'mr') {
+      return 'विवाहाच्या दृष्टीने मंगळ दोषाशी संबंधित कोणताही अडथळा नाही. मेळ जुळवणी सामान्यपणे केली जाऊ शकते.';
+    }
+    return 'From a marriage standpoint, there is no Mangal Dosha-related obstacle. Match making can proceed normally.';
+  }
+  if (truthy(d['Cancelled'])) {
+    if (l == 'hi') {
+      return 'यद्यपि मंगल दोष उपस्थित है, परन्तु शास्त्रीय परिहार लागू होने से इसका प्रभाव क्षीण हो जाता है। मेल मिलान में सामान्यतः इसे महत्वपूर्ण बाधा नहीं माना जाता।';
+    }
+    if (l == 'mr') {
+      return 'जरी मंगळ दोष उपस्थित आहे, तरी शास्त्रीय परिहार लागू असल्याने त्याचा प्रभाव कमी होतो. मेळ जुळवणीत साधारणपणे हा महत्त्वाचा अडथळा मानला जात नाही.';
+    }
+    return 'Although Mangal Dosha is present, classical cancellation rules apply and substantially reduce its effect. Match making typically does not treat this as a significant obstacle.';
+  }
+  if (d['Status'] == 'purn') {
+    if (l == 'hi') {
+      return 'पूर्ण मंगल दोष विवाह सम्बन्धों में चुनौतियाँ ला सकता है। पारंपरिक रूप से अनुशंसित है कि साथी की कुंडली में भी मंगल दोष हो (या समान भारता हो), जिससे प्रभाव संतुलित हो जाए। दोनों कुंडलियों की सावधानीपूर्वक जाँच एवं उचित मेल मिलान महत्वपूर्ण है।';
+    }
+    if (l == 'mr') {
+      return 'पूर्ण मंगळ दोष विवाह संबंधांत आव्हाने आणू शकतो. पारंपरिकपणे शिफारस केली जाते की जोडीदाराच्या कुंडलीतही मंगळ दोष असावा (किंवा समान तीव्रता), ज्यामुळे परिणाम संतुलित होतो. दोन्ही कुंडल्यांची काळजीपूर्वक तपासणी आणि योग्य मेळ जुळवणी महत्त्वाची आहे.';
+    }
+    return 'Full Mangal Dosha can introduce challenges in marriage relationships. Tradition recommends that the partner\'s chart also carry Mangal Dosha (or comparable intensity) so the effect is balanced between the two. A careful study of both charts and proper match making are important.';
+  }
+  if (l == 'hi') {
+    return 'अल्प मंगल दोष का प्रभाव सीमित होता है, परन्तु मेल मिलान करते समय इसे ध्यान में रखना उचित है। साथी की कुंडली को भी इसके साथ मिलाकर जाँच लीजिए।';
+  }
+  if (l == 'mr') {
+    return 'अल्प मंगळ दोषाचा प्रभाव मर्यादित असतो, परंतु मेळ जुळवणी करताना याचा विचार करणे योग्य आहे. जोडीदाराची कुंडलीही याच्यासोबत तपासून घ्या.';
+  }
+  return 'Mild Mangal Dosha has limited effect, but it is prudent to factor it in during match making. Study the partner\'s chart alongside it.';
+}
+
+/// Remedies for the given status (falls back to "mild" then English).
+List<String> _mangalRemediesList(String loc, Object? status) {
+  final m = _remedies[_pickLocale(loc)] ?? _remedies['en'] ?? const {};
+  return m[jsStr(status ?? '')] ??
+      m['mild'] ??
+      _remedies['en']?['mild'] ??
+      const [];
+}
+
+/// Renders the Mangal Dosha report as a complete HTML document.
+String renderMangalDoshaHtml(Map<String, Object?> data, [Branding? branding]) {
+  final locRaw = data['Locale'] ?? '';
+  final loc = jsStr(locRaw);
+  final b = resolveBranding(data['Branding'], branding);
+  final subject = asMap(data['Subject']);
+  final mars = asMap(data['MarsPlacement']);
+  final title = _label(loc, 'title_mangal');
+
+  final cover = '''<section class="cover">
+  ${coverBrandingHtml(b)}
+  <h1>${esc(title)}</h1>
+  <div class="subject">${esc(subject['name'])}</div>
+  <div class="meta">
+    ${esc(_label(loc, 'born'))} ${esc(subject['birth_date'])} ${esc(_label(loc, 'at'))} ${esc(subject['birth_time'])}<br>
+    ${esc(subject['birth_place'])}<br>
+    ${esc(_label(loc, 'ascendant'))}: ${esc(subject['ascendant_sign'])}
+  </div>
+  <div class="status-badge ${esc(_badgeClass(data))}">${esc(_statusBadgeText(loc, data))}</div>
+  <div class="generated">${esc(_label(loc, 'generated'))} ${esc(formatGenerated(data['GeneratedAt']))}</div>
+</section>''';
+
+  final houses = _formatHouses(loc, data['HousesOccupied']);
+  final housesText = houses.isEmpty ? '—' : houses;
+  final diagnostic = '''<h2>${esc(_label(loc, 'section_diagnostic'))}</h2>
+<div class="diagnostic">
+  <dl>
+    <dt>${esc(_label(loc, 'mars_sign'))}</dt>
+    <dd>${esc(mars['sign'])} (${esc(mars['dms_within'])})</dd>
+    <dt>${esc(_label(loc, 'mars_nakshatra'))}</dt>
+    <dd>${esc(mars['nakshatra'])}, ${esc(_label(loc, 'pada'))} ${esc(mars['pada'])}</dd>
+    <dt>${esc(_label(loc, 'mars_houses'))}</dt>
+    <dd>${esc(housesText)}</dd>
+    <dt>${esc(_label(loc, 'diagnosis'))}</dt>
+    <dd>${esc(_diagnosisText(loc, data))}</dd>
+  </dl>
+</div>''';
+
+  var cancellation = '';
+  if (truthy(data['Cancelled'])) {
+    final reasons = asList(data['CancelReasons']);
+    cancellation = '''<h2>${esc(_label(loc, 'section_cancellation'))}</h2>
+<div class="cancellation">
+  <p>${esc(_label(loc, 'cancellation_intro'))}</p>
+  <ul>
+    ${reasons.map((r) => '<li>${esc(r)}</li>').join('\n    ')}
+  </ul>
+</div>''';
+  }
+
+  final marriage = '''<h2>${esc(_label(loc, 'section_marriage'))}</h2>
+<p>${esc(_marriageImplicationsText(loc, data))}</p>''';
+
+  final remedies = '''<h2>${esc(_label(loc, 'section_remedies'))}</h2>
+<div class="remedies">
+  <p>${esc(_label(loc, 'remedies_intro'))}</p>
+  <ul>
+    ${_mangalRemediesList(loc, data['Status']).map((r) => '<li>${esc(r)}</li>').join('\n    ')}
+  </ul>
+</div>''';
+
+  final bodyHtml = [cover, diagnostic, cancellation, marriage, remedies]
+      .where((s) => s != '')
+      .join('\n\n');
+
+  return layoutDocument(
+    lang: jsStr(jsOr(locRaw, 'en')),
+    title: title,
+    branding: b,
+    bodyHtml: bodyHtml,
+    extraCss: _extraCss,
+  );
+}

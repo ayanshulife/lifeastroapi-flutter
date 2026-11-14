@@ -1,0 +1,11 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  language:
+    strict-raw-types: true
+
+linter:
+  rules:
+    - public_member_api_docs
+    - prefer_const_constructors
+    - unawaited_futures
