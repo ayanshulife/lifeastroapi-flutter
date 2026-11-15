@@ -5,7 +5,7 @@ Official **Dart and Flutter SDK** for [LifeAstroAPI](https://lifeastroapi.com), 
 kundli, muhurat and Western charts, with location-aware calculations and pay-per-call billing.
 Free tier: 1,500 credits a month, no card. [Get a key](https://lifeastroapi.com/signup/).
 
-- **Every endpoint**: 322 methods in 23 groups: panchang, charts, dashas, matching, transits,
+- **Every endpoint**: all 321 endpoints (322 methods, with a shortcut for the navamsa chart) in 23 groups: panchang, charts, dashas, matching, transits,
   horoscopes, numerology, Lal Kitab, remedies, muhurta, narrative readings, JSON reports, tarot and
   a complete Western (tropical) module.
 - **Pure Dart**, one dependency (`http`): Flutter (Android, iOS, web, desktop) and Dart servers.
