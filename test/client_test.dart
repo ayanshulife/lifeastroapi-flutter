@@ -21,6 +21,7 @@ Reply reply(Object? body, {int status = 200, Map<String, String>? headers}) =>
   Reply Function(Uri url) responder, {
   int maxRetries = 0,
   Map<String, String> defaultHeaders = const {},
+  ResponseHook? onResponse,
 }) {
   final calls = <http.Request>[];
   final inner = MockClient((req) async {
@@ -35,6 +36,7 @@ Reply reply(Object? body, {int status = 200, Map<String, String>? headers}) =>
     httpClient: inner,
     maxRetries: maxRetries,
     defaultHeaders: defaultHeaders,
+    onResponse: onResponse,
   );
   return (client: client, calls: calls);
 }
@@ -1343,6 +1345,129 @@ void main() {
       final q = await query((c) => c.calendar.ritu(
           date: '2027-01-15', tz: 'Asia/Kolkata', ayanamsa: Ayanamsa.raman));
       expect(q['ayanamsa'], 'raman');
+    });
+  });
+
+  group('onResponse (credits, rate limit, request id)', () {
+    const headers = {
+      'X-Request-ID': '52a520f261d3db37',
+      'X-Credits-Remaining': '64043',
+      'X-RateLimit-Limit': '250',
+      'X-RateLimit-Remaining': '249',
+      'X-RateLimit-Reset': '1794718800',
+      'X-Cache': 'HIT',
+      'Content-Language': 'gu',
+    };
+
+    test('reports every header on a success, client-level and per call',
+        () async {
+      final seen = <ResponseInfo>[];
+      final perCall = <ResponseInfo>[];
+      final order = <String>[];
+      final m =
+          mock((_) => reply({'ok': 1}, headers: headers), onResponse: (i) {
+        seen.add(i);
+        order.add('client');
+      });
+      await m.client.panchang.basic(
+          lat: 1,
+          lon: 2,
+          tz: 'UTC',
+          lang: Lang.gu,
+          options: RequestOptions(onResponse: (i) {
+            perCall.add(i);
+            order.add('call');
+          }));
+      expect(seen, hasLength(1));
+      expect(perCall, seen);
+      expect(order, ['client', 'call']);
+      expect(
+          seen.single,
+          ResponseInfo(
+            status: 200,
+            path: '/v1/panchang/basic',
+            requestId: '52a520f261d3db37',
+            creditsRemaining: 64043,
+            rateLimit: RateLimit(
+                limit: 250,
+                remaining: 249,
+                resetAt: DateTime.utc(2026, 11, 15, 5)),
+            cache: 'HIT',
+            language: 'gu',
+          ));
+      expect(seen.single.rateLimit!.resetAt.isUtc, isTrue);
+    });
+
+    test('leaves out headers the API did not send (free calls have no credits)',
+        () async {
+      ResponseInfo? info;
+      final m = mock(
+          (_) => reply({
+                'ok': 1
+              }, headers: {
+                'x-request-id': 'abc',
+                'x-credits-remaining': 'n/a', // not a number
+                'x-ratelimit-limit': '250', // incomplete rate-limit set
+                'x-ratelimit-remaining': '249',
+              }),
+          onResponse: (i) => info = i);
+      await m.client.meta.version();
+      expect(
+          info,
+          const ResponseInfo(
+              status: 200, path: '/v1/meta/version', requestId: 'abc'));
+    });
+
+    test('reports the final error response once, not the retried attempts',
+        () async {
+      var n = 0;
+      final seen = <ResponseInfo>[];
+      final m = mock((_) {
+        n += 1;
+        return reply(
+            {
+              'error': {'code': 'billing_unavailable', 'message': 'x'}
+            },
+            status: 503,
+            headers: {'x-request-id': 'r$n', 'retry-after': '0'});
+      }, maxRetries: 2, onResponse: seen.add);
+      final err = await caught(m.client.meta.version());
+      expect(err, isA<ServerException>());
+      expect(n, 3);
+      expect(seen.map((i) => (i.status, i.requestId)), [(503, 'r3')]);
+    });
+
+    test('is not called for a network failure', () async {
+      // The 503 is retried; the retry fails without a response.
+      var n = 0;
+      var calls = 0;
+      final inner = MockClient((req) async {
+        n += 1;
+        if (n == 1) {
+          return http.Response('{}', 503,
+              headers: {'x-request-id': 'r1', 'retry-after': '0'});
+        }
+        throw http.ClientException('boom', req.url);
+      });
+      final client = LifeAstro(
+          apiKey: 'dv_live_test',
+          httpClient: inner,
+          maxRetries: 1,
+          onResponse: (_) => calls += 1);
+      final err = await caught(client.meta.version());
+      expect(err, isA<LifeAstroConnectionException>());
+      expect(n, 2);
+      expect(calls, 0);
+    });
+
+    test('a throwing hook (sync or async) never breaks the call', () async {
+      final m = mock((_) => reply({'v': 7}, headers: headers),
+          onResponse: (_) => throw StateError('logger down'));
+      expect(
+          await m.client.meta.version(
+              options: RequestOptions(
+                  onResponse: (_) async => throw StateError('async logger'))),
+          {'v': 7});
     });
   });
 }

@@ -98,6 +98,7 @@ final client = LifeAstro(
   maxRetries: 2,                           // on 429 / 5xx / network errors
   httpClient: myClient,                    // your own http.Client (proxies, tests)
   defaultHeaders: {'X-Trace': 'abc'},      // extra headers on every request
+  onResponse: null,                        // see "Credits, rate limit and request id"
 );
 // ...
 client.close(); // closes the HTTP client the SDK created
@@ -327,7 +328,50 @@ final f = client.chart.planets(
 );
 ```
 
-`RequestOptions(raw: true)` returns the body exactly as received.
+`RequestOptions(raw: true)` returns the body exactly as received; `RequestOptions(onResponse: ...)`
+is the hook below, for one call.
+
+## Credits, rate limit and request id
+
+Every response carries your credit balance, your plan's rate limit and a request id in its
+headers. `onResponse` hands them to you as a `ResponseInfo`, for every call (client parameter) or
+for one call (`RequestOptions`):
+
+```dart
+final client = LifeAstro(
+  apiKey: 'dv_live_...',
+  onResponse: (info) {
+    final credits = info.creditsRemaining;
+    if (credits != null && credits < 5000) {
+      print('LifeAstroAPI credits low: $credits');
+    }
+  },
+);
+
+await client.panchang.basic(
+  lat: 19.076, lon: 72.8777, tz: 'Asia/Kolkata',
+  options: RequestOptions(
+    onResponse: (info) => print('${info.requestId} ${info.rateLimit?.remaining}'),
+  ),
+);
+```
+
+| Field | From header | Meaning |
+|---|---|---|
+| `status` | | HTTP status |
+| `path` | | Endpoint path, e.g. `/v1/panchang/basic` |
+| `requestId` | `X-Request-ID` | Quote it to support |
+| `creditsRemaining` | `X-Credits-Remaining` | Balance after the call; unchanged after a failed call (failed calls are free). `null` on the free tier, whose allowance is daily/monthly rather than a balance |
+| `rateLimit` | `X-RateLimit-*` | `RateLimit` with `limit`, `remaining` and `resetAt` (a UTC `DateTime`), per minute for your plan |
+| `cache` | `X-Cache` | `HIT` when the API answered from its cache (billed the same) |
+| `language` | `Content-Language` | Language of the answer |
+
+A field is `null` when the API did not send its header. The hook runs once per call with the final
+response, success or error (not for retried attempts or network failures); the client-level hook
+runs first, then the per-call one. An error thrown inside it, or by the future of an `async` hook,
+is ignored, so logging can never break a call. When your app calls through your own backend
+(Flutter web, or to keep the key off the device), the fields are filled only if the backend passes
+these headers on.
 
 ## Branded PDF reports
 

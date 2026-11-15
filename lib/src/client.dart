@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'platform/platform.dart';
 import 'resources/resources.dart';
+import 'response_info.dart';
 import 'transport.dart';
 import 'version.dart';
 
@@ -49,6 +50,9 @@ class LifeAstro extends LifeAstroResources {
   /// - [httpClient]: your own `http.Client` (proxies, tests). The SDK does not
   ///   close a client you pass in.
   /// - [defaultHeaders]: extra headers sent on every request.
+  /// - [onResponse]: called with the [ResponseInfo] of every call: request
+  ///   id, credits left, rate limit, cache and language. Use it to log usage
+  ///   or warn when credits run low. Errors thrown inside it are ignored.
   ///
   /// Throws [ArgumentError] when no API key is found.
   factory LifeAstro({
@@ -58,6 +62,7 @@ class LifeAstro extends LifeAstroResources {
     int maxRetries = 2,
     http.Client? httpClient,
     Map<String, String> defaultHeaders = const {},
+    ResponseHook? onResponse,
   }) {
     final key = apiKey ?? environmentApiKey();
     if (key == null || key.isEmpty) {
@@ -74,6 +79,7 @@ class LifeAstro extends LifeAstroResources {
       ownsClient: httpClient == null,
       userAgent: canSetUserAgent ? 'lifeastroapi-dart/$packageVersion' : null,
       defaultHeaders: Map.unmodifiable(defaultHeaders),
+      onResponse: onResponse,
     );
     return LifeAstro._(Transport(config));
   }

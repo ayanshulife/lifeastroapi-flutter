@@ -1,5 +1,6 @@
 /// HTTP transport: URL and query building, bearer auth, timeout, JSON
-/// parsing, typed errors, and bounded retries with backoff and `Retry-After`.
+/// parsing, typed errors, bounded retries with backoff and `Retry-After`, and
+/// the `onResponse` hook.
 library;
 
 import 'dart:async';
@@ -10,11 +11,13 @@ import 'package:http/http.dart' as http;
 
 import 'errors.dart';
 import 'params.dart';
+import 'response_info.dart';
 
 /// Per-call options, accepted by every method as `options:`.
 class RequestOptions {
   /// Creates per-call options.
-  const RequestOptions({this.timeout, this.raw = false, this.abortTrigger});
+  const RequestOptions(
+      {this.timeout, this.raw = false, this.abortTrigger, this.onResponse});
 
   /// Overrides the client timeout for this call.
   final Duration? timeout;
@@ -26,6 +29,10 @@ class RequestOptions {
   /// Cancels the call when this future completes. The call then throws
   /// [LifeAstroConnectionException] with code `aborted`.
   final Future<void>? abortTrigger;
+
+  /// Called with this call's [ResponseInfo] (after the client-level
+  /// `onResponse`). Errors thrown inside it are ignored.
+  final ResponseHook? onResponse;
 }
 
 /// What a resource group needs from the client: one GET request.
@@ -47,6 +54,7 @@ class TransportConfig {
     required this.ownsClient,
     required this.userAgent,
     required this.defaultHeaders,
+    this.onResponse,
   });
 
   /// Bearer token.
@@ -72,6 +80,10 @@ class TransportConfig {
 
   /// Extra headers sent on every request (applied last).
   final Map<String, String> defaultHeaders;
+
+  /// Called with the [ResponseInfo] of every final response, before a
+  /// per-call hook.
+  final ResponseHook? onResponse;
 }
 
 const _retryableStatus = {408, 425, 429, 500, 502, 503, 504};
@@ -121,9 +133,15 @@ class Transport implements ClientCore {
   /// envelope unless [RequestOptions.raw]).
   Future<Object?> send(String path, Map<String, Object?> query,
       [RequestOptions? options]) async {
-    final url = Uri.parse(config.baseUrl +
-        (path.startsWith('/') ? path : '/$path') +
-        encodeQuery(query));
+    final fullPath = path.startsWith('/') ? path : '/$path';
+    final url = Uri.parse(config.baseUrl + fullPath + encodeQuery(query));
+    void report(_RawResponse res) {
+      final hooks = [config.onResponse, options?.onResponse];
+      if (hooks.every((h) => h == null)) return;
+      emitResponseInfo(
+          hooks, responseInfoFrom(res.status, fullPath, res.headers));
+    }
+
     final timeout = options?.timeout ?? config.timeout;
 
     var callerAborted = false;
@@ -201,6 +219,7 @@ class Transport implements ClientCore {
       }
 
       if (res.status >= 200 && res.status < 300) {
+        report(res);
         if (options?.raw ?? false) return body;
         // The API returns bare JSON today. A `{ data, meta }` envelope is
         // unwrapped if a response ever carries one, as the Node SDK does.
@@ -216,6 +235,7 @@ class Transport implements ClientCore {
             () => callerAborted);
         continue;
       }
+      report(res);
       throw lastError;
     }
     throw lastError ??
