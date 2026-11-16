@@ -90,6 +90,7 @@ const wire = <String, Object>{
   'birth_nak': 7,
   'birth_moon_sign': 3,
   'cusp': 7,
+  'number': 23,
   'date': '2026-11-20',
   'time': '12:00',
   'tz': 'Asia/Kolkata',

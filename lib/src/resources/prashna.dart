@@ -92,6 +92,38 @@ class PrashnaApi {
     return _c.request<T>('/v1/prashna/chart', $q, options);
   }
 
+  /// KP horary chart for a number from 1 to 249 (30 credits), cast for the
+  /// moment and place of judgement: the horary ascendant (the first degree of
+  /// that number's sign/star/sub part), the 12 Placidus cusps with star, sub
+  /// and sub-sub lords and significators, planets with KP lords and houses,
+  /// planet significators, the 4-step chain and the ruling planets of the
+  /// moment. Uses the Krishnamurti ayanamsa unless ayanamsa is sent.
+  ///
+  /// `GET /v1/prashna/kp-horary`
+  Future<T> kpHorary<T>({
+    required num lat,
+    required num lon,
+    required String tz,
+    required int number,
+    String? date,
+    String? time,
+    Ayanamsa? ayanamsa,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('lat', lat)
+      ..put('lon', lon)
+      ..put('tz', tz)
+      ..put('date', date ?? todayIn(tz))
+      ..put('time', time)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('number', number)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/prashna/kp-horary', $q, options);
+  }
+
   /// Get the lagna lord analysis for a Prashna chart — where the lagna lord is
   /// placed, its strength, and what it indicates about the querent's situation
   /// and chances of success.

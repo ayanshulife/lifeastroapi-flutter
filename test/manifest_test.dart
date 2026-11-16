@@ -19,6 +19,8 @@ const notReallyRequired = {
   // without both it answers for now. Like the Node SDK, transit.sadeSati
   // sends the natal chart only.
   '/v1/transit/sade-sati': {'tz'},
+  // Same rule: the transit moment defaults to now, and `tz` only goes with `date`.
+  '/v1/vedic/narrative/transit-ashtakavarga': {'tz'},
 };
 
 /// Turns a path template into a pattern (`{varga}` matches one segment).
@@ -43,8 +45,8 @@ void main() {
     return null;
   }
 
-  test('one method per manifest entry, same count as the Node SDK (322)', () {
-    expect(manifest.length, 322);
+  test('one method per manifest entry, same count as the Node SDK (323)', () {
+    expect(manifest.length, 323);
     expect(invokers.length, manifest.length);
     expect(manifest.map((e) => e.key).toSet().length, manifest.length);
     for (final e in manifest) {

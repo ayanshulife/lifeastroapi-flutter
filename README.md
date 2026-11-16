@@ -5,7 +5,7 @@ Official **Dart and Flutter SDK** for [LifeAstroAPI](https://lifeastroapi.com), 
 kundli, muhurat and Western charts, with location-aware calculations and pay-per-call billing.
 Free tier: 1,500 credits a month, no card. [Get a key](https://lifeastroapi.com/signup/).
 
-- **Every endpoint**: all 321 endpoints (322 methods, with a shortcut for the navamsa chart) in 23 groups: panchang, charts, dashas, matching, transits,
+- **Every endpoint**: all 322 endpoints (323 methods, with a shortcut for the navamsa chart) in 23 groups: panchang, charts, dashas, matching, transits,
   horoscopes, numerology, Lal Kitab, remedies, muhurta, narrative readings, JSON reports, tarot and
   a complete Western (tropical) module.
 - **Pure Dart**, one dependency (`http`): Flutter (Android, iOS, web, desktop) and Dart servers.
@@ -221,7 +221,7 @@ The enum is called `Lang`, not `Locale`, so it does not clash with Flutter's `Lo
 | Group | What it covers |
 |-------|----------------|
 | `panchang` | tithi, nakshatra, yoga, karana, vara, sunrise/sunset, rahu kaal, choghadiya, hora, muhurtas, monthly calendar, composite `basic` / `advanced` |
-| `chart` | planets, ascendant, houses, divisional (D1-D60), dignity, aspects, shadbala, ashtakvarga, avakhada, KP; data bundles `kundliFacts`, `yogas`, `doshas`, `sensitivity` |
+| `chart` | planets, ascendant, houses, divisional (D1-D60), dignity, aspects, shadbala, ashtakvarga, avakhada, KP (sub lords, ruling planets, significators, 4-step chain); data bundles `kundliFacts`, `yogas`, `doshas`, `sensitivity` |
 | `dasha` | Vimshottari (5 levels), Yogini, Chara |
 | `milan` | Ashtakoota (total, full, per koota), mangal / nadi / shani dosha, navamsa and dasha compatibility, `overlay`, `summary` |
 | `transit` | positions, sade sati, small panoti, tarabala, vedha, double transit, dated `sadeSatiWindows` and `windows` |
@@ -229,7 +229,7 @@ The enum is called `Lang`, not `Locale`, so it does not clash with Flutter's `Lo
 | `numerology` | driver, conductor, soul, personality, destiny, full, advanced, challenges, personal periods |
 | `muhurta` | vivah, naamkaran, griha pravesh, vyapar, yatra, best time, chandra / tara bala |
 | `varshaphal` | annual chart, lord, muntha, mudda dasha, harsha bala, tajika yogas |
-| `prashna` | horary answer, chart, arudha, significators |
+| `prashna` | horary answer, chart, arudha, significators, KP horary (1-249) |
 | `eclipses` | solar, lunar, all (date range; local contact times and sutak with a place) |
 | `calendar` | Hindu month, ritu, samvatsara, adhik maas, solstices |
 | `festivals` | festival calendar by month, on a date, vrat lists by year; location-aware |
@@ -534,7 +534,7 @@ network access.
 
 ## Contributing
 
-The 322 methods are generated from the endpoint manifest that the Node SDK also uses, so both SDKs
+The 323 methods are generated from the endpoint manifest that the Node SDK also uses, so both SDKs
 stay in step. The generator imports the Node SDK's `scripts/manifest.mjs` (endpoint list, method
 names, `lang` rules) from a sibling checkout:
 

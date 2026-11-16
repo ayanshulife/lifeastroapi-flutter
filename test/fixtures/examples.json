@@ -198,10 +198,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/chart/avakhada": {
@@ -310,10 +310,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/chart/graha-yuddha": {
@@ -374,10 +374,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/chart/kp-sublord": {
@@ -579,10 +579,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/char/{md}": {
@@ -595,10 +595,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/char/{md}/{ad}": {
@@ -611,10 +611,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/char/current": {
@@ -627,10 +627,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
+   "time": "10:30",
    "at": "2027-01-15T00:00:00Z"
   }
  },
@@ -644,10 +644,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/vimshottari": {
@@ -676,10 +676,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/vimshottari/{md}/{ad}": {
@@ -692,10 +692,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/vimshottari/{md}/{ad}/{pd}": {
@@ -708,10 +708,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/vimshottari/{md}/{ad}/{pd}/{sd}": {
@@ -724,10 +724,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/vimshottari/current": {
@@ -773,10 +773,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/dasha/yogini/current": {
@@ -884,9 +884,9 @@
    "lon"
   ],
   "params": {
-   "limit": "2",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "limit": "2"
   }
  },
  "/v1/geo/search": {
@@ -911,28 +911,34 @@
   }
  },
  "/v1/horoscope/daily": {
-  "status": 500,
-  "required": [],
+  "status": 200,
+  "required": [
+   "rashi"
+  ],
   "params": {
-   "rashi": "Mesha",
-   "date": "2027-01-15"
+   "date": "2027-01-15",
+   "rashi": "Mesha"
   }
  },
  "/v1/horoscope/monthly": {
-  "status": 500,
-  "required": [],
+  "status": 200,
+  "required": [
+   "rashi"
+  ],
   "params": {
-   "rashi": "Mesha",
    "date": "2027-01-15",
+   "rashi": "Mesha",
    "month": "2027-01"
   }
  },
  "/v1/horoscope/weekly": {
-  "status": 500,
-  "required": [],
+  "status": 200,
+  "required": [
+   "rashi"
+  ],
   "params": {
-   "rashi": "Mesha",
    "date": "2027-01-15",
+   "rashi": "Mesha",
    "week": "2027-W03"
   }
  },
@@ -946,10 +952,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/lalkitab/dasha": {
@@ -962,10 +968,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/lalkitab/dasha/current": {
@@ -978,10 +984,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/meta/ayanamsas": {
@@ -1100,12 +1106,12 @@
    "boy.tz": "Asia/Kolkata",
    "girl.date": "1992-03-20",
    "girl.tz": "Asia/Kolkata",
-   "boy.time": "10:30",
    "boy.lat": "19.076",
    "boy.lon": "72.8777",
-   "girl.time": "08:15",
    "girl.lat": "28.6139",
    "girl.lon": "77.209",
+   "boy.time": "10:30",
+   "girl.time": "08:15",
    "marriage_windows": "true",
    "from": "2027-01-15",
    "years": "3"
@@ -1557,8 +1563,8 @@
    "dob"
   ],
   "params": {
-   "name": "Arjun Mehta",
-   "dob": "1990-01-15"
+   "dob": "1990-01-15",
+   "name": "Arjun Mehta"
   }
  },
  "/v1/numerology/personal-periods": {
@@ -2105,7 +2111,7 @@
    "house"
   ],
   "params": {
-   "date": "1990-01-15",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
@@ -2122,7 +2128,7 @@
    "lon"
   ],
   "params": {
-   "date": "1990-01-15",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
@@ -2138,10 +2144,28 @@
    "lon"
   ],
   "params": {
-   "date": "1990-01-15",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
+   "time": "10:30"
+  }
+ },
+ "/v1/prashna/kp-horary": {
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon",
+   "number"
+  ],
+  "params": {
+   "date": "2027-01-15",
+   "tz": "Asia/Kolkata",
+   "lat": "19.076",
+   "lon": "72.8777",
+   "number": "23",
    "time": "10:30"
   }
  },
@@ -2154,7 +2178,7 @@
    "lon"
   ],
   "params": {
-   "date": "1990-01-15",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
@@ -2171,7 +2195,7 @@
    "house"
   ],
   "params": {
-   "date": "1990-01-15",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
@@ -2188,15 +2212,17 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30",
+   "tz": "Asia/Kolkata"
   }
  },
  "/v1/reports/horoscope/daily": {
-  "status": 500,
-  "required": [],
+  "status": 200,
+  "required": [
+   "rashi"
+  ],
   "params": {
    "date": "2027-01-15",
    "time": "10:30",
@@ -2207,8 +2233,10 @@
   }
  },
  "/v1/reports/horoscope/monthly": {
-  "status": 500,
-  "required": [],
+  "status": 200,
+  "required": [
+   "rashi"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2220,8 +2248,10 @@
   }
  },
  "/v1/reports/horoscope/weekly": {
-  "status": 500,
-  "required": [],
+  "status": 200,
+  "required": [
+   "rashi"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2241,10 +2271,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30",
+   "tz": "Asia/Kolkata"
   }
  },
  "/v1/reports/kundli/detailed": {
@@ -2256,10 +2286,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30",
+   "tz": "Asia/Kolkata"
   }
  },
  "/v1/reports/kundli/lite": {
@@ -2271,10 +2301,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30",
+   "tz": "Asia/Kolkata"
   }
  },
  "/v1/reports/mangal-dosha": {
@@ -2286,10 +2316,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30",
+   "tz": "Asia/Kolkata"
   }
  },
  "/v1/reports/match-making": {
@@ -2299,17 +2329,17 @@
    "girl.date"
   ],
   "params": {
+   "boy.date": "1990-01-15",
+   "girl.date": "1992-03-20",
    "date": "1990-01-15",
    "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
-   "boy.date": "1990-01-15",
    "boy.time": "10:30",
    "boy.tz": "Asia/Kolkata",
    "boy.lat": "19.076",
    "boy.lon": "72.8777",
-   "girl.date": "1992-03-20",
    "girl.time": "08:15",
    "girl.tz": "Asia/Kolkata",
    "girl.lat": "28.6139",
@@ -2322,8 +2352,8 @@
    "dob"
   ],
   "params": {
-   "name": "Arjun Mehta",
-   "dob": "1990-01-15"
+   "dob": "1990-01-15",
+   "name": "Arjun Mehta"
   }
  },
  "/v1/reports/sade-sati": {
@@ -2335,10 +2365,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30",
+   "tz": "Asia/Kolkata"
   }
  },
  "/v1/reports/varshaphal": {
@@ -2351,11 +2381,11 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
-   "year": "2027"
+   "year": "2027",
+   "time": "10:30",
+   "tz": "Asia/Kolkata"
   }
  },
  "/v1/tarot/card/{id}": {
@@ -2422,7 +2452,13 @@
   "params": {
    "date": "2027-01-15",
    "time": "06:00",
-   "tz": "Asia/Kolkata"
+   "tz": "Asia/Kolkata",
+   "lat": "28.6139",
+   "lon": "77.209",
+   "birth.date": "1990-01-15",
+   "birth.time": "10:30",
+   "birth.tz": "Asia/Kolkata",
+   "birth.lat": "19.076"
   }
  },
  "/v1/transit/positions": {
@@ -2476,12 +2512,12 @@
    "birth.tz"
   ],
   "params": {
-   "date": "2027-01-15",
-   "time": "06:00",
    "tz": "Asia/Kolkata",
    "birth.date": "1990-01-15",
-   "birth.time": "10:30",
-   "birth.tz": "Asia/Kolkata"
+   "birth.tz": "Asia/Kolkata",
+   "date": "2027-01-15",
+   "time": "06:00",
+   "birth.time": "10:30"
   }
  },
  "/v1/transit/small-panoti/history": {
@@ -2491,14 +2527,14 @@
    "birth.tz"
   ],
   "params": {
+   "birth.date": "1990-01-15",
+   "birth.tz": "Asia/Kolkata",
    "date": "2027-01-15",
    "time": "06:00",
    "tz": "Asia/Kolkata",
    "lat": "28.6139",
    "lon": "77.209",
-   "birth.date": "1990-01-15",
    "birth.time": "10:30",
-   "birth.tz": "Asia/Kolkata",
    "birth.lat": "19.076",
    "birth.lon": "72.8777"
   }
@@ -2549,9 +2585,9 @@
   ],
   "params": {
    "planet": "saturn",
+   "birth.tz": "Asia/Kolkata",
    "birth.date": "1990-01-15",
    "birth.time": "10:30",
-   "birth.tz": "Asia/Kolkata",
    "birth.lat": "19.076",
    "birth.lon": "72.8777",
    "from": "2027-01-15"
@@ -2586,11 +2622,11 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
-   "year": "2027"
+   "year": "2027",
+   "time": "10:30"
   }
  },
  "/v1/varshaphal/lord": {
@@ -2622,11 +2658,11 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
-   "year": "2027"
+   "year": "2027",
+   "time": "10:30"
   }
  },
  "/v1/varshaphal/muntha": {
@@ -2676,16 +2712,20 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
-   "year": "2027"
+   "year": "2027",
+   "time": "10:30"
   }
  },
  "/v1/vedic/narrative/career-outlook": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2702,60 +2742,69 @@
    "birth.tz"
   ],
   "params": {
-   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
+   "birth.date": "1990-01-15",
+   "birth.tz": "Asia/Kolkata",
+   "date": "2027-01-15",
+   "lat": "19.076",
+   "lon": "72.8777",
+   "birth.time": "10:30"
+  }
+ },
+ "/v1/vedic/narrative/dasha-tree-phal": {
+  "status": 200,
+  "required": [
+   "birth.date",
+   "birth.tz"
+  ],
+  "params": {
    "birth.date": "1990-01-15",
    "birth.time": "10:30",
    "birth.tz": "Asia/Kolkata"
   }
  },
- "/v1/vedic/narrative/dasha-tree-phal": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
  "/v1/vedic/narrative/divisional/{varga}": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/dosha/{id}": {
-  "status": 503,
+  "status": 200,
   "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
+  "params": {}
  },
  "/v1/vedic/narrative/doshas": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/finance-outlook": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2765,8 +2814,13 @@
   }
  },
  "/v1/vedic/narrative/horoscope/daily-by-lagna": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2776,19 +2830,28 @@
   }
  },
  "/v1/vedic/narrative/horoscope/daily-by-moon": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/horoscope/daily-tamil": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2798,8 +2861,13 @@
   }
  },
  "/v1/vedic/narrative/horoscope/weekly-by-lagna": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2809,19 +2877,29 @@
   }
  },
  "/v1/vedic/narrative/horoscope/weekly-by-moon": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/house-lord": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon",
+   "house"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2832,8 +2910,13 @@
   }
  },
  "/v1/vedic/narrative/house-lords-overview": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2843,19 +2926,28 @@
   }
  },
  "/v1/vedic/narrative/karakas": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/lagna": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2865,8 +2957,12 @@
   }
  },
  "/v1/vedic/narrative/marriage-outlook": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2885,38 +2981,52 @@
   ],
   "params": {
    "boy.date": "1990-01-15",
-   "boy.time": "10:30",
    "boy.tz": "Asia/Kolkata",
    "girl.date": "1992-03-20",
-   "girl.time": "08:15",
-   "girl.tz": "Asia/Kolkata"
+   "girl.tz": "Asia/Kolkata",
+   "boy.time": "10:30",
+   "girl.time": "08:15"
   }
  },
  "/v1/vedic/narrative/moon-sign": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/nakshatra": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/planet-in-house": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon",
+   "planet"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2927,11 +3037,16 @@
   }
  },
  "/v1/vedic/narrative/planet-in-sign": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon",
+   "planet"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
@@ -2939,8 +3054,13 @@
   }
  },
  "/v1/vedic/narrative/planets-in-houses": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2950,11 +3070,15 @@
   }
  },
  "/v1/vedic/narrative/planets-in-signs": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
@@ -2970,16 +3094,21 @@
   ],
   "params": {
    "date": "2027-01-15",
-   "time": "10:00",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
+   "time": "10:00",
    "topic": "career"
   }
  },
  "/v1/vedic/narrative/profile": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
    "time": "10:30",
@@ -2989,91 +3118,102 @@
   }
  },
  "/v1/vedic/narrative/reference": {
-  "status": 503,
+  "status": 200,
   "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
+  "params": {}
  },
  "/v1/vedic/narrative/reference/{family}": {
-  "status": 503,
+  "status": 200,
   "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
+  "params": {}
  },
  "/v1/vedic/narrative/sade-sati-history": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "birth.date",
+   "birth.tz"
+  ],
   "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
+   "birth.date": "1990-01-15",
+   "birth.time": "10:30",
+   "birth.tz": "Asia/Kolkata"
   }
  },
  "/v1/vedic/narrative/sade-sati-phase": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "birth.date",
+   "birth.tz"
+  ],
   "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
+   "birth.date": "1990-01-15",
+   "birth.time": "10:30",
+   "birth.tz": "Asia/Kolkata"
   }
  },
  "/v1/vedic/narrative/sade-sati-status": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "birth.date",
+   "birth.tz"
+  ],
   "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
+   "birth.date": "1990-01-15",
+   "birth.time": "10:30",
+   "birth.tz": "Asia/Kolkata"
   }
  },
  "/v1/vedic/narrative/sun-sign": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/transit-ashtakavarga": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "tz",
+   "lat",
+   "lon",
+   "birth.date",
+   "birth.tz"
+  ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "birth.date": "1990-01-15",
+   "birth.time": "10:30",
+   "birth.tz": "Asia/Kolkata"
   }
  },
  "/v1/vedic/narrative/transit-double": {
-  "status": 503,
-  "required": [],
+  "status": 200,
+  "required": [
+   "tz",
+   "birth.date",
+   "birth.tz"
+  ],
   "params": {
-   "date": "1990-01-15",
+   "date": "2027-01-15",
    "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "birth.date": "1990-01-15",
+   "birth.time": "10:30",
+   "birth.tz": "Asia/Kolkata",
+   "birth.lon": "72.8777"
   }
  },
  "/v1/vedic/narrative/transit-phal": {
@@ -3084,16 +3224,34 @@
    "birth.tz"
   ],
   "params": {
-   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
+   "birth.date": "1990-01-15",
+   "birth.tz": "Asia/Kolkata",
+   "date": "2027-01-15",
    "lat": "19.076",
    "lon": "72.8777",
-   "birth.date": "1990-01-15",
-   "birth.time": "10:30",
-   "birth.tz": "Asia/Kolkata"
+   "birth.time": "10:30"
   }
  },
  "/v1/vedic/narrative/varshaphal-themes": {
+  "status": 200,
+  "required": [
+   "lat",
+   "lon",
+   "birth.date",
+   "birth.tz",
+   "year"
+  ],
+  "params": {
+   "lat": "19.076",
+   "lon": "72.8777",
+   "birth.date": "1990-01-15",
+   "birth.tz": "Asia/Kolkata",
+   "year": "2027",
+   "birth.time": "10:30"
+  }
+ },
+ "/v1/vedic/narrative/yearly-bhavishyafal": {
   "status": 200,
   "required": [
    "lat",
@@ -3111,161 +3269,12 @@
    "year": "2027"
   }
  },
- "/v1/vedic/narrative/yearly-bhavishyafal": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777",
-   "year": "2027"
-  }
- },
  "/v1/vedic/narrative/yoga/{id}": {
-  "status": 503,
+  "status": 200,
   "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
+  "params": {}
  },
  "/v1/vedic/narrative/yogas": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/{rule_id}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/daan/{id}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/for-graha": {
-  "status": 200,
-  "required": [
-   "graha"
-  ],
-  "params": {
-   "graha": "saturn",
-   "reason": "debilitated"
-  }
- },
- "/v1/vedic/remedies/lal-kitab": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/lal-kitab/{planet}/{house}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/mantra/{id}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/pooja/{id}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/rudraksha/{id}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/vrat/{id}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/vedic/remedies/yantra/{id}": {
-  "status": 503,
-  "required": [],
-  "params": {
-   "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777"
-  }
- },
- "/v1/western/astrocartography/local-space": {
   "status": 200,
   "required": [
    "date",
@@ -3281,6 +3290,82 @@
    "lon": "72.8777"
   }
  },
+ "/v1/vedic/remedies": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/{rule_id}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/daan/{id}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/for-graha": {
+  "status": 200,
+  "required": [
+   "graha"
+  ],
+  "params": {
+   "graha": "saturn",
+   "reason": "debilitated"
+  }
+ },
+ "/v1/vedic/remedies/lal-kitab": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/lal-kitab/{planet}/{house}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/mantra/{id}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/pooja/{id}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/rudraksha/{id}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/vrat/{id}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/vedic/remedies/yantra/{id}": {
+  "status": 200,
+  "required": [],
+  "params": {}
+ },
+ "/v1/western/astrocartography/local-space": {
+  "status": 200,
+  "required": [
+   "date",
+   "tz",
+   "lat",
+   "lon"
+  ],
+  "params": {
+   "date": "1990-01-15",
+   "tz": "Asia/Kolkata",
+   "lat": "19.076",
+   "lon": "72.8777",
+   "time": "10:30"
+  }
+ },
  "/v1/western/astrocartography/planet-lines": {
   "status": 200,
   "required": [
@@ -3289,8 +3374,8 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata"
+   "tz": "Asia/Kolkata",
+   "time": "10:30"
   }
  },
  "/v1/western/compatibility/sun-sign": {
@@ -3603,8 +3688,8 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
-   "tz": "Asia/Kolkata"
+   "tz": "Asia/Kolkata",
+   "time": "10:30"
   }
  },
  "/v1/western/horoscope/daily": {
@@ -3687,10 +3772,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/narrative/decan": {
@@ -3801,10 +3886,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/ascendant": {
@@ -3833,10 +3918,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/aspects": {
@@ -3865,10 +3950,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/asteroids/big-four-plus": {
@@ -3892,10 +3977,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/chart": {
@@ -3924,10 +4009,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/declinations": {
@@ -3940,10 +4025,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/dominant": {
@@ -3956,10 +4041,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/fixed-stars": {
@@ -3972,10 +4057,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/fixed-stars/{name}": {
@@ -3988,10 +4073,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/harmonic-aspects": {
@@ -4004,10 +4089,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/harmonic/{n}": {
@@ -4020,10 +4105,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/houses": {
@@ -4052,10 +4137,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/lot/{name}": {
@@ -4068,10 +4153,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/lots": {
@@ -4084,10 +4169,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/mc": {
@@ -4116,10 +4201,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/midpoints": {
@@ -4132,10 +4217,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/out-of-bounds": {
@@ -4148,10 +4233,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/parans": {
@@ -4164,10 +4249,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/planet/{name}": {
@@ -4223,10 +4308,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/natal/vertex-set": {
@@ -4239,10 +4324,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/primary-directions/placidus-mundane": {
@@ -4255,10 +4340,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/primary-directions/placidus-zodiacal": {
@@ -4271,10 +4356,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/primary-directions/regiomontanus": {
@@ -4287,10 +4372,10 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
-   "lon": "72.8777"
+   "lon": "72.8777",
+   "time": "10:30"
   }
  },
  "/v1/western/profections/annual": {
@@ -4420,11 +4505,11 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
-   "from": "2027-01-01T00:00:00Z"
+   "from": "2027-01-01T00:00:00Z",
+   "time": "10:30"
   }
  },
  "/v1/western/returns/solar": {
@@ -4456,11 +4541,11 @@
   ],
   "params": {
    "date": "1990-01-15",
-   "time": "10:30",
    "tz": "Asia/Kolkata",
    "lat": "19.076",
    "lon": "72.8777",
-   "return_year": "2027"
+   "return_year": "2027",
+   "time": "10:30"
   }
  },
  "/v1/western/returns/solar/exact-jd": {
@@ -4604,12 +4689,12 @@
   ],
   "params": {
    "birth.date": "1990-01-15",
-   "birth.time": "10:30",
    "birth.tz": "Asia/Kolkata",
    "birth.lat": "19.076",
    "birth.lon": "72.8777",
    "from": "2027-01-01",
-   "to": "2027-01-30"
+   "to": "2027-01-30",
+   "birth.time": "10:30"
   }
  },
  "/v1/western/transits/exact": {

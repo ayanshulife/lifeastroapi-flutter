@@ -165,14 +165,14 @@ final Map<String, Invoker> invokers = {
       birth: asBirth(i['birth'])!,
       ayanamsa: asAyanamsa(i['ayanamsa']),
       houseSystem: asHouseSystem(i['houseSystem']),
-      cusp: asInt(i['cusp'])!,
+      cusp: asInt(i['cusp']),
       lang: asLang(i['lang']),
       options: o),
   'chart.kpSublord': (c, i, [o]) => c.chart.kpSublord(
       birth: asBirth(i['birth'])!,
       ayanamsa: asAyanamsa(i['ayanamsa']),
       houseSystem: asHouseSystem(i['houseSystem']),
-      planet: asStr(i['planet'])!,
+      planet: asStr(i['planet']),
       lang: asLang(i['lang']),
       options: o),
   'chart.kundliFacts': (c, i, [o]) => c.chart.kundliFacts(
@@ -1255,6 +1255,16 @@ final Map<String, Invoker> invokers = {
       date: asStr(i['date']),
       time: asStr(i['time']),
       ayanamsa: asAyanamsa(i['ayanamsa']),
+      lang: asLang(i['lang']),
+      options: o),
+  'prashna.kpHorary': (c, i, [o]) => c.prashna.kpHorary(
+      lat: asNum(i['lat'])!,
+      lon: asNum(i['lon'])!,
+      tz: asStr(i['tz'])!,
+      date: asStr(i['date']),
+      time: asStr(i['time']),
+      ayanamsa: asAyanamsa(i['ayanamsa']),
+      number: asInt(i['number'])!,
       lang: asLang(i['lang']),
       options: o),
   'prashna.lagnaLord': (c, i, [o]) => c.prashna.lagnaLord(

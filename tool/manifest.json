@@ -1444,7 +1444,7 @@
   "method": "kpHouseSignificator",
   "path": "/v1/chart/kp-house-significator",
   "shape": "birth",
-  "desc": "Get KP (Krishnamurti Paddhati) house significators for a given cusp — lists planets that significate the house through occupancy, lordship, and sub-lord chain.",
+  "desc": "KP house significators for all 12 Placidus cusps (20 credits): each cusp's star, sub and sub-sub lords and its significator planets (four KP levels), the houses every planet signifies, and the KP 4-step chain. Pass ayanamsa krishnamurti for KP work. `cusp` is accepted for compatibility and ignored: all 12 cusps are returned.",
   "params": [
    {
     "name": "birth",
@@ -1490,7 +1490,7 @@
    {
     "name": "cusp",
     "type": "int",
-    "required": true,
+    "required": false,
     "source": "extra",
     "wires": [
      "cusp"
@@ -1514,7 +1514,7 @@
   "method": "kpSublord",
   "path": "/v1/chart/kp-sublord",
   "shape": "birth",
-  "desc": "Get the KP sublord of a planet — the sub-lord of the nakshatra sub-division the planet occupies (KP star lord → sub lord → sub-sub lord chain).",
+  "desc": "KP star, sub and sub-sub lords of every planet (10 credits), and the KP ruling planets for the moment and place (day lord, and the star, sign and sub lords of the ascendant and the Moon); send the moment of judgement for horary or timing. Pass ayanamsa krishnamurti for KP work. `planet` is accepted for compatibility and ignored: all planets are returned.",
   "params": [
    {
     "name": "birth",
@@ -1560,7 +1560,7 @@
    {
     "name": "planet",
     "type": "String",
-    "required": true,
+    "required": false,
     "source": "extra",
     "wires": [
      "planet"
@@ -11533,6 +11533,89 @@
     "source": "base",
     "wires": [
      "ayanamsa"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "prashna.kpHorary",
+  "ns": "prashna",
+  "method": "kpHorary",
+  "path": "/v1/prashna/kp-horary",
+  "shape": "moment",
+  "desc": "KP horary chart for a number from 1 to 249 (30 credits), cast for the moment and place of judgement: the horary ascendant (the first degree of that number's sign/star/sub part), the 12 Placidus cusps with star, sub and sub-sub lords and significators, planets with KP lords and houses, planet significators, the 4-step chain and the ruling planets of the moment. Uses the Krishnamurti ayanamsa unless ayanamsa is sent.",
+  "params": [
+   {
+    "name": "lat",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lat"
+    ]
+   },
+   {
+    "name": "lon",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lon"
+    ]
+   },
+   {
+    "name": "tz",
+    "type": "String",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "tz"
+    ]
+   },
+   {
+    "name": "date",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "date"
+    ]
+   },
+   {
+    "name": "time",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "time"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "number",
+    "type": "int",
+    "required": true,
+    "source": "extra",
+    "wires": [
+     "number"
     ]
    },
    {
