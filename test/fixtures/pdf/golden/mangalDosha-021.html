@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="kn">
+<html lang="ta">
 <head>
 <meta charset="utf-8">
-<title>ಮಂಗಳ ದೋಷ ವರದಿ</title>
+<title>செவ்வாய் தோஷ அறிக்கை</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -109,50 +101,50 @@ footer {
 <body>
 <section class="cover">
   
-  <h1>ಮಂಗಳ ದೋಷ ವರದಿ</h1>
+  <h1>செவ்வாய் தோஷ அறிக்கை</h1>
   <div class="subject">Subject</div>
   <div class="meta">
-    ಜನನ 1990-01-15 ಸಮಯ 10:30 IST<br>
+    பிறப்பு 1990-01-15 நேரம் 10:30 IST<br>
     19.0760, 72.8777<br>
-    ಲಗ್ನ: Aquarius
+    லக்னம்: Aquarius
   </div>
-  <div class="status-badge cancelled">ಮಂಗಳ ದೋಷ (ನಿವಾರಣೆಯೊಂದಿಗೆ)</div>
-  <div class="generated">ತಯಾರಿಸಿದ ದಿನಾಂಕ 2026-10-17 20:44 UTC</div>
+  <div class="status-badge cancelled">செவ்வாய் தோஷம் (நிவர்த்தியுடன்)</div>
+  <div class="generated">தயாரித்த நாள் 2026-11-15 06:14 UTC</div>
 </section>
 
-<h2>ವಿಶ್ಲೇಷಣೆ</h2>
+<h2>பகுப்பாய்வு</h2>
 <div class="diagnostic">
   <dl>
-    <dt>ಮಂಗಳನ ರಾಶಿ</dt>
+    <dt>செவ்வாய் இருக்கும் ராசி</dt>
     <dd>Scorpio (25°59&#39;00&quot;)</dd>
-    <dt>ಮಂಗಳನ ನಕ್ಷತ್ರ</dt>
-    <dd>Jyeshtha, ಪಾದ 3</dd>
-    <dt>ಮಂಗಳನಿರುವ ಭಾವ</dt>
-    <dd>ಚಂದ್ರನಿಂದ 4</dd>
-    <dt>ನಿರ್ಣಯ</dt>
-    <dd>ಮಂಗಳ Scorpio ರಾಶಿಯಲ್ಲಿದ್ದಾನೆ (ಭಾವ: ಚಂದ್ರನಿಂದ 4). ಇದು ಮಂಗಳ ದೋಷದ ಅಲ್ಪ ರೂಪ.</dd>
+    <dt>செவ்வாய் இருக்கும் நட்சத்திரம்</dt>
+    <dd>Jyeshtha, பாதம் 3</dd>
+    <dt>செவ்வாய் இருக்கும் வீடு</dt>
+    <dd>சந்திரனிலிருந்து 4</dd>
+    <dt>முடிவு</dt>
+    <dd>செவ்வாய் Scorpio ராசியில் இருக்கிறார் (வீடு: சந்திரனிலிருந்து 4). இது செவ்வாய் தோஷத்தின் லேசான வடிவம்.</dd>
   </dl>
 </div>
 
-<h2>ದೋಷ ನಿವಾರಣೆ</h2>
+<h2>தோஷ நிவர்த்தி</h2>
 <div class="cancellation">
-  <p>ಶಾಸ್ತ್ರೀಯ ನಿಯಮಗಳ ಪ್ರಕಾರ ಈ ಕಾರಣಗಳಿಂದ ದೋಷ ನಿವಾರಣೆಯಾಗುತ್ತದೆ:</p>
+  <p>சாஸ்திர விதிகளின்படி கீழ்க்காணும் காரணங்களால் தோஷம் நிவர்த்தி ஆகிறது:</p>
   <ul>
     <li>Mars in own sign</li>
   </ul>
 </div>
 
-<h2>ವಿವಾಹದ ಮೇಲಿನ ಪ್ರಭಾವ</h2>
-<p>ಮಂಗಳ ದೋಷ ಇದ್ದರೂ, ಶಾಸ್ತ್ರೀಯ ನಿವಾರಣೆ ಅನ್ವಯಿಸುವುದರಿಂದ ಅದರ ಪ್ರಭಾವ ಬಹಳಷ್ಟು ಕಡಿಮೆಯಾಗುತ್ತದೆ. ಹೊಂದಾಣಿಕೆಯಲ್ಲಿ ಸಾಮಾನ್ಯವಾಗಿ ಇದನ್ನು ದೊಡ್ಡ ಅಡ್ಡಿಯೆಂದು ಪರಿಗಣಿಸುವುದಿಲ್ಲ.</p>
+<h2>திருமணத்தில் தாக்கம்</h2>
+<p>செவ்வாய் தோஷம் இருந்தாலும், சாஸ்திர நிவர்த்தி பொருந்துவதால் அதன் தாக்கம் வெகுவாகக் குறைகிறது. பொருத்தம் பார்க்கும்போது பொதுவாக இது பெரிய தடையாகக் கருதப்படுவதில்லை.</p>
 
-<h2>ಶಿಫಾರಸು ಮಾಡಿದ ಪರಿಹಾರಗಳು</h2>
+<h2>பரிந்துரைக்கப்பட்ட பரிகாரங்கள்</h2>
 <div class="remedies">
-  <p>ಮಂಗಳ ದೋಷಕ್ಕೆ ಸಾಮಾನ್ಯವಾಗಿ ಶಿಫಾರಸು ಮಾಡುವ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಹಾರಗಳು ಇವು. ಯಾವುದೇ ಪರಿಹಾರವನ್ನು ಆರಂಭಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಜಾತಕವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಿಕೊಳ್ಳಿ:</p>
+  <p>செவ்வாய் தோஷத்துக்குப் பொதுவாகப் பரிந்துரைக்கப்படும் பாரம்பரியப் பரிகாரங்கள் இவை. எந்தப் பரிகாரத்தையும் தொடங்கும் முன் உங்கள் ஜாதகத்தை முழுமையாகச் சரிபார்த்துக்கொள்ளுங்கள்:</p>
   <ul>
-    <li>ಮಂಗಳವಾರ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಪಠಿಸಿ.</li>
-    <li>ಮಂಗಳವಾರ ಮಸೂರ್ ಬೇಳೆ ಅಥವಾ ಬೆಲ್ಲ ದಾನ ಮಾಡಿ.</li>
-    <li>ನಿಯಮಿತವಾಗಿ ಹನುಮಂತನ ದೇವಸ್ಥಾನಕ್ಕೆ ಹೋಗಿ.</li>
-    <li>ಮಂಗಳವಾರ ಹನುಮಂತನ ಎದುರು ಸಾಸಿವೆ ಎಣ್ಣೆಯ ದೀಪ ಹಚ್ಚಿ.</li>
+    <li>செவ்வாய்க்கிழமை ஹனுமான் சாலிசா பாராயணம் செய்யுங்கள்.</li>
+    <li>செவ்வாய்க்கிழமை மசூர் பருப்பு அல்லது வெல்லம் தானம் செய்யுங்கள்.</li>
+    <li>தவறாமல் ஆஞ்சநேயர் கோயிலுக்குச் செல்லுங்கள்.</li>
+    <li>செவ்வாய்க்கிழமை ஆஞ்சநேயர் முன் கடுகு எண்ணெய் தீபம் ஏற்றுங்கள்.</li>
   </ul>
 </div>
 <footer>Generated using LifeAstroAPI</footer>

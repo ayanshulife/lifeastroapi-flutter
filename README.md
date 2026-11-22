@@ -12,8 +12,9 @@ Free tier: 1,500 credits a month, no card. [Get a key](https://lifeastroapi.com/
 - **10 languages**: `lang: Lang.gu` on every Vedic method.
 - Typed exceptions, automatic retries on 429/5xx with `Retry-After`, timeouts, cancellation, and a
   generic escape hatch for any endpoint.
-- **Branded PDF reports**: turn report JSON into white-label kundli, matching, numerology and
-  horoscope documents (HTML anywhere, PDF through Chrome or a Gotenberg service).
+- **Branded PDF reports**: this package turns report JSON into white-label kundli, matching,
+  numerology and horoscope documents in all 10 languages, on your side (HTML anywhere, PDF through
+  Chrome, Edge or a Gotenberg service). See [Branded PDF reports](#branded-pdf-reports).
 
 ```bash
 dart pub add lifeastroapi
@@ -196,7 +197,7 @@ final chart = await client.chart.planets(birth: arjun, lang: Lang.bn);
 | `Lang.ta` | Tamil | complete |
 | `Lang.kn` | Kannada | complete |
 | `Lang.ml` | Malayalam | complete |
-| `Lang.pa` | Punjabi | names and terms; longer prose is still English |
+| `Lang.pa` | Punjabi | complete |
 
 The enum is called `Lang`, not `Locale`, so it does not clash with Flutter's `Locale`.
 `Lang.fromCode('gu')` turns a code into a value.
@@ -377,21 +378,21 @@ these headers on.
 
 `package:lifeastroapi/pdf.dart` turns the JSON from `client.reports.*` into **branded,
 print-ready reports**: cover page, charts, planet and dasha tables, narrative sections,
-white-labelled with your logo, colours, footer and an optional watermark. The API returns JSON
-only; the document is built on your side, so your branding and your customers' reports stay with
-you.
+white-labelled with your logo, colours, footer and an optional watermark. The document is built
+by this package, on your server or in your app: pass the report as the client returned it. Nothing
+is sent to LifeAstroAPI to render, so your branding and your customers' reports stay with you.
 
 ### Two layers
 
 | Layer | Functions | Runs on |
 |-------|-----------|---------|
-| **HTML** | `render*Html(data, branding)` | Everywhere: Flutter (mobile, desktop, web), Dart servers. Pure Dart, no dependencies. |
+| **HTML** | `render*Html(data, branding)`, `a4PrintOptions` | Everywhere: Flutter (mobile, desktop, web), Dart servers. Pure Dart: no browser, process, file or network access. |
 | **PDF** | `*Pdf(data, ...)`, `htmlToPdf(html, ...)` | A Chromium-based `PdfEngine`: local Chrome / Chromium / Edge, a remote Chrome, or a Gotenberg service. |
 
 The HTML is the same document the Node SDK produces (the Dart templates are tested byte-for-byte
 against it), so a report looks the same whichever SDK made it. Reports are printed by a browser
-engine because Indic scripts need proper text shaping; Chromium gets Devanagari, Gujarati,
-Bengali, Tamil, Telugu, Kannada and Malayalam right.
+engine because Indic scripts need proper text shaping; Chromium shapes Devanagari, Gujarati,
+Bengali, Gurmukhi, Tamil, Telugu, Kannada and Malayalam.
 
 ### Reports
 
@@ -408,8 +409,8 @@ Bengali, Tamil, Telugu, Kannada and Malayalam right.
 | Varshaphal | `reports.varshaphal` | `renderVarshaphalHtml` | `varshaphalPdf` |
 | Horoscope (daily / weekly / monthly) | `reports.horoscopeDaily` ... | `renderHoroscopeHtml` | `horoscopePdf` |
 
-All render in `en`, `hi`, `mr`, `gu`, `bn`, `te`, `ta`, `kn` and `ml`: pass `lang` when you
-request the report. Pass `name` and `place` (`boyName`, `girlName`, ... for match making) so the
+All render in the 10 languages `en`, `hi`, `mr`, `gu`, `bn`, `te`, `ta`, `kn`, `ml` and `pa`:
+pass `lang` when you request the report. Pass `name` and `place` (`boyName`, `girlName`, ... for match making) so the
 cover shows them.
 
 ### On a server or desktop (Chrome)
@@ -435,18 +436,25 @@ const branding = Branding(
 final pdf = await kundliDetailedPdf(report, branding: branding);
 await File('kundli.pdf').writeAsBytes(pdf);
 
-// On a server, launch once and reuse:
-final engine = await ChromePdfEngine.launch(); // noSandbox: true in a root container
+// On a server, launch once and reuse (concurrent calls are fine):
+final engine = await ChromePdfEngine.launch();
 final pdf2 = await kundliDetailedPdf(report, branding: branding, engine: engine);
+final pdf3 = await htmlToPdf('<h1>Any HTML</h1>', engine: engine);
 await engine.close(); // on shutdown
 ```
 
 `ChromePdfEngine` drives Chrome, Chromium or Edge over the DevTools protocol (the way Puppeteer
-does) with no extra Dart package and no Node. It finds the browser in the usual install
-locations, or from `CHROME_PATH` / `executablePath:`. `ChromePdfEngine.connect(wsUrl)` uses a
-browser that is already running, for example a Chrome container.
+does) with no extra Dart package and no Node. It looks for the browser in `LIFEASTRO_CHROME`,
+`CHROME_PATH` and `PUPPETEER_EXECUTABLE_PATH`, then in the usual install locations (`PATH` on
+Linux, Applications on macOS, Program Files on Windows); `executablePath:` overrides them all.
+`ChromePdfEngine.connect(wsUrl)` uses a browser that is already running, for example a Chrome
+container.
 
-A minimal Linux image that renders every report, including Indic scripts:
+Each engine gets a temporary browser profile of its own, which `close()` deletes. The sandbox
+stays on, except when running as root, where Chromium cannot start with it (`noSandbox:` decides
+either way).
+
+A Linux image with Chromium and the fonts for the Indic scripts:
 
 ```dockerfile
 FROM dart:stable AS build
@@ -462,57 +470,90 @@ COPY --from=build /server /server
 CMD ["/server"]
 ```
 
-with `ChromePdfEngine.launch(executablePath: '/usr/bin/chromium', noSandbox: true)` when the
-container runs as root.
+Chromium is found there without configuration, and a container that runs as root needs no
+`noSandbox:`.
 
 ### In a Flutter app
 
-The HTML layer runs in the app; the report JSON comes from your backend (see
-[Authentication](#authentication)). Two ways to get a PDF:
+The HTML layer runs in the app. The report JSON comes from your own backend, so the API key never
+ships in the app (see [Authentication](#authentication)). Ways to get a PDF:
 
-1. **The `printing` package** (Android, iOS, macOS) prints the HTML with the platform's own web
-   engine, so Indic text is shaped correctly, and opens the share / print sheet:
+1. **The platform's web view** prints the HTML, with no server involved. Any plugin that prints
+   HTML with the system web view takes it; give it `a4PrintOptions` (A4 and the margins, in
+   points), because some web views, iOS among them, ignore the CSS `@page` rule. With the
+   `printing` and `pdf` packages:
 
    ```dart
    import 'package:lifeastroapi/pdf.dart';
+   import 'package:pdf/pdf.dart';
    import 'package:printing/printing.dart';
 
-   final html = renderKundliLiteHtml(report, const Branding(companyName: 'Acme Astro'));
-   await Printing.layoutPdf(
-     onLayout: (format) => Printing.convertHtml(format: format, html: html),
-   );
+   Future<void> shareKundli(Map<String, dynamic> report) async {
+     final html = renderKundliLiteHtml(report);
+     // printing marks convertHtml as deprecated; check that the platform has it.
+     if (!(await Printing.info()).canConvertHtml) return;
+     final m = a4PrintOptions.margins;
+     // ignore: deprecated_member_use
+     final bytes = await Printing.convertHtml(
+       html: html,
+       format: PdfPageFormat(a4PrintOptions.width, a4PrintOptions.height,
+           marginTop: m.top, marginRight: m.right,
+           marginBottom: m.bottom, marginLeft: m.left),
+     );
+     await Printing.sharePdf(bytes: bytes, filename: 'kundli.pdf');
+   }
    ```
 
+   The table of contents, running header and bookmarks of the Brihad Kundli are added by
+   `kundliBrihadPdf`, through an engine.
+
 2. **A Gotenberg service** you run (`docker run --rm -p 3000:3000 gotenberg/gotenberg:8`) gives PDF
-   bytes on every platform, the web included:
+   bytes on every platform, the web included (allow your origin with its CORS settings):
 
    ```dart
    final engine = GotenbergPdfEngine(Uri.parse('https://pdf.your-app.example'));
    final bytes = await kundliLitePdf(report, engine: engine);
    ```
 
-On Flutter web you can also open the HTML in a new tab and let the user print it to PDF.
+On Flutter web you can also open the HTML in a new tab and let the user print it to PDF. A desktop
+app can use `ChromePdfEngine` when the app may start processes (a sandboxed macOS app prints
+through the web view or Gotenberg instead).
 
 ### Brihad Kundli
 
-The large report (well over 100 pages). `kundliBrihadPdf` renders it twice so the table of
-contents shows the real page of every section, adds a running header and footer, and writes PDF
-bookmarks. It is the slowest report to produce: give it a generous `timeout` and run it in a
-background job. The plain `renderKundliBrihadHtml` has no table of contents or running header.
+The large report (about 300 pages). `kundliBrihadPdf` renders it twice so the table of contents
+shows the real page of every section, adds a running header and footer, and writes PDF bookmarks.
+Short sections share a page, so two lines of the contents can show the same page. The plain
+`renderKundliBrihadHtml` has no table of contents or running header.
+
+Your `primaryColor` and `secondaryColor` colour the headings, banners, table heads, contents,
+charts, header and footer. Without brand colours, or with the API's default pair, the report keeps
+its saffron design. A `watermarkText` prints on every page, behind the content.
+
+`kundliBrihadPdf` also takes your own `headerTemplate` and `footerTemplate`, or
+`displayHeaderFooter: false`. It merges your margins side by side over its own (26 mm top, 16 mm
+bottom). It is the slowest report to produce: on a busy server give it more time and run it in a
+background job.
+
+```dart
+final brihad = await kundliBrihadPdf(report,
+    options: const HtmlToPdfOptions(timeout: Duration(minutes: 2)));
+```
 
 ### Branding
 
 | Field | Effect |
 |---|---|
-| `companyName` | Shown on the cover (and in the Brihad running header). |
-| `logoUrl` | Cover logo: `http(s)`, `data:image/...` or a relative URL. |
-| `primaryColor` / `secondaryColor` | Headings, table headers, accents. |
-| `footerText` | Line printed at the bottom of every page. |
-| `watermarkText` | Optional diagonal watermark. |
+| `companyName` | Shown on the cover (and in the Brihad running header), as written. |
+| `logoUrl` | Cover logo: `http(s)`, `data:image/...` or a relative URL. `//host/logo.png` is fetched over https. |
+| `primaryColor` / `secondaryColor` | Headings, table headers, accents, and the Brihad design. Hex, a CSS colour name, `rgb()` or `hsl()`. |
+| `footerText` | Line printed at the bottom of every page, as written. |
+| `watermarkText` | Optional diagonal watermark on every page, sized to stay on the page. |
 
 The branding you pass wins over the branding stored on your account (embedded in the report
-JSON), which falls back to neutral defaults. Colours are checked against a safe list, text is
-escaped, and `logoUrl` is limited to `http(s)`, `data:image/...` and relative URLs. Chromium fetches
+JSON), which falls back to neutral defaults; a blank field counts as not set. A colour too pale to
+read prints as a darker shade of itself, and a word that is not a colour falls back to the default.
+Text is escaped, and `logoUrl` is limited to `http(s)`, `data:image/...` and relative URLs. Chromium fetches
 `logoUrl` while printing; if you accept logo URLs from your users, run the browser with restricted
 network access.
 
@@ -520,15 +561,51 @@ network access.
 
 `HtmlToPdfOptions` (all engines): `format` (`PaperFormat.a4` default, `a3`, `a5`, `letter`, `legal`,
 `tabloid`), `landscape`, `printBackground` (default true), `margin: PdfMargin(top: '10mm', ...)`,
-`scale`, `timeout`, and `displayHeaderFooter` with `headerTemplate` / `footerTemplate`.
+`scale`, `timeout`, `abortTrigger`, and `displayHeaderFooter` with `headerTemplate` /
+`footerTemplate`.
 
-### Fonts and troubleshooting
+| Option | With a report |
+|---|---|
+| `margin` | A side you set wins over the page's own CSS; the other sides keep it. No unit means px. |
+| `format`, `landscape` | Set the paper, also over an `@page` size in your own HTML. `preferCssPageSize: true` keeps the CSS size. |
+| `printBackground: false` | No backgrounds; text that was white on a colour prints dark. |
+| `displayHeaderFooter` with `footerTemplate` | Your footer replaces the report's footer line. |
+
+With default options the HTML is printed untouched.
+
+`timeout` (30 seconds by default) is for loading the page; printing may take four times as long,
+and a Gotenberg request gets five times `timeout` in all. Too slow throws a `TimeoutException`.
+To cancel, complete the future you passed as `abortTrigger`: the call throws `PdfAbortedException`
+and the engine stays usable.
+
+```dart
+final cancel = Completer<void>();
+final pdf = kundliBrihadPdf(report,
+    engine: engine, options: HtmlToPdfOptions(abortTrigger: cancel.future));
+// cancel.complete();
+```
+
+### Fonts
+
+The templates name the Noto Sans families and fall back to the system's fonts. The fonts must be
+on the machine that prints.
+
+| Prints on | Fonts for the Indic scripts |
+|---|---|
+| Debian, Ubuntu, Docker | `apt install fonts-noto-core fonts-noto-extra` |
+| macOS | Built in. |
+| Windows | Built in (Nirmala UI). |
+| Android, iOS | The system's fonts for the Indian scripts. |
+| Gotenberg | The fonts in its image: add Noto there if a script prints as boxes. |
+
+### Troubleshooting
 
 | Symptom | Fix |
 |---|---|
-| Indic text prints as boxes | The machine that prints has no font for that script. Debian/Ubuntu: `apt install fonts-noto-core fonts-noto-extra`. macOS and Windows already have them. |
-| `no Chrome, Chromium or Edge found` | Install one, or pass `executablePath:` / set `CHROME_PATH`. |
-| Chrome fails to start in Docker | Use `noSandbox: true` when running as root, and the image above. |
+| Indic text prints as boxes | The machine that prints has no font for that script: see [Fonts](#fonts). |
+| `no Chrome, Chromium or Edge found` | Install one, or pass `executablePath:` / set `LIFEASTRO_CHROME` or `CHROME_PATH`. |
+| `the browser exited with code ...` | The message ends with the browser's own log. In Docker use the image above. |
+| `TimeoutException` | Raise `timeout`, and check that `logoUrl` answers. |
 | No footer line on pages | The page footer needs Chromium 131 or newer. |
 | Cover says "Subject" | Pass `name` (and `place`) when requesting the report. |
 
@@ -547,9 +624,14 @@ dart test
 Set `LIFEASTRO_NODE_SDK` if the Node SDK is not at `../lifeastroapi-node`.
 
 The report templates are a port of the Node SDK's `src/pdf/templates`; `test/pdf_golden_test.dart`
-checks the Dart HTML byte-for-byte against the Node output. After a template changes in Node,
+checks the Dart HTML byte-for-byte against the Node output, and `test/pdf_options_test.dart` the
+colour math and print CSS. After a template changes in Node,
 run `node tool/pdf_goldens.mjs` to refresh the goldens, then update the Dart template until the test
-passes (`node tool/ts_tables.mjs` copies label tables exactly).
+passes (`node tool/ts_tables.mjs` copies label tables exactly). `test/pdf_deep_test.dart` also
+checks 432 full reports when their shared reference is checked out (`LIFEASTRO_PDF_WORK`, default
+`../LifeAstroAPI/pdf_work`), and is skipped otherwise. The browser tests (tag `chrome`) are skipped
+without a browser. `dart test -p chrome test/pdf_js_test.dart test/pdf_html_test.dart
+test/pdf_regressions_test.dart test/pdf_branding_test.dart` checks the HTML layer on the web.
 
 Unit tests use a mock HTTP client, so they cannot tell whether the API really accepts a parameter.
 The live sweep calls **every** method against a real server and lists each one the API rejects:

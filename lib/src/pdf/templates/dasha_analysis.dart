@@ -333,14 +333,50 @@ const _labels = {
     'th_duration': 'সময়কাল',
     'years': 'বছর',
   },
+  'pa': {
+    'title_dasha': 'ਦਸ਼ਾ ਵਿਸ਼ਲੇਸ਼ਣ',
+    'subtitle_dasha':
+        'ਵਿੰਸ਼ੋਤਰੀ ਦਸ਼ਾ ਦਾ ਡੂੰਘਾ ਵੇਰਵਾ: ਬੀਤੀਆਂ, ਮੌਜੂਦਾ ਅਤੇ ਆਉਣ ਵਾਲੀਆਂ ਦਸ਼ਾਵਾਂ',
+    'born': 'ਜਨਮ',
+    'at': 'ਸਮਾਂ',
+    'generated': 'ਤਿਆਰ',
+    'section_active': 'ਇਸ ਸਮੇਂ ਸਰਗਰਮ ਦਸ਼ਾ ਦੇ ਪੱਧਰ',
+    'section_predictions': 'ਸਰਗਰਮ ਉਪ-ਦਸ਼ਾਵਾਂ ਦਾ ਭਵਿੱਖਫਲ',
+    'section_all_md': 'ਸਾਰੀਆਂ 9 ਮਹਾਦਸ਼ਾਵਾਂ (120 ਸਾਲਾਂ ਦਾ ਚੱਕਰ)',
+    'section_past': 'ਪਿਛਲੇ 20 ਸਾਲਾਂ ਦੀ ਸਮੀਖਿਆ',
+    'section_future': 'ਅਗਲੇ 10 ਸਾਲਾਂ ਦੀ ਝਲਕ',
+    'section_yogini': 'ਯੋਗਿਨੀ ਦਸ਼ਾ (ਸਹਾਇਕ ਪ੍ਰਣਾਲੀ)',
+    'active_intro':
+        'ਇਸ ਸਮੇਂ ਦਸ਼ਾ ਦੇ ਇਹ ਪੰਜ ਪੱਧਰ ਇਕੱਠੇ ਚੱਲ ਰਹੇ ਹਨ। ਬਾਹਰਲੀ ਮਹਾਦਸ਼ਾ ਸਮੁੱਚਾ ਰੰਗ ਤੈਅ ਕਰਦੀ ਹੈ; ਹਰ ਅੰਦਰਲਾ ਪੱਧਰ ਸਮੇਂ ਨੂੰ ਹੋਰ ਬਰੀਕੀ ਨਾਲ ਦੱਸਦਾ ਹੈ।',
+    'active_unavailable': 'ਇਸ ਕੁੰਡਲੀ ਲਈ ਸਰਗਰਮ ਦਸ਼ਾ ਦੇ ਪੱਧਰ ਉਪਲਬਧ ਨਹੀਂ ਹਨ।',
+    'past_intro':
+        'ਪਿਛਲੇ 20 ਸਾਲਾਂ ਵਿੱਚ ਲੰਘ ਚੁੱਕੀਆਂ ਮਹਾਦਸ਼ਾਵਾਂ, ਪਿੱਛੇ ਮੁੜ ਕੇ ਦੇਖਣ ਲਈ ਲਾਭਦਾਇਕ।',
+    'past_none': 'ਇਸ ਕੁੰਡਲੀ ਲਈ ਪਿਛਲੇ 20 ਸਾਲਾਂ ਦੀ ਕੋਈ ਮਹਾਦਸ਼ਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।',
+    'future_intro':
+        'ਅਗਲੇ 10 ਸਾਲਾਂ ਦੀਆਂ ਅੰਤਰਦਸ਼ਾਵਾਂ, ਨੇੜਲੇ ਸਮੇਂ ਦੀ ਯੋਜਨਾ ਲਈ ਮਹਾਦਸ਼ਾ ਨਾਲੋਂ ਵੱਧ ਬਰੀਕ ਨਜ਼ਰ।',
+    'future_none': 'ਅਗਲੇ 10 ਸਾਲਾਂ ਦੀ ਕੋਈ ਦਸ਼ਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।',
+    'yogini_intro':
+        'ਯੋਗਿਨੀ ਦਸ਼ਾ 8 ਦੌਰਾਂ ਵਾਲੀ ਇੱਕ ਸਹਾਇਕ ਪ੍ਰਣਾਲੀ ਹੈ, ਜਿਸ ਨੂੰ ਵਿੰਸ਼ੋਤਰੀ ਦੇ ਨਾਲ ਸਮੇਂ ਦੀ ਪੁਸ਼ਟੀ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ।',
+    'md_unavailable': 'ਇਸ ਕੁੰਡਲੀ ਲਈ ਮਹਾਦਸ਼ਾ ਦਾ ਕ੍ਰਮ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।',
+    'lvl_maha': 'ਮਹਾਦਸ਼ਾ',
+    'lvl_antar': 'ਅੰਤਰਦਸ਼ਾ',
+    'lvl_pratyantar': 'ਪ੍ਰਤਿਅੰਤਰ ਦਸ਼ਾ',
+    'lvl_sookshma': 'ਸੂਖਮ ਦਸ਼ਾ',
+    'lvl_prana': 'ਪ੍ਰਾਣ ਦਸ਼ਾ',
+    'th_lord': 'ਸੁਆਮੀ',
+    'th_start': 'ਸ਼ੁਰੂ',
+    'th_end': 'ਅੰਤ',
+    'th_duration': 'ਮਿਆਦ',
+    'years': 'ਸਾਲ',
+  },
 };
 
 const _extraCss =
-    '\n.cover h1 { font-size: 32pt; font-weight: 700; letter-spacing: 1pt; margin: 0 0 4mm; }\n.cover .subtitle { color: var(--brand-secondary); font-size: 14pt; margin-bottom: 14mm; font-style: italic; }\n.cover .subject { font-size: 18pt; margin-bottom: 4mm; font-weight: 600; }\n.section { page-break-before: always; margin-top: 4mm; }\n.section.first { page-break-before: auto; }\n.stack-row {\n  display: flex; justify-content: space-between; align-items: baseline;\n  padding: 3mm 4mm; margin: 2mm 0; background: #f5f7fa;\n  border-left: 4px solid var(--brand-primary);\n}\n.stack-row.level-1 { background: #e0f2fe; border-left-color: #0369a1; }\n.stack-row.level-2 { background: #ecfccb; border-left-color: #65a30d; }\n.stack-row.level-3 { background: #fef9c3; border-left-color: #ca8a04; }\n.stack-row.level-4 { background: #fed7aa; border-left-color: #ea580c; }\n.stack-row.level-5 { background: #fecaca; border-left-color: #dc2626; }\n.stack-row .level-label { font-weight: 600; width: 30mm; flex-shrink: 0; }\n.stack-row .lord-name { font-weight: 700; font-size: 12pt; flex: 1; }\n.stack-row .dates { color: var(--brand-secondary); font-size: 10pt; text-align: right; }\n.prediction-block {\n  margin: 4mm 0; padding: 4mm 5mm; background: #f0fdf4;\n  border-left: 4px solid #16a34a; page-break-inside: avoid;\n}\n.prediction-block .lord-line { font-size: 13pt; font-weight: 700; color: var(--brand-primary); margin-bottom: 2mm; }\n.timeline-block {\n  margin: 3mm 0; padding: 3mm 4mm; background: #fafafa;\n  border-left: 3px solid var(--brand-secondary); page-break-inside: avoid;\n}\n.timeline-block.current { background: #f0fdf4; border-left-color: #16a34a; }\n.timeline-block .header { display: flex; justify-content: space-between; align-items: baseline; }\n.timeline-block .lord { font-weight: 700; font-size: 12pt; color: var(--brand-primary); }\n.timeline-block .dates { color: var(--brand-secondary); font-size: 10pt; }\n.timeline-block .body { margin-top: 1mm; font-size: 10pt; }\n.empty-list { margin: 3mm 0; color: var(--brand-secondary); font-style: italic; }\n';
+    '\n.cover h1 { font-size: 32pt; font-weight: 700; letter-spacing: 1pt; margin: 0 0 4mm; }\n.cover .subtitle { color: var(--brand-secondary); font-size: 14pt; margin-bottom: 14mm; font-style: italic; }\n.cover .subject { font-size: 18pt; margin-bottom: 4mm; font-weight: 600; }\n.section { page-break-before: always; margin-top: 4mm; }\n.section.first { page-break-before: auto; }\n.stack-row {\n  display: flex; justify-content: space-between; align-items: baseline;\n  padding: 3mm 4mm; margin: 2mm 0; background: #f5f7fa;\n  border-left: 4px solid var(--brand-primary);\n}\n.stack-row.level-1 { background: #e0f2fe; border-left-color: #0369a1; }\n.stack-row.level-2 { background: #ecfccb; border-left-color: #65a30d; }\n.stack-row.level-3 { background: #fef9c3; border-left-color: #ca8a04; }\n.stack-row.level-4 { background: #fed7aa; border-left-color: #ea580c; }\n.stack-row.level-5 { background: #fecaca; border-left-color: #dc2626; }\n.stack-row .level-label { font-weight: 600; width: 40mm; padding-right: 3mm; flex-shrink: 0; }\n.stack-row .lord-name { font-weight: 700; font-size: 12pt; flex: 1; }\n.stack-row .dates { color: var(--brand-secondary); font-size: 10pt; text-align: right; }\n.prediction-block {\n  margin: 4mm 0; padding: 4mm 5mm; background: #f0fdf4;\n  border-left: 4px solid #16a34a; page-break-inside: avoid;\n}\n.prediction-block .lord-line { font-size: 13pt; font-weight: 700; color: var(--brand-primary); margin-bottom: 2mm; }\n.timeline-block {\n  margin: 3mm 0; padding: 3mm 4mm; background: #fafafa;\n  border-left: 3px solid var(--brand-secondary); page-break-inside: avoid;\n}\n.timeline-block.current { background: #f0fdf4; border-left-color: #16a34a; }\n.timeline-block .header { display: flex; justify-content: space-between; align-items: baseline; }\n.timeline-block .lord { font-weight: 700; font-size: 12pt; color: var(--brand-primary); }\n.timeline-block .dates { color: var(--brand-secondary); font-size: 10pt; }\n.timeline-block .body { margin-top: 1mm; font-size: 10pt; }\n.empty-list { margin: 3mm 0; color: var(--brand-secondary); font-style: italic; }\n';
 
 /// A period's lord name for the locale: the API's LordLocal when present
 /// (any non-en locale), else LordHI for hi/mr, the engine's native planet /
-/// Yogini name for te/ta/kn/ml/gu/bn (older API builds sent only Lord +
+/// Yogini name for te/ta/kn/ml/gu/bn/pa (older API builds sent only Lord +
 /// LordHI).
 String _periodLord(Object? period, String locale) {
   if (!truthy(period)) return '';
@@ -407,6 +443,7 @@ String _timelineBlocks(List<Object?> rows, String locale) {
 /// Renders the Dasha Analysis report as a complete HTML document.
 String renderDashaAnalysisHtml(Map<String, Object?> data,
     [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final rawLocale = data['Locale'];
   final locale = truthy(rawLocale) && _labels.containsKey(jsStr(rawLocale))
       ? jsStr(rawLocale)

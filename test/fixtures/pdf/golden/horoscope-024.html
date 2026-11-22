@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="ml">
+<html lang="kn">
 <head>
 <meta charset="utf-8">
-<title>വാരഫലം, Aries</title>
+<title>ವಾರದ ರಾಶಿಫಲ, Aries</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -84,9 +76,9 @@ footer {
 
 <section class="cover">
   
-  <h1>വാരഫലം</h1>
+  <h1>ವಾರದ ರಾಶಿಫಲ</h1>
   <div class="subject">Aries</div>
-  <div class="meta">കാലയളവ്: 2026-W24</div>
+  <div class="meta">ಅವಧಿ: 2026-W24</div>
 </section>
 
 

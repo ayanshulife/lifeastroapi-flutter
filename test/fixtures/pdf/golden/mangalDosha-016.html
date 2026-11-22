@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="pa">
 <head>
 <meta charset="utf-8">
-<title>Mangal Dosha Report</title>
+<title>ਮਾਂਗਲਿਕ ਦੋਸ਼ ਰਿਪੋਰਟ</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -109,50 +101,52 @@ footer {
 <body>
 <section class="cover">
   
-  <h1>Mangal Dosha Report</h1>
-  <div class="subject">Subject</div>
+  <h1>ਮਾਂਗਲਿਕ ਦੋਸ਼ ਰਿਪੋਰਟ</h1>
+  <div class="subject">Arjun Mehta</div>
   <div class="meta">
-    Born 1990-01-15 at 10:30 IST<br>
-    19.0760, 72.8777<br>
-    Ascendant: Aquarius
+    ਜਨਮ 1990-01-15 ਸਮਾਂ 10:30<br>
+    ਨਮੂਨੇ ਦਾ ਵਾਕ।<br>
+    ਲਗਨ: ਸਿੰਘ
   </div>
-  <div class="status-badge cancelled">Mangal Dosha (with cancellation)</div>
-  <div class="generated">Generated on 2026-10-17 20:44 UTC</div>
+  <div class="status-badge cancelled">ਮਾਂਗਲਿਕ ਦੋਸ਼ (ਪਰਿਹਾਰ ਸਮੇਤ)</div>
+  <div class="generated">ਤਿਆਰ 2026-10-31 06:40 UTC</div>
 </section>
 
-<h2>Diagnostic</h2>
+<h2>ਵਿਸ਼ਲੇਸ਼ਣ</h2>
 <div class="diagnostic">
   <dl>
-    <dt>Mars Sign</dt>
-    <dd>Scorpio (25°59&#39;00&quot;)</dd>
-    <dt>Mars Nakshatra</dt>
-    <dd>Jyeshtha, Pada 3</dd>
-    <dt>Mars in House(s)</dt>
-    <dd>4 from the Moon</dd>
-    <dt>Diagnosis</dt>
-    <dd>Mars sits in Scorpio, in house 4 from the Moon, this constitutes a mild form of Mangal Dosha.</dd>
+    <dt>ਮੰਗਲ ਦੀ ਰਾਸ਼ੀ</dt>
+    <dd>ਮੇਖ (06°00&#39;21&quot;)</dd>
+    <dt>ਮੰਗਲ ਦਾ ਨਛੱਤਰ</dt>
+    <dd>ਮਘਾ, ਪਦ 2</dd>
+    <dt>ਮੰਗਲ ਦੇ ਭਾਵ</dt>
+    <dd>ਲਗਨ ਤੋਂ 1; ਚੰਦਰਮਾ ਤੋਂ 4</dd>
+    <dt>ਨਿਦਾਨ</dt>
+    <dd>ਮੰਗਲ ਮੇਖ ਰਾਸ਼ੀ ਵਿੱਚ ਹੈ (ਭਾਵ: ਲਗਨ ਤੋਂ 1; ਚੰਦਰਮਾ ਤੋਂ 4)। ਇਹ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਦਾ ਪੂਰਨ ਰੂਪ ਹੈ।</dd>
   </dl>
 </div>
 
-<h2>Cancellation</h2>
+<h2>ਦੋਸ਼ ਦਾ ਪਰਿਹਾਰ</h2>
 <div class="cancellation">
-  <p>Classical rules indicate the following cancellations apply to the dosha:</p>
+  <p>ਸ਼ਾਸਤਰੀ ਨਿਯਮਾਂ ਅਨੁਸਾਰ ਹੇਠ ਲਿਖੇ ਕਾਰਨਾਂ ਨਾਲ ਦੋਸ਼ ਦਾ ਪਰਿਹਾਰ ਹੁੰਦਾ ਹੈ:</p>
   <ul>
-    <li>Mars in own sign</li>
+    <li>ਨਮੂਨੇ ਦਾ ਵਾਕ।</li>
   </ul>
 </div>
 
-<h2>Marriage Implications</h2>
-<p>Although Mangal Dosha is present, classical cancellation rules apply and substantially reduce its effect. Match making typically does not treat this as a significant obstacle.</p>
+<h2>ਵਿਆਹ ਉੱਤੇ ਪ੍ਰਭਾਵ</h2>
+<p>ਭਾਵੇਂ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਮੌਜੂਦ ਹੈ, ਪਰ ਸ਼ਾਸਤਰੀ ਪਰਿਹਾਰ ਲਾਗੂ ਹੋਣ ਕਾਰਨ ਇਸ ਦਾ ਪ੍ਰਭਾਵ ਘੱਟ ਜਾਂਦਾ ਹੈ। ਕੁੰਡਲੀ ਮਿਲਾਨ ਵਿੱਚ ਆਮ ਤੌਰ &#39;ਤੇ ਇਸ ਨੂੰ ਵੱਡੀ ਰੁਕਾਵਟ ਨਹੀਂ ਮੰਨਿਆ ਜਾਂਦਾ।</p>
 
-<h2>Recommended Remedies</h2>
+<h2>ਸੁਝਾਏ ਗਏ ਉਪਾਅ</h2>
 <div class="remedies">
-  <p>These traditional remedies are commonly recommended. Check your full chart before adopting any:</p>
+  <p>ਮਾਂਗਲਿਕ ਦੋਸ਼ ਲਈ ਆਮ ਤੌਰ &#39;ਤੇ ਸੁਝਾਏ ਜਾਂਦੇ ਰਵਾਇਤੀ ਉਪਾਅ ਹੇਠਾਂ ਦਿੱਤੇ ਗਏ ਹਨ। ਕੋਈ ਵੀ ਉਪਾਅ ਅਪਣਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੀ ਕੁੰਡਲੀ ਚੰਗੀ ਤਰ੍ਹਾਂ ਜਾਂਚ ਲਓ:</p>
   <ul>
-    <li>Recite Hanuman Chalisa on Tuesdays.</li>
-    <li>Donate red lentils or jaggery on Tuesdays.</li>
-    <li>Visit a Hanuman temple regularly.</li>
-    <li>Light a mustard-oil lamp before Hanuman idol on Tuesdays.</li>
+    <li>ਰੋਜ਼ ਹਨੂਮਾਨ ਚਾਲੀਸਾ ਦਾ ਪਾਠ ਕਰੋ, ਖ਼ਾਸ ਤੌਰ &#39;ਤੇ ਮੰਗਲਵਾਰ ਨੂੰ।</li>
+    <li>ਹਰ ਮੰਗਲਵਾਰ ਨੂੰ ਹਨੂਮਾਨ ਮੰਦਰ ਜਾ ਕੇ ਲਾਲ ਫੁੱਲ ਅਤੇ ਸੰਧੂਰ ਚੜ੍ਹਾਓ।</li>
+    <li>ਮੰਗਲਵਾਰ ਨੂੰ ਮਸਰ ਦੀ ਦਾਲ, ਗੁੜ ਜਾਂ ਲਾਲ ਕੱਪੜੇ ਦਾ ਦਾਨ ਕਰੋ।</li>
+    <li>ਮੰਗਲਵਾਰ ਦਾ ਵਰਤ ਰੱਖੋ; ਉਸ ਦਿਨ ਸਿਰਫ਼ ਫਲ ਅਤੇ ਦੁੱਧ ਲਓ।</li>
+    <li>ਮੰਗਲਵਾਰ ਨੂੰ ਘਰ ਵਿੱਚ ਹਨੂਮਾਨ ਜੀ ਦੇ ਸਾਹਮਣੇ ਦੀਵਾ ਜਗਾ ਕੇ &#39;ਓਮ ਅੰ ਅੰਗਾਰਕਾਯ ਨਮਃ&#39; ਦਾ 108 ਵਾਰ ਜਪ ਕਰੋ ਅਤੇ ਸੁਖੀ ਵਿਆਹੁਤਾ ਜੀਵਨ ਲਈ ਪ੍ਰਾਰਥਨਾ ਕਰੋ; ਪਰੰਪਰਾ ਵਿੱਚ ਕੁੰਭ ਵਿਆਹ (ਪਿੱਪਲ ਜਾਂ ਕੁੰਭ ਨਾਲ ਪ੍ਰਤੀਕ ਰੂਪ ਵਿਆਹ) ਦਾ ਵੀ ਜ਼ਿਕਰ ਮਿਲਦਾ ਹੈ।</li>
+    <li>ਮੂੰਗਾ ਰਤਨ ਕੁੰਡਲੀ ਦੀ ਜਾਂਚ ਤੋਂ ਬਾਅਦ ਹੀ ਪਹਿਨੋ; ਇਹ ਹਰ ਕਿਸੇ ਲਈ ਢੁਕਵਾਂ ਨਹੀਂ ਹੁੰਦਾ।</li>
   </ul>
 </div>
 <footer>Generated using LifeAstroAPI</footer>

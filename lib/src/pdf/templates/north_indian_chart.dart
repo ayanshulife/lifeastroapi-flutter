@@ -52,6 +52,179 @@ const _houseXy = {
   12: [75, 8],
 };
 
+// One layout list per cell shape (`node tool/ts_tables.mjs
+// templates/northIndianChart.ts CELL_LAYOUTS:_cellLayouts`): `upTo` planets are
+// set in `size` type, in `rows` of [offset toward the middle of the chart,
+// offset down, capacity], in fill order. Offsets are from _houseXy.
+const _cellLayouts = {
+  'diamond': [
+    {
+      'upTo': 3,
+      'size': 4.6,
+      'rows': [
+        [
+          0,
+          1.5,
+          3,
+        ],
+      ],
+    },
+    {
+      'upTo': 9,
+      'size': 3.6,
+      'rows': [
+        [
+          0,
+          1,
+          5,
+        ],
+        [
+          0,
+          6,
+          4,
+        ],
+      ],
+    },
+  ],
+  'top': [
+    {
+      'upTo': 2,
+      'size': 4,
+      'rows': [
+        [
+          0.5,
+          8.5,
+          2,
+        ],
+      ],
+    },
+    {
+      'upTo': 6,
+      'size': 3.5,
+      'rows': [
+        [
+          0.5,
+          8,
+          2,
+        ],
+        [
+          0.5,
+          -3,
+          4,
+        ],
+      ],
+    },
+    {
+      'upTo': 9,
+      'size': 2.8,
+      'rows': [
+        [
+          0.5,
+          7.5,
+          3,
+        ],
+        [
+          0.5,
+          -3.2,
+          6,
+        ],
+      ],
+    },
+  ],
+  'bottom': [
+    {
+      'upTo': 3,
+      'size': 4,
+      'rows': [
+        [
+          0.5,
+          1.5,
+          3,
+        ],
+      ],
+    },
+    {
+      'upTo': 9,
+      'size': 3.1,
+      'rows': [
+        [
+          0.5,
+          -1,
+          4,
+        ],
+        [
+          0.5,
+          3.9,
+          5,
+        ],
+      ],
+    },
+  ],
+  'side': [
+    {
+      'upTo': 2,
+      'size': 4,
+      'rows': [
+        [
+          3,
+          1.5,
+          2,
+        ],
+      ],
+    },
+    {
+      'upTo': 5,
+      'size': 3.3,
+      'rows': [
+        [
+          2.8,
+          0.8,
+          3,
+        ],
+        [
+          0.7,
+          5.6,
+          2,
+        ],
+      ],
+    },
+    {
+      'upTo': 9,
+      'size': 2.8,
+      'rows': [
+        [
+          3.2,
+          0.2,
+          4,
+        ],
+        [
+          1.2,
+          4.4,
+          3,
+        ],
+        [
+          -1,
+          8.6,
+          2,
+        ],
+      ],
+    },
+  ],
+};
+
+/// JS `cellShape`. Its comparisons are strict, so a house given as the string
+/// '1' is a side cell.
+String _cellShape(Object? house) {
+  if (const [1, 4, 7, 10].contains(house)) return 'diamond';
+  if (house == 2 || house == 12) return 'top';
+  if (house == 6 || house == 8) return 'bottom';
+  return 'side';
+}
+
+/// A coordinate with at most one decimal, so every language prints the same
+/// digits.
+String _svgNumber(num value) => jsNum(jsRound(value * 10) / 10);
+
 /// Renders a North-Indian diamond chart as an inline SVG string.
 ///
 /// [lagnaSignIndex] is the 0-based sign index of house 1 (Aries = 0).
@@ -70,7 +243,7 @@ String northIndianChartSvg({
   // Group planet labels by house (JS Map: first-seen order).
   final byHouse = <Object?, List<ChartPlanet>>{};
   for (final p in planets) {
-    final h = toJsNumber(p.house);
+    final h = jsNumber(p.house);
     if (h < 1 || h > 12) continue;
     (byHouse[p.house] ??= []).add(p);
   }
@@ -96,7 +269,8 @@ String northIndianChartSvg({
         '<text x="${jsNum(cx)}" y="${jsNum(ny)}" font-size="4.4" fill="$signColor" font-weight="600" text-anchor="middle" dominant-baseline="middle">$sign</text>');
   }
 
-  // Planets per house (stacked, 3 per line).
+  // Planets per house, laid out for the shape of the cell and how many share
+  // it. The sign number keeps its place and the rows go around it.
   final planetsSvg = StringBuffer();
   for (final entry in byHouse.entries) {
     final pos = _houseXy[_propertyIndex(entry.key)];
@@ -104,26 +278,28 @@ String northIndianChartSvg({
     final arr = entry.value;
     final cx = pos[0];
     final cy = pos[1];
-    final labels = [for (final p in arr) p.label];
-    const perRow = 3;
-    final rows = <List<String>>[];
-    for (var i = 0; i < labels.length; i += perRow) {
-      rows.add(labels.sublist(
-          i, i + perRow < labels.length ? i + perRow : labels.length));
-    }
-    const lineH = 4.6;
-    final topEdge = cy < 12;
-    final num anchor = topEdge ? cy + 9 : cy + 1.5;
-    final startY = anchor - ((rows.length - 1) * lineH) / 2;
+    final inward = cx > 50 ? -1 : 1;
+    final layouts = _cellLayouts[_cellShape(entry.key)]!;
+    final layout = layouts.firstWhere((l) => arr.length <= (l['upTo'] as num),
+        orElse: () => layouts.last);
+    final rows = layout['rows'] as List<List<num>>;
+    final size = jsNum(layout['size'] as num);
+    var next = 0;
     for (var ri = 0; ri < rows.length; ri++) {
-      final y = startY + ri * lineH;
-      final row = rows[ri];
+      final [dx, dy, capacity] = rows[ri];
+      // More bodies than the layout holds (outer planets) share its last row.
+      final end = ri == rows.length - 1 || next + capacity > arr.length
+          ? arr.length
+          : next + capacity.toInt();
+      final row = arr.sublist(next, end);
+      next = end;
+      if (row.isEmpty) continue;
       final text = [
-        for (var ci = 0; ci < row.length; ci++)
-          '<tspan fill="${arr[ri * perRow + ci].color ?? '#1a2a6c'}">${esc(row[ci])}</tspan>',
+        for (final p in row)
+          '<tspan fill="${p.color ?? '#1a2a6c'}">${esc(p.label)}</tspan>',
       ].join('<tspan> </tspan>');
       planetsSvg.write(
-          '<text x="${jsNum(cx)}" y="${jsNum(y)}" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle">$text</text>');
+          '<text x="${_svgNumber(cx + inward * dx)}" y="${_svgNumber(cy + dy)}" font-size="$size" font-weight="bold" text-anchor="middle" dominant-baseline="middle">$text</text>');
     }
   }
 
@@ -139,23 +315,6 @@ $signs
 $planetsSvg
 </svg>
 </div>''';
-}
-
-/// JS `Number(v)` for a JSON value.
-double toJsNumber(Object? v) {
-  if (v == null) return double.nan;
-  if (v is num) return v.toDouble();
-  if (v is bool) return v ? 1 : 0;
-  if (v is List) return toJsNumber(jsStr(v));
-  if (v is String) {
-    final s = v.trim();
-    if (s.isEmpty) return 0;
-    final d = double.tryParse(s);
-    if (d != null) return d;
-    final i = RegExp(r'^0[xXoObB]').hasMatch(s) ? int.tryParse(s) : null;
-    return i?.toDouble() ?? double.nan;
-  }
-  return double.nan;
 }
 
 /// The integer index a JS object property lookup `obj[v]` resolves to, or
@@ -287,6 +446,21 @@ const _planetLabelsBn = {
   'Pluto': 'প্লু',
 };
 
+const _planetLabelsPa = {
+  'Sun': 'ਸੂ',
+  'Moon': 'ਚੰ',
+  'Mars': 'ਮੰ',
+  'Mercury': 'ਬੁ',
+  'Jupiter': 'ਬ੍ਰ',
+  'Venus': 'ਸ਼ੁ',
+  'Saturn': 'ਸ਼',
+  'Rahu': 'ਰਾ',
+  'Ketu': 'ਕੇ',
+  'Uranus': 'ਯੂ',
+  'Neptune': 'ਨੇ',
+  'Pluto': 'ਪ੍ਲੂ',
+};
+
 /// Per-planet colours of the chart-cell labels.
 const planetColors = {
   'Sun': '#e05e18',
@@ -318,6 +492,8 @@ Map<String, String> planetLabelsFor(String? locale) {
       return _planetLabelsGu;
     case 'bn':
       return _planetLabelsBn;
+    case 'pa':
+      return _planetLabelsPa;
     default:
       return planetLabelsEn;
   }

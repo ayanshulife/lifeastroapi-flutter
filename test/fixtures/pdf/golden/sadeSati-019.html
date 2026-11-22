@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="pa">
+<html lang="bn">
 <head>
 <meta charset="utf-8">
-<title>Sade Sati Report</title>
+<title>শনির সাড়েসাতি রিপোর্ট</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -121,88 +113,76 @@ tr.current-window td { background: #fff7ed; font-weight: 600; }
 <body>
 <section class="cover">
   
-  <h1>Sade Sati Report</h1>
+  <h1>শনির সাড়েসাতি রিপোর্ট</h1>
   <div class="subject">Subject</div>
   <div class="meta">
-    Born 1990-01-15 at 10:30 IST<br>
+    জন্ম 1990-01-15 সময় 10:30 IST<br>
     19.0760, 72.8777
   </div>
   <div class="moon-sign-badge">
-    Moon Sign: Leo
+    চন্দ্র রাশি: Leo
   </div>
   <div class="generated">
-    Generated on 2026-10-17 20:44 UTC
+    তৈরি 2026-11-15 06:14 UTC
   </div>
 </section>
 
-<h2>Current Status</h2>
+<h2>বর্তমান অবস্থা</h2>
 <div class="status-card clear">
-  <div class="label">Current Phase</div>
-  <div class="value">Clear (no Sade Sati)</div>
-  <div class="detail">You are currently clear of Sade Sati. Saturn (Pisces) is not in the cluster around your moon sign (Leo).</div>
+  <div class="label">বর্তমান পর্যায়</div>
+  <div class="value">মুক্ত (সাড়েসাতি নেই)</div>
+  <div class="detail">এখন আপনি শনির সাড়েসাতি থেকে মুক্ত। শনি (Pisces) আপনার চন্দ্র রাশি (Leo) থেকে দূরে আছে।</div>
 </div>
 
-<h2>Past Sade Sati Windows</h2>
+<h2>আগের সাড়েসাতির পর্যায়গুলো</h2>
 <table>
   <thead>
     <tr>
-      <th>From</th>
-      <th>To</th>
-      <th>Duration</th>
-      <th>Signs Traversed</th>
+      <th>শুরু</th>
+      <th>শেষ</th>
+      <th>সময়কাল</th>
+      <th>গোচরের রাশি</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-  <td>2006-10-17</td>
-  <td>2011-11-20</td>
-  <td>approx 5.1 years</td>
+  <td>2004-09-05</td>
+  <td>2012-08-04</td>
+  <td>প্রায় 7.9 বছর</td>
   <td>Cancer, Leo</td>
-</tr>
-    <tr>
-  <td>2012-06-17</td>
-  <td>2012-08-16</td>
-  <td>approx 0.2 years</td>
-  <td>Virgo</td>
 </tr>
   </tbody>
 </table>
 
-<h2>Upcoming Windows</h2>
+<h2>আগামী পর্যায়</h2>
 <table>
   <thead>
     <tr>
-      <th>From</th>
-      <th>To</th>
-      <th>Duration</th>
-      <th>Signs Traversed</th>
+      <th>শুরু</th>
+      <th>শেষ</th>
+      <th>সময়কাল</th>
+      <th>গোচরের রাশি</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-  <td>2034-07-22</td>
-  <td>2041-01-16</td>
-  <td>approx 6.5 years</td>
+  <td>2034-07-12</td>
+  <td>2041-09-26</td>
+  <td>প্রায় 7.2 বছর</td>
   <td>Cancer, Leo</td>
-</tr>
-    <tr>
-  <td>2041-03-17</td>
-  <td>2041-10-13</td>
-  <td>approx 0.6 years</td>
-  <td>Virgo</td>
 </tr>
   </tbody>
 </table>
 
-<h2>Recommended Remedies</h2>
+<h2>প্রস্তাবিত প্রতিকার</h2>
 <div class="remedies">
-  <p>These traditional remedies are commonly recommended during Sade Sati phases. Check your full chart before adopting any:</p>
+  <p>শনির সাড়েসাতির সময় প্রচলিত প্রথাগত প্রতিকারগুলো নিচে দেওয়া হলো। কোনো প্রতিকার শুরু করার আগে নিজের কুণ্ডলী ভালো করে দেখে নেবেন:</p>
   <ul>
-    <li>Recite Hanuman Chalisa daily, especially on Tuesdays and Saturdays.</li>
-    <li>Donate black sesame seeds, mustard oil, or iron items on Saturdays.</li>
-    <li>Worship Lord Shani with til oil and blue flowers.</li>
-    <li>Wear a blue sapphire only after checking the chart, Saturn&#39;s gemstone is not for everyone.</li>
-    <li>Maintain disciplined routine, ethical conduct, and minimize unnecessary expenditure.</li>
+    <li>প্রতিদিন হনুমান চালিসা পাঠ করুন, বিশেষ করে মঙ্গলবার আর শনিবারে।</li>
+    <li>শনিবারে কালো তিল, সর্ষের তেল বা লোহার জিনিস দান করুন।</li>
+    <li>শনিদেবের পূজা সর্ষের তেলের প্রদীপ আর নীল ফুল দিয়ে করুন।</li>
+    <li>কুণ্ডলী ভালো করে যাচাই না করে নীলা ধারণ করবেন না; শনির রত্ন সবার জন্য উপযুক্ত নয়।</li>
+    <li>নিয়মমাফিক দিনচর্যা রাখুন, সৎ আচরণ করুন আর অপ্রয়োজনীয় খরচ এড়িয়ে চলবেন।</li>
   </ul>
 </div>
 <footer>Generated using LifeAstroAPI</footer>

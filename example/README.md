@@ -7,7 +7,8 @@ LIFEASTRO_API_KEY=dv_live_... dart run example/main.dart
 ```
 
 [`main.dart`](main.dart) prints today's panchang in Gujarati and a few planet positions, and
-writes a branded Detailed Kundli report in Hindi to `kundli.html`.
+writes a branded Detailed Kundli report in Hindi to `kundli.html`, and to `kundli.pdf` when a
+Chrome, Chromium or Edge is installed.
 
 ## Flutter
 
@@ -46,16 +47,26 @@ class TodayPanchang extends StatelessWidget {
 }
 ```
 
-A report as a PDF in the app, with the `printing` package:
+A report as a PDF in the app, printed by the platform's web view through the `printing` and
+`pdf` packages (add both to your app). The report JSON comes from your backend:
 
 ```dart
 import 'package:lifeastroapi/pdf.dart';
+import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
 Future<void> shareKundli(Map<String, dynamic> report) async {
   final html = renderKundliLiteHtml(report);
-  await Printing.layoutPdf(
-    onLayout: (format) => Printing.convertHtml(format: format, html: html),
+  // printing marks convertHtml as deprecated; check that the platform has it.
+  if (!(await Printing.info()).canConvertHtml) return;
+  final m = a4PrintOptions.margins;
+  // ignore: deprecated_member_use
+  final bytes = await Printing.convertHtml(
+    html: html,
+    format: PdfPageFormat(a4PrintOptions.width, a4PrintOptions.height,
+        marginTop: m.top, marginRight: m.right,
+        marginBottom: m.bottom, marginLeft: m.left),
   );
+  await Printing.sharePdf(bytes: bytes, filename: 'kundli.pdf');
 }
 ```

@@ -1,5 +1,89 @@
 # Changelog
 
+## 0.3.0 — 2026-11-22
+
+**Breaking:** a class of your own that `implements HtmlToPdfOptions` must now use
+`extends HtmlToPdfOptions`. Code that only creates or passes the options needs no change.
+
+Punjabi:
+
+- Punjabi (`Lang.pa`) is now a complete language, in the PDF reports too: all 10 reports print
+  Gurmukhi labels, text, chart labels, table of contents and bookmarks.
+
+Branding:
+
+- The Brihad Kundli follows your brand colours, or the report's: headings, banners, table heads,
+  contents, charts, header and footer. The API's default colours keep the saffron design.
+- The Brihad Kundli prints `watermarkText` on every page, behind the content. In every report a
+  long watermark is sized to stay on the page.
+- A colour too pale to read prints as a darker shade of itself, and a word that is not a colour
+  falls back to the default. The footer line follows the same rule.
+- Company and footer text print as you wrote them, dashes included. A `//host/logo.png` logo is
+  fetched over https, and a logo URL is never reworded.
+
+Print options:
+
+- `margin` (side by side), `format`, `landscape` and `printBackground: false` now work on the
+  report templates. A `footerTemplate` with `displayHeaderFooter` replaces the report's footer
+  line.
+- Note for your own HTML given to `htmlToPdf`: a margin side you set, `landscape` and a `format`
+  other than A4 now win over its `@page` rule. Pass `preferCssPageSize: true` to keep its page
+  size.
+- `kundliBrihadPdf` takes your `headerTemplate`, `footerTemplate` and `displayHeaderFooter: false`,
+  and merges your margins side by side over its own.
+
+PDF reports, what you will see after upgrading:
+
+- The English and Malayalam Brihad Kundli print at full size. A wide friendship table made Chrome
+  shrink the whole report to about 92%, so their text is now larger and the two reports are about
+  10% longer.
+- Brihad Kundli pages: Part 1 starts after the contents with its charts and planet table on one
+  page, a section's last few lines or rows no longer get a page of their own, very short sections
+  share a page, and the contents take fewer pages.
+- The Brihad gem note in English, Hindi and Marathi no longer refers the reader to an astrologer.
+- English Brihad tables print words where they showed API codes such as `TempFriend` and
+  `graha_shanti`.
+- Mangal Dosha without a dosha no longer shows a house row that holds only a dash.
+- Marathi Brihad charts show all nine planets: Mars, Jupiter, Saturn, Rahu and Ketu were missing
+  in the Navamsa and the other divisional charts.
+- Numerology prints the person's name, and each label sits above its own value.
+- Varshaphal prints the solar return in readable form: in the time zone of the birth when the
+  report carries `SolarReturnLocal`, else as `2027-01-15 16:39 UTC` instead of a raw timestamp.
+- Match making says 36 guna (not 8) in Hindi, Marathi, Gujarati, Bengali and Punjabi, and the max
+  and score headings line up with their numbers.
+- Headings no longer leave cut-off glyph tops at the foot of a page, and stay with the text that
+  follows. Page counts change.
+- North Indian charts lay out 1 to 9 planets by the shape of the cell, inside it and clear of the
+  sign number, in every script. Long dasha level names no longer touch the lord's name.
+- Gujarati, Bengali and Punjabi text is no longer letter-spaced.
+- Brihad Kundli PDF: the running header and footer use a sans-serif face, Malayalam bookmarks show
+  in Malayalam script, the document title is kept, and the page-locator tokens (`⟦T0⟧`, ...) are
+  gone from the PDF's text.
+- A timestamp without a zone, such as `2027-01-15T16:39:17` or `2027-01-15 16:39`, is read as UTC
+  whatever the machine's time zone. A `Locale` that is not a language, such as `toString`, renders
+  as English.
+- A lone value where a list is expected prints as it is in the KP significators and Raj yoga planets
+  (it printed nothing), and a malformed one no longer prints `[object Object]` in Sade Sati.
+- A null item in a list of rows is left out of every report (it printed an empty row or block).
+- Two Brihad sections now HTML-escape their values. The HTML carries no CSS comments.
+- Reports with long texts render much faster (a Tamil Brihad Kundli's HTML is 10 times faster or
+  more in compiled Dart).
+- The HTML is byte-identical to the Node.js SDK 0.14.0 templates, checked on 432 full reports (12
+  report endpoints, all 10 languages, with and without branding), on servers and on the web.
+
+PDF engines:
+
+- New `a4PrintOptions`: the A4 page and the reports' margins in points, for print APIs of web
+  views.
+- New `HtmlToPdfOptions.abortTrigger` cancels a PDF (`PdfAbortedException`); the engine stays
+  usable. `ChromePdfEngine.launch` takes `abortTrigger` too, and `connect` takes a `timeout`.
+- `ChromePdfEngine`: every DevTools call has a timeout, a launch that fails leaves no temporary
+  profile behind, and a browser that is missing or cannot start gives an error that says what to
+  install. `noSandbox` now defaults to true only when running as root; pass `false` to keep the
+  sandbox there.
+- `GotenbergPdfEngine`: the deadline (five times `timeout`) covers the download too, and an answer
+  that is not a PDF is an error.
+
 ## 0.2.0 — 2026-11-15
 
 - New `prashna.kpHorary(number: 23, lat: ..., lon: ..., tz: ..., date: ..., time: ...)`: the KP

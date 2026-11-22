@@ -16,6 +16,7 @@ const southLocales = [
   'ml',
   'gu',
   'bn',
+  'pa',
 ];
 
 const indicFontStack =
@@ -23,6 +24,11 @@ const indicFontStack =
 
 const indicFontStackAttr =
     'Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, sans-serif';
+
+/// For the running header and footer, where Chrome's generic sans-serif prints
+/// Latin text in a serif face.
+const printMarginFontStackAttr =
+    'Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, Helvetica Neue, Helvetica, Arial, Liberation Sans, sans-serif';
 
 const planetNames = {
   'te': {
@@ -97,6 +103,18 @@ const planetNames = {
     'Ketu': 'কেতু',
     'Lagna': 'লগ্ন',
   },
+  'pa': {
+    'Sun': 'ਸੂਰਜ',
+    'Moon': 'ਚੰਦਰਮਾ',
+    'Mars': 'ਮੰਗਲ',
+    'Mercury': 'ਬੁੱਧ',
+    'Jupiter': 'ਬ੍ਰਹਿਸਪਤੀ',
+    'Venus': 'ਸ਼ੁੱਕਰ',
+    'Saturn': 'ਸ਼ਨੀ',
+    'Rahu': 'ਰਾਹੂ',
+    'Ketu': 'ਕੇਤੂ',
+    'Lagna': 'ਲਗਨ',
+  },
 };
 
 const yoginiNames = {
@@ -159,6 +177,16 @@ const yoginiNames = {
     'Ulka': 'উল্কা',
     'Siddha': 'সিদ্ধা',
     'Sankata': 'সঙ্কটা',
+  },
+  'pa': {
+    'Mangala': 'ਮੰਗਲਾ',
+    'Pingala': 'ਪਿੰਗਲਾ',
+    'Dhanya': 'ਧਾਨਯਾ',
+    'Bhramari': 'ਭ੍ਰਮਰੀ',
+    'Bhadrika': 'ਭਦ੍ਰਿਕਾ',
+    'Ulka': 'ਉਲਕਾ',
+    'Siddha': 'ਸਿੱਧਾ',
+    'Sankata': 'ਸੰਕਟਾ',
   },
 };
 
@@ -247,6 +275,20 @@ const rashiNames = {
     'কুম্ভ',
     'মীন',
   ],
+  'pa': [
+    'ਮੇਖ',
+    'ਬ੍ਰਿਸ਼ਭ',
+    'ਮਿਥੁਨ',
+    'ਕਰਕ',
+    'ਸਿੰਘ',
+    'ਕੰਨਿਆ',
+    'ਤੁਲਾ',
+    'ਬ੍ਰਿਸ਼ਚਕ',
+    'ਧਨੂੰ',
+    'ਮਕਰ',
+    'ਕੁੰਭ',
+    'ਮੀਨ',
+  ],
 };
 
 const _weekdaysEn = [
@@ -314,6 +356,15 @@ const weekdayNames = {
     'শুক্রবার',
     'শনিবার',
   ],
+  'pa': [
+    'ਐਤਵਾਰ',
+    'ਸੋਮਵਾਰ',
+    'ਮੰਗਲਵਾਰ',
+    'ਬੁੱਧਵਾਰ',
+    'ਵੀਰਵਾਰ',
+    'ਸ਼ੁੱਕਰਵਾਰ',
+    'ਸ਼ਨੀਵਾਰ',
+  ],
 };
 
 const _planetToEn = {
@@ -377,6 +428,16 @@ const _planetToEn = {
   'রাহু': 'Rahu',
   'কেতু': 'Ketu',
   'লগ্ন': 'Lagna',
+  'ਸੂਰਜ': 'Sun',
+  'ਚੰਦਰਮਾ': 'Moon',
+  'ਮੰਗਲ': 'Mars',
+  'ਬੁੱਧ': 'Mercury',
+  'ਬ੍ਰਹਿਸਪਤੀ': 'Jupiter',
+  'ਸ਼ੁੱਕਰ': 'Venus',
+  'ਸ਼ਨੀ': 'Saturn',
+  'ਰਾਹੂ': 'Rahu',
+  'ਕੇਤੂ': 'Ketu',
+  'ਲਗਨ': 'Lagna',
 };
 
 const southSignIndex = {
@@ -452,6 +513,18 @@ const southSignIndex = {
   'মকর': 9,
   'কুম্ভ': 10,
   'মীন': 11,
+  'ਮੇਖ': 0,
+  'ਬ੍ਰਿਸ਼ਭ': 1,
+  'ਮਿਥੁਨ': 2,
+  'ਕਰਕ': 3,
+  'ਸਿੰਘ': 4,
+  'ਕੰਨਿਆ': 5,
+  'ਤੁਲਾ': 6,
+  'ਬ੍ਰਿਸ਼ਚਕ': 7,
+  'ਧਨੂੰ': 8,
+  'ਮਕਰ': 9,
+  'ਕੁੰਭ': 10,
+  'ਮੀਨ': 11,
 };
 
 const tocHeading = {
@@ -464,9 +537,11 @@ const tocHeading = {
   'ml': 'ഉള്ളടക്കം',
   'gu': 'અનુક્રમણિકા',
   'bn': 'সূচিপত্র',
+  'pa': 'ਵਿਸ਼ਾ-ਸੂਚੀ',
 };
 
-final partPrefixRe = RegExp('^(part|भाग|భాగం|பகுதி|ಭಾಗ|ഭാഗം|ભાગ|ভাগ)[\\s\\d]',
+final partPrefixRe = RegExp(
+    '^(part|भाग|భాగం|பகுதி|ಭಾಗ|ഭാഗം|ભાગ|ভাগ|ਭਾਗ)[\\s\\d]',
     caseSensitive: false);
 
 const indicLocales = [...devanagariLocales, ...southLocales];
@@ -480,18 +555,18 @@ bool isSouthLocale(String? locale) =>
 bool isIndicLocale(String? locale) =>
     locale != null && indicLocales.contains(locale);
 
-/// A te/ta/kn/ml/gu/bn planet name back to its English key (`''` if unknown).
+/// A te/ta/kn/ml/gu/bn/pa planet name back to its English key (`''` if unknown).
 String southPlanetToEn(String? name) =>
     (name != null && name.isNotEmpty ? _planetToEn[name] : null) ?? '';
 
-/// Localizes an English planet or Yogini lord key for te/ta/kn/ml/gu/bn.
+/// Localizes an English planet or Yogini lord key for te/ta/kn/ml/gu/bn/pa.
 String localizeLord(String? locale, String? english) {
   final en = english ?? '';
   if (locale == null || locale.isEmpty) return en;
   return planetNames[locale]?[en] ?? yoginiNames[locale]?[en] ?? en;
 }
 
-/// Localizes an English weekday name for te/ta/kn/ml/gu/bn.
+/// Localizes an English weekday name for te/ta/kn/ml/gu/bn/pa.
 String localizeWeekday(String? locale, String? english) {
   final en = english ?? '';
   final table = locale != null ? weekdayNames[locale] : null;
@@ -501,7 +576,7 @@ String localizeWeekday(String? locale, String? english) {
 }
 
 /// The lord label a template shows: the API's Devanagari field for hi/mr, the
-/// native name for te/ta/kn/ml/gu/bn, else the English key.
+/// native name for te/ta/kn/ml/gu/bn/pa, else the English key.
 String lordLabel(String? locale, String? english, [String? hindi]) {
   if (isDevanagariLocale(locale) && hindi != null && hindi.isNotEmpty) {
     return hindi;

@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>अंक ज्योतिष रिपोर्ट</title>
+<title>Numerology Report, Arjun Mehta</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -116,6 +108,8 @@ footer {
 .factors-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
   gap: 2mm 6mm;
   padding: 4mm;
   background: #fafafa;
@@ -157,101 +151,101 @@ footer {
 <body>
 <section class="cover">
   
-  <h1>अंक ज्योतिष रिपोर्ट</h1>
-  <div class="subject"></div>
-  <div class="meta">जन्म 1990-01-15</div>
+  <h1>Numerology Report</h1>
+  <div class="subject">Arjun Mehta</div>
+  <div class="meta">Born 1990-01-15</div>
   <div class="summary">
-    <div class="summary-card"><div class="number">6</div><div class="label">मूलांक</div></div>
-    <div class="summary-card"><div class="number">8</div><div class="label">भाग्यांक</div></div>
-    <div class="summary-card"><div class="number">4</div><div class="label">अंतरात्मा अंक</div></div>
-    <div class="summary-card"><div class="number">3</div><div class="label">व्यक्तित्व अंक</div></div>
-    <div class="summary-card"><div class="number">7</div><div class="label">नाम अंक</div></div>
+    <div class="summary-card"><div class="number">6</div><div class="label">Driver</div></div>
+    <div class="summary-card"><div class="number">8</div><div class="label">Conductor</div></div>
+    <div class="summary-card"><div class="number">4</div><div class="label">Soul</div></div>
+    <div class="summary-card"><div class="number">3</div><div class="label">Personality</div></div>
+    <div class="summary-card"><div class="number">7</div><div class="label">Destiny</div></div>
   </div>
   
 </section>
-<h2>मूलांक</h2>
+<h2>Driver Number</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">6</span>
-    <span class="name">मूलांक (जन्म तिथि अंक)</span>
+    <span class="name">Driver (Mulank / Birth Number)</span>
   </div>
-  <p class="meaning">उत्तरदायित्व, सामंजस्य, परिवार। पोषक स्वभाव; दूसरों की देखभाल एवं सौंदर्य रचना में उद्देश्य पाते हैं।</p>
+  <p class="meaning">Responsibility, harmony, family. Nurturing temperament; finds purpose in caring for others and creating beauty.</p>
   <dl class="factors-grid">
-  <dt>ग्रह</dt><dd>Venus</dd>
-  <dt>दिवस</dt><dd>Friday</dd>
-  <dt>रंग</dt><dd>White / Sky Blue</dd>
-  <dt>रत्न</dt><dd>Diamond</dd>
-  <dt>देव</dt><dd>Shukra / Lakshmi</dd>
-  <dt>दिशा</dt><dd>Southeast</dd>
+  <dt>Planet</dt><dd>Venus</dd>
+  <dt>Day</dt><dd>Friday</dd>
+  <dt>Color</dt><dd>White / Sky Blue</dd>
+  <dt>Gemstone</dt><dd>Diamond</dd>
+  <dt>Deity</dt><dd>Shukra / Lakshmi</dd>
+  <dt>Direction</dt><dd>Southeast</dd>
 </dl>
 </div>
-<h2>भाग्यांक</h2>
+<h2>Conductor Number</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">8</span>
-    <span class="name">भाग्यांक (जीवन पथ)</span>
+    <span class="name">Conductor (Bhagyank / Life Path)</span>
   </div>
-  <p class="meaning">शक्ति, महत्वाकांक्षा, भौतिक दक्षता। उपलब्धि की प्रबल इच्छा; सम्पत्ति एवं उद्यम निर्माण में सक्षम।</p>
+  <p class="meaning">Power, ambition, material mastery. Strong drive for achievement; capable of building and managing wealth and enterprises.</p>
   <dl class="factors-grid">
-  <dt>ग्रह</dt><dd>Saturn</dd>
-  <dt>दिवस</dt><dd>Saturday</dd>
-  <dt>रंग</dt><dd>Blue / Black</dd>
-  <dt>रत्न</dt><dd>Blue Sapphire</dd>
-  <dt>देव</dt><dd>Shani / Hanuman</dd>
-  <dt>दिशा</dt><dd>West</dd>
+  <dt>Planet</dt><dd>Saturn</dd>
+  <dt>Day</dt><dd>Saturday</dd>
+  <dt>Color</dt><dd>Blue / Black</dd>
+  <dt>Gemstone</dt><dd>Blue Sapphire</dd>
+  <dt>Deity</dt><dd>Shani / Hanuman</dd>
+  <dt>Direction</dt><dd>West</dd>
 </dl>
 </div>
-<h2>अंतरात्मा अंक</h2>
+<h2>Soul Number</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">4</span>
-    <span class="name">अंतरात्मा अंक</span>
+    <span class="name">Soul</span>
   </div>
-  <p class="meaning">व्यावहारिकता, संरचना, परिश्रम। पद्धतिगत एवं अनुशासित; धैर्य से स्थायी आधार निर्मित करते हैं।</p>
+  <p class="meaning">Practicality, structure, hard work. Methodical and disciplined; builds enduring foundations through patience.</p>
   <dl class="factors-grid">
-  <dt>ग्रह</dt><dd>Rahu</dd>
-  <dt>दिवस</dt><dd>Sunday (with caution)</dd>
-  <dt>रंग</dt><dd>Smoky Gray / Indigo</dd>
-  <dt>रत्न</dt><dd>Hessonite</dd>
-  <dt>देव</dt><dd>Rahu / Saraswati</dd>
-  <dt>दिशा</dt><dd>Southwest</dd>
+  <dt>Planet</dt><dd>Rahu</dd>
+  <dt>Day</dt><dd>Sunday (with caution)</dd>
+  <dt>Color</dt><dd>Smoky Gray / Indigo</dd>
+  <dt>Gemstone</dt><dd>Hessonite</dd>
+  <dt>Deity</dt><dd>Rahu / Saraswati</dd>
+  <dt>Direction</dt><dd>Southwest</dd>
 </dl>
 </div>
-<h2>व्यक्तित्व अंक</h2>
+<h2>Personality Number</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">3</span>
-    <span class="name">व्यक्तित्व अंक</span>
+    <span class="name">Personality</span>
   </div>
-  <p class="meaning">अभिव्यक्ति, सृजनात्मकता, आशावाद। संचार एवं अधिगम स्वाभाविक शक्तियाँ; शिक्षण, लेखन, कला अनुकूल।</p>
+  <p class="meaning">Expression, creativity, optimism. Communication and learning are natural strengths; teaching, writing, and arts are favored.</p>
   <dl class="factors-grid">
-  <dt>ग्रह</dt><dd>Jupiter</dd>
-  <dt>दिवस</dt><dd>Thursday</dd>
-  <dt>रंग</dt><dd>Yellow</dd>
-  <dt>रत्न</dt><dd>Yellow Sapphire</dd>
-  <dt>देव</dt><dd>Brihaspati / Vishnu</dd>
-  <dt>दिशा</dt><dd>Northeast</dd>
+  <dt>Planet</dt><dd>Jupiter</dd>
+  <dt>Day</dt><dd>Thursday</dd>
+  <dt>Color</dt><dd>Yellow</dd>
+  <dt>Gemstone</dt><dd>Yellow Sapphire</dd>
+  <dt>Deity</dt><dd>Brihaspati / Vishnu</dd>
+  <dt>Direction</dt><dd>Northeast</dd>
 </dl>
 </div>
-<h2>नाम अंक</h2>
+<h2>Destiny Number</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">7</span>
-    <span class="name">नाम अंक</span>
+    <span class="name">Destiny</span>
   </div>
-  <p class="meaning">आध्यात्मिकता, आत्मनिरीक्षण, विश्लेषण। गहन सत्य के अन्वेषक; शोध, दर्शन, साधना में फलते हैं।</p>
+  <p class="meaning">Spirituality, introspection, analysis. Seeker of deeper truth; thrives in research, philosophy, and contemplative practice.</p>
   <dl class="factors-grid">
-  <dt>ग्रह</dt><dd>Ketu</dd>
-  <dt>दिवस</dt><dd>Tuesday (calm)</dd>
-  <dt>रंग</dt><dd>Brown / Purple</dd>
-  <dt>रत्न</dt><dd>Cat&#39;s Eye</dd>
-  <dt>देव</dt><dd>Ketu / Ganesha</dd>
-  <dt>दिशा</dt><dd>Northwest</dd>
+  <dt>Planet</dt><dd>Ketu</dd>
+  <dt>Day</dt><dd>Tuesday (calm)</dd>
+  <dt>Color</dt><dd>Brown / Purple</dd>
+  <dt>Gemstone</dt><dd>Cat&#39;s Eye</dd>
+  <dt>Deity</dt><dd>Ketu / Ganesha</dd>
+  <dt>Direction</dt><dd>Northwest</dd>
 </dl>
 </div>
-<h2>संगत अंक</h2>
+<h2>Compatible Numbers</h2>
 <div class="compatibility">
-  <div class="label">आपके मूलांक के साथ अनुकूल अंक</div>
+  <div class="label">Driver numbers that harmonize with yours</div>
   <div class="numbers">
       <span class="num-chip">3</span>
       <span class="num-chip">4</span>

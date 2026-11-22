@@ -168,6 +168,24 @@ const _labels = {
     'upsell':
         'যোগ, দশা ও প্রতিকারসহ বিস্তারিত বিশ্লেষণের জন্য বিস্তারিত কুণ্ডলী বা বৃহৎ কুণ্ডলী রিপোর্ট নিন।',
   },
+  'pa': {
+    'title_lite': 'ਜਨਮ ਕੁੰਡਲੀ',
+    'born': 'ਜਨਮ',
+    'at': 'ਸਮਾਂ',
+    'generated': 'ਤਿਆਰ',
+    'section_ascendant': 'ਲਗਨ',
+    'section_planets': 'ਗ੍ਰਹਿ ਸਥਿਤੀ',
+    'ascendant': 'ਲਗਨ',
+    'nakshatra': 'ਨਛੱਤਰ',
+    'pada': 'ਪਦ',
+    'lord': 'ਸੁਆਮੀ',
+    'planet': 'ਗ੍ਰਹਿ',
+    'sign': 'ਰਾਸ਼ੀ',
+    'degree': 'ਅੰਸ਼',
+    'house': 'ਭਾਵ',
+    'upsell':
+        'ਯੋਗ, ਦਸ਼ਾ ਅਤੇ ਉਪਾਵਾਂ ਸਮੇਤ ਵਿਸਤ੍ਰਿਤ ਵਿਸ਼ਲੇਸ਼ਣ ਲਈ ਵਿਸਤ੍ਰਿਤ ਕੁੰਡਲੀ ਜਾਂ ਬ੍ਰਿਹਤ ਕੁੰਡਲੀ ਰਿਪੋਰਟ ਲਓ।',
+  },
 };
 
 const _extraCss =
@@ -177,6 +195,7 @@ const _extraCss =
 /// as a complete HTML document. [branding] fields win over the branding in
 /// the report JSON.
 String renderKundliLiteHtml(Map<String, Object?> data, [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final b = resolveBranding(data['Branding'], branding);
   final locale = jsStr(jsOr(data['Locale'], 'en'));
   final label = makeLabeler(_labels, locale);

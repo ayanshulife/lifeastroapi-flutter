@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="gu">
+<html lang="ml">
 <head>
 <meta charset="utf-8">
-<title>સાડાસાતી પનોતી રિપોર્ટ</title>
+<title>ഏഴരശ്ശനി റിപ്പോർട്ട്</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -121,88 +113,76 @@ tr.current-window td { background: #fff7ed; font-weight: 600; }
 <body>
 <section class="cover">
   
-  <h1>સાડાસાતી પનોતી રિપોર્ટ</h1>
+  <h1>ഏഴരശ്ശനി റിപ്പോർട്ട്</h1>
   <div class="subject">Subject</div>
   <div class="meta">
-    જન્મ 1990-01-15 સમય 10:30 IST<br>
+    ജനനം 1990-01-15 സമയം 10:30 IST<br>
     19.0760, 72.8777
   </div>
   <div class="moon-sign-badge">
-    ચંદ્ર રાશિ: Leo
+    ചന്ദ്രരാശി: Leo
   </div>
   <div class="generated">
-    તૈયાર 2026-10-17 20:44 UTC
+    തയ്യാറാക്കിയ തീയതി 2026-11-15 06:14 UTC
   </div>
 </section>
 
-<h2>વર્તમાન સ્થિતિ</h2>
+<h2>നിലവിലെ സ്ഥിതി</h2>
 <div class="status-card clear">
-  <div class="label">વર્તમાન તબક્કો</div>
-  <div class="value">મુક્ત (સાડાસાતી પનોતી નથી)</div>
-  <div class="detail">હાલ આપ સાડાસાતી પનોતીથી મુક્ત છો. શનિ (Pisces) આપની ચંદ્ર રાશિ (Leo)થી દૂર છે.</div>
+  <div class="label">നിലവിലെ ഘട്ടം</div>
+  <div class="value">മുക്തം (ഏഴരശ്ശനി ഇല്ല)</div>
+  <div class="detail">നിലവിൽ നിങ്ങൾ ഏഴരശ്ശനിയിൽ നിന്ന് മുക്തരാണ്. ശനി (Pisces) നിങ്ങളുടെ ചന്ദ്രരാശിയിൽ (Leo) നിന്ന് അകലെയാണ്.</div>
 </div>
 
-<h2>અગાઉના સાડાસાતી પનોતીના તબક્કા</h2>
+<h2>മുൻ ഏഴരശ്ശനി കാലങ്ങൾ</h2>
 <table>
   <thead>
     <tr>
-      <th>આરંભ</th>
-      <th>સમાપ્તિ</th>
-      <th>અવધિ</th>
-      <th>ગોચર રાશિઓ</th>
+      <th>ആരംഭം</th>
+      <th>അവസാനം</th>
+      <th>കാലയളവ്</th>
+      <th>ഗോചാര രാശികൾ</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-  <td>2006-10-17</td>
-  <td>2011-11-20</td>
-  <td>આશરે 5.1 વર્ષ</td>
+  <td>2004-09-05</td>
+  <td>2012-08-04</td>
+  <td>ഏകദേശം 7.9 വർഷം</td>
   <td>Cancer, Leo</td>
-</tr>
-    <tr>
-  <td>2012-06-17</td>
-  <td>2012-08-16</td>
-  <td>આશરે 0.2 વર્ષ</td>
-  <td>Virgo</td>
 </tr>
   </tbody>
 </table>
 
-<h2>આગામી તબક્કા</h2>
+<h2>വരാനിരിക്കുന്ന കാലങ്ങൾ</h2>
 <table>
   <thead>
     <tr>
-      <th>આરંભ</th>
-      <th>સમાપ્તિ</th>
-      <th>અવધિ</th>
-      <th>ગોચર રાશિઓ</th>
+      <th>ആരംഭം</th>
+      <th>അവസാനം</th>
+      <th>കാലയളവ്</th>
+      <th>ഗോചാര രാശികൾ</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-  <td>2034-07-22</td>
-  <td>2041-01-16</td>
-  <td>આશરે 6.5 વર્ષ</td>
+  <td>2034-07-12</td>
+  <td>2041-09-26</td>
+  <td>ഏകദേശം 7.2 വർഷം</td>
   <td>Cancer, Leo</td>
-</tr>
-    <tr>
-  <td>2041-03-17</td>
-  <td>2041-10-13</td>
-  <td>આશરે 0.6 વર્ષ</td>
-  <td>Virgo</td>
 </tr>
   </tbody>
 </table>
 
-<h2>સૂચવેલા ઉપાયો</h2>
+<h2>നിർദ്ദേശിക്കുന്ന പരിഹാരങ്ങൾ</h2>
 <div class="remedies">
-  <p>સાડાસાતી પનોતી દરમિયાન પ્રચલિત પરંપરાગત ઉપાયો નીચે મુજબ છે. કોઈ પણ ઉપાય અપનાવતાં પહેલાં આપની કુંડળીને પૂરેપૂરી તપાસી લેજો:</p>
+  <p>ഏഴരശ്ശനിക്കാലത്ത് സാധാരണയായി അനുഷ്ഠിക്കുന്ന പരമ്പരാഗത പരിഹാരങ്ങൾ ഇവയാണ്. ഏതു പരിഹാരവും തുടങ്ങുന്നതിനു മുമ്പ് നിങ്ങളുടെ ജാതകം പൂർണമായി പരിശോധിക്കുക:</p>
   <ul>
-    <li>દરરોજ હનુમાન ચાલીસાનો પાઠ કરજો, ખાસ કરીને મંગળવારે અને શનિવારે.</li>
-    <li>શનિવારે કાળા તલ, સરસવનું તેલ અથવા લોખંડની વસ્તુઓનું દાન કરજો.</li>
-    <li>શનિદેવની પૂજા તલના તેલ અને વાદળી ફૂલોથી કરજો.</li>
-    <li>નીલમ કુંડળીની તપાસ પછી જ ધારણ કરજો; શનિનું રત્ન બધા માટે યોગ્ય હોતું નથી.</li>
-    <li>અનુશાસિત દિનચર્યા રાખજો, નૈતિક આચરણ કરજો અને બિનજરૂરી ખર્ચ ટાળજો.</li>
+    <li>ദിവസവും ഹനുമാൻ ചാലീസ ജപിക്കുക, പ്രത്യേകിച്ച് ചൊവ്വാഴ്ചയും ശനിയാഴ്ചയും.</li>
+    <li>ശനിയാഴ്ച കറുത്ത എള്ള്, എള്ളെണ്ണ അല്ലെങ്കിൽ ഇരുമ്പുസാധനങ്ങൾ ദാനം ചെയ്യുക.</li>
+    <li>എള്ളെണ്ണയും നീലപ്പൂക്കളും കൊണ്ട് ശനിദേവനെ ആരാധിക്കുക.</li>
+    <li>ഇന്ദ്രനീലം ജാതകപരിശോധനയ്ക്കു ശേഷം മാത്രം ധരിക്കുക; ശനിയുടെ രത്നം എല്ലാവർക്കും യോജിക്കില്ല.</li>
+    <li>ചിട്ടയായ ദിനചര്യ പാലിക്കുക, ധാർമികമായി പെരുമാറുക, അനാവശ്യ ചെലവുകൾ ഒഴിവാക്കുക.</li>
   </ul>
 </div>
 <footer>Generated using LifeAstroAPI</footer>

@@ -35,20 +35,26 @@ Future<void> main() async {
       print('${p['name']}: house ${p['house']}, ${p['dms_in_sign']}');
     }
 
-    // A Detailed Kundli report in Hindi, as a branded HTML document. Open
-    // it in a browser, or print it to PDF with kundliDetailedPdf(report).
+    // A Detailed Kundli report in Hindi, as a branded HTML document and,
+    // when a Chrome, Chromium or Edge is installed, as a PDF.
     final report = await client.reports.kundliDetailed(
       birth: arjun,
       name: 'Arjun Mehta',
       place: 'Mumbai',
       lang: Lang.hi,
     );
-    final html = renderKundliDetailedHtml(
-      report,
-      const Branding(companyName: 'Acme Astro', primaryColor: '#6b21a8'),
+    const branding = Branding(
+      companyName: 'Acme Astro',
+      primaryColor: '#6b21a8',
     );
-    File('kundli.html').writeAsStringSync(html);
+    File('kundli.html')
+        .writeAsStringSync(renderKundliDetailedHtml(report, branding));
     print('Wrote kundli.html');
+    if (ChromePdfEngine.findChromeExecutable() != null) {
+      final pdf = await kundliDetailedPdf(report, branding: branding);
+      File('kundli.pdf').writeAsBytesSync(pdf);
+      print('Wrote kundli.pdf');
+    }
   } on PaymentRequiredException {
     print('Out of credits: https://lifeastroapi.com/dashboard/billing');
   } on LifeAstroException catch (e) {

@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="pa">
 <head>
 <meta charset="utf-8">
-<title>Numerology Report</title>
+<title>ਅੰਕ ਜੋਤਿਸ਼ ਰਿਪੋਰਟ, Arjun Mehta</title>
 <style>
-:root { --brand-primary: #6b21a8; --brand-secondary: #9333ea; }
+:root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,39 +49,24 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
-body::before {
-  content: "SAMPLE";
-  position: fixed; top: 50%; left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  font-size: 80pt; color: rgba(0,0,0,0.06); font-weight: 700;
-  pointer-events: none; z-index: 0;
-}
 
 @page {
   @bottom-center {
-    content: "Acme Astro · confidential";
+    content: "Generated using LifeAstroAPI";
     font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
     font-size: 8pt;
-    color: #9333ea;
+    color: #666666;
   }
 }
 
@@ -123,6 +108,8 @@ body::before {
 .factors-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
   gap: 2mm 6mm;
   padding: 4mm;
   background: #fafafa;
@@ -163,107 +150,107 @@ body::before {
 </head>
 <body>
 <section class="cover">
-  <img src="https://cdn.example/acme/logo.png" alt="" class="logo"><div class="company">Acme Astro</div>
-  <h1>Numerology Report</h1>
-  <div class="subject"></div>
-  <div class="meta">Born 1990-01-15</div>
+  
+  <h1>ਅੰਕ ਜੋਤਿਸ਼ ਰਿਪੋਰਟ</h1>
+  <div class="subject">Arjun Mehta</div>
+  <div class="meta">ਜਨਮ 1990-01-15</div>
   <div class="summary">
-    <div class="summary-card"><div class="number">6</div><div class="label">Driver</div></div>
-    <div class="summary-card"><div class="number">8</div><div class="label">Conductor</div></div>
-    <div class="summary-card"><div class="number">4</div><div class="label">Soul</div></div>
-    <div class="summary-card"><div class="number">3</div><div class="label">Personality</div></div>
-    <div class="summary-card"><div class="number">7</div><div class="label">Destiny</div></div>
+    <div class="summary-card"><div class="number">6</div><div class="label">ਮੂਲਾਂਕ</div></div>
+    <div class="summary-card"><div class="number">8</div><div class="label">ਭਾਗਯਾਂਕ</div></div>
+    <div class="summary-card"><div class="number">4</div><div class="label">ਅੰਤਰ-ਆਤਮਾ ਅੰਕ</div></div>
+    <div class="summary-card"><div class="number">3</div><div class="label">ਸ਼ਖ਼ਸੀਅਤ ਅੰਕ</div></div>
+    <div class="summary-card"><div class="number">7</div><div class="label">ਨਾਮ ਅੰਕ</div></div>
   </div>
   
 </section>
-<h2>Driver Number</h2>
+<h2>ਮੂਲਾਂਕ</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">6</span>
-    <span class="name">Driver (Mulank / Birth Number)</span>
+    <span class="name">ਮੂਲਾਂਕ (ਜਨਮ ਤਰੀਕ ਦਾ ਅੰਕ)</span>
   </div>
-  <p class="meaning">Responsibility, harmony, family. Nurturing temperament; finds purpose in caring for others and creating beauty.</p>
+  <p class="meaning">ਜ਼ਿੰਮੇਵਾਰੀ, ਮੇਲ-ਜੋਲ, ਪਰਿਵਾਰ। ਪਾਲਣ ਵਾਲਾ ਸੁਭਾਅ; ਦੂਜਿਆਂ ਦੀ ਦੇਖਭਾਲ ਅਤੇ ਸੁੰਦਰਤਾ ਦੀ ਸਿਰਜਣਾ ਵਿੱਚ ਤੁਸੀਂ ਜੀਵਨ ਦਾ ਮਕਸਦ ਲੱਭਦੇ ਹੋ।</p>
   <dl class="factors-grid">
-  <dt>Planet</dt><dd>Venus</dd>
-  <dt>Day</dt><dd>Friday</dd>
-  <dt>Color</dt><dd>White / Sky Blue</dd>
-  <dt>Gemstone</dt><dd>Diamond</dd>
-  <dt>Deity</dt><dd>Shukra / Lakshmi</dd>
-  <dt>Direction</dt><dd>Southeast</dd>
+  <dt>ਗ੍ਰਹਿ</dt><dd>ਸ਼ੁੱਕਰ</dd>
+  <dt>ਵਾਰ</dt><dd>ਸ਼ੁੱਕਰਵਾਰ</dd>
+  <dt>ਰੰਗ</dt><dd>White / Sky Blue</dd>
+  <dt>ਰਤਨ</dt><dd>Diamond</dd>
+  <dt>ਦੇਵਤਾ</dt><dd>Shukra / Lakshmi</dd>
+  <dt>ਦਿਸ਼ਾ</dt><dd>Southeast</dd>
 </dl>
 </div>
-<h2>Conductor Number</h2>
+<h2>ਭਾਗਯਾਂਕ</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">8</span>
-    <span class="name">Conductor (Bhagyank / Life Path)</span>
+    <span class="name">ਭਾਗਯਾਂਕ (ਜੀਵਨ ਪੰਧ)</span>
   </div>
-  <p class="meaning">Power, ambition, material mastery. Strong drive for achievement; capable of building and managing wealth and enterprises.</p>
+  <p class="meaning">ਸ਼ਕਤੀ, ਉੱਚੀਆਂ ਇੱਛਾਵਾਂ, ਦੁਨਿਆਵੀ ਕੰਮਾਂ ਦੀ ਮੁਹਾਰਤ। ਪ੍ਰਾਪਤੀ ਦੀ ਤੀਬਰ ਇੱਛਾ; ਜਾਇਦਾਦ ਅਤੇ ਕਾਰੋਬਾਰ ਖੜ੍ਹਾ ਕਰਨ ਦੀ ਸਮਰੱਥਾ ਤੁਹਾਡੇ ਵਿੱਚ ਹੈ।</p>
   <dl class="factors-grid">
-  <dt>Planet</dt><dd>Saturn</dd>
-  <dt>Day</dt><dd>Saturday</dd>
-  <dt>Color</dt><dd>Blue / Black</dd>
-  <dt>Gemstone</dt><dd>Blue Sapphire</dd>
-  <dt>Deity</dt><dd>Shani / Hanuman</dd>
-  <dt>Direction</dt><dd>West</dd>
+  <dt>ਗ੍ਰਹਿ</dt><dd>ਸ਼ਨੀ</dd>
+  <dt>ਵਾਰ</dt><dd>ਸ਼ਨੀਵਾਰ</dd>
+  <dt>ਰੰਗ</dt><dd>Blue / Black</dd>
+  <dt>ਰਤਨ</dt><dd>Blue Sapphire</dd>
+  <dt>ਦੇਵਤਾ</dt><dd>Shani / Hanuman</dd>
+  <dt>ਦਿਸ਼ਾ</dt><dd>West</dd>
 </dl>
 </div>
-<h2>Soul Number</h2>
+<h2>ਅੰਤਰ-ਆਤਮਾ ਅੰਕ</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">4</span>
-    <span class="name">Soul</span>
+    <span class="name">ਅੰਤਰ-ਆਤਮਾ ਅੰਕ</span>
   </div>
-  <p class="meaning">Practicality, structure, hard work. Methodical and disciplined; builds enduring foundations through patience.</p>
+  <p class="meaning">ਵਿਹਾਰਕਤਾ, ਬਣਤਰ, ਮਿਹਨਤ। ਤੁਸੀਂ ਢੰਗ ਨਾਲ ਅਤੇ ਅਨੁਸ਼ਾਸਨ ਵਿੱਚ ਕੰਮ ਕਰਦੇ ਹੋ; ਧੀਰਜ ਨਾਲ ਟਿਕਾਊ ਨੀਂਹ ਬਣਾਉਂਦੇ ਹੋ।</p>
   <dl class="factors-grid">
-  <dt>Planet</dt><dd>Rahu</dd>
-  <dt>Day</dt><dd>Sunday (with caution)</dd>
-  <dt>Color</dt><dd>Smoky Gray / Indigo</dd>
-  <dt>Gemstone</dt><dd>Hessonite</dd>
-  <dt>Deity</dt><dd>Rahu / Saraswati</dd>
-  <dt>Direction</dt><dd>Southwest</dd>
+  <dt>ਗ੍ਰਹਿ</dt><dd>ਰਾਹੂ</dd>
+  <dt>ਵਾਰ</dt><dd>Sunday (with caution)</dd>
+  <dt>ਰੰਗ</dt><dd>Smoky Gray / Indigo</dd>
+  <dt>ਰਤਨ</dt><dd>Hessonite</dd>
+  <dt>ਦੇਵਤਾ</dt><dd>Rahu / Saraswati</dd>
+  <dt>ਦਿਸ਼ਾ</dt><dd>Southwest</dd>
 </dl>
 </div>
-<h2>Personality Number</h2>
+<h2>ਸ਼ਖ਼ਸੀਅਤ ਅੰਕ</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">3</span>
-    <span class="name">Personality</span>
+    <span class="name">ਸ਼ਖ਼ਸੀਅਤ ਅੰਕ</span>
   </div>
-  <p class="meaning">Expression, creativity, optimism. Communication and learning are natural strengths; teaching, writing, and arts are favored.</p>
+  <p class="meaning">ਪ੍ਰਗਟਾਵਾ, ਰਚਨਾਤਮਕਤਾ, ਆਸ਼ਾਵਾਦ। ਗੱਲਬਾਤ ਅਤੇ ਸਿੱਖਣਾ ਤੁਹਾਡੀਆਂ ਕੁਦਰਤੀ ਤਾਕਤਾਂ ਹਨ; ਪੜ੍ਹਾਉਣਾ, ਲਿਖਣਾ ਅਤੇ ਕਲਾ ਅਨੁਕੂਲ ਹਨ।</p>
   <dl class="factors-grid">
-  <dt>Planet</dt><dd>Jupiter</dd>
-  <dt>Day</dt><dd>Thursday</dd>
-  <dt>Color</dt><dd>Yellow</dd>
-  <dt>Gemstone</dt><dd>Yellow Sapphire</dd>
-  <dt>Deity</dt><dd>Brihaspati / Vishnu</dd>
-  <dt>Direction</dt><dd>Northeast</dd>
+  <dt>ਗ੍ਰਹਿ</dt><dd>ਬ੍ਰਹਿਸਪਤੀ</dd>
+  <dt>ਵਾਰ</dt><dd>ਵੀਰਵਾਰ</dd>
+  <dt>ਰੰਗ</dt><dd>Yellow</dd>
+  <dt>ਰਤਨ</dt><dd>Yellow Sapphire</dd>
+  <dt>ਦੇਵਤਾ</dt><dd>Brihaspati / Vishnu</dd>
+  <dt>ਦਿਸ਼ਾ</dt><dd>Northeast</dd>
 </dl>
 </div>
-<h2>Destiny Number</h2>
+<h2>ਨਾਮ ਅੰਕ</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">7</span>
-    <span class="name">Destiny</span>
+    <span class="name">ਨਾਮ ਅੰਕ</span>
   </div>
-  <p class="meaning">Spirituality, introspection, analysis. Seeker of deeper truth; thrives in research, philosophy, and contemplative practice.</p>
+  <p class="meaning">ਅਧਿਆਤਮਕਤਾ, ਆਤਮ-ਨਿਰੀਖਣ, ਵਿਸ਼ਲੇਸ਼ਣ। ਤੁਸੀਂ ਡੂੰਘੇ ਸੱਚ ਦੇ ਖੋਜੀ ਹੋ; ਖੋਜ, ਦਰਸ਼ਨ ਅਤੇ ਸਾਧਨਾ ਵਿੱਚ ਤੁਸੀਂ ਵਧਦੇ-ਫੁੱਲਦੇ ਹੋ।</p>
   <dl class="factors-grid">
-  <dt>Planet</dt><dd>Ketu</dd>
-  <dt>Day</dt><dd>Tuesday (calm)</dd>
-  <dt>Color</dt><dd>Brown / Purple</dd>
-  <dt>Gemstone</dt><dd>Cat&#39;s Eye</dd>
-  <dt>Deity</dt><dd>Ketu / Ganesha</dd>
-  <dt>Direction</dt><dd>Northwest</dd>
+  <dt>ਗ੍ਰਹਿ</dt><dd>ਕੇਤੂ</dd>
+  <dt>ਵਾਰ</dt><dd>Tuesday (calm)</dd>
+  <dt>ਰੰਗ</dt><dd>Brown / Purple</dd>
+  <dt>ਰਤਨ</dt><dd>Cat&#39;s Eye</dd>
+  <dt>ਦੇਵਤਾ</dt><dd>Ketu / Ganesha</dd>
+  <dt>ਦਿਸ਼ਾ</dt><dd>Northwest</dd>
 </dl>
 </div>
-<h2>Compatible Numbers</h2>
+<h2>ਮੇਲ ਖਾਂਦੇ ਅੰਕ</h2>
 <div class="compatibility">
-  <div class="label">Driver numbers that harmonize with yours</div>
+  <div class="label">ਤੁਹਾਡੇ ਮੂਲਾਂਕ ਨਾਲ ਅਨੁਕੂਲ ਅੰਕ</div>
   <div class="numbers">
       <span class="num-chip">3</span>
       <span class="num-chip">4</span>
   </div>
 </div>
-<footer>Acme Astro · confidential</footer>
+<footer>Generated using LifeAstroAPI</footer>
 </body>
 </html>

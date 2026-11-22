@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="hi">
+<html lang="pa">
 <head>
 <meta charset="utf-8">
-<title>बृहत् कुंडली: Arjun Mehta</title>
+<title>ਬ੍ਰਿਹਤ ਕੁੰਡਲੀ: Arjun Mehta</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,78 +49,53 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
 
-/* Brihad uses a Puppeteer running header/footer in the page margin. The
-   @page margin here MUST match the page.pdf margin (BRIHAD_PDF_MARGIN =
-   26mm/16mm top/bottom) so that whichever Chromium honours, body content
-   always stays inside the same safe box and never overlaps the header/footer
-   bands. (The old 18/22mm BASE_CSS margin let content ride up into the
-   header.) Drop the in-body fixed footer + watermark too. */
+
 @page { size: A4; margin: 26mm 0 16mm 0; }
 body > footer { display: none !important; }
-body::before { display: none !important; }
-/* Side gutters live on the body so the running header/footer can still bleed
-   to the page edges like the benchmark's page-number tab. */
+
+body::before { z-index: -1; }
+
 .section { padding-left: 14mm; padding-right: 14mm; }
 .cover { padding-left: 0; padding-right: 0; }
 
-/* ====================================================================
-   LifeAstro design system — "Royal Purple + Gold" (premium/luxe). A
-   DISTINCT identity, deliberately NOT the benchmark's teal/orange look:
-   royal-purple primaries + gold accents + soft-lavender backgrounds, and a
-   gold double-rule heading underline (not a slanted bar). The --as-* var
-   names are kept only so the rest of the CSS need not change.
-   ==================================================================== */
+
 :root {
-  /* LifeAstro "Hindu Spiritual / Saffron" palette — warm dharmic colours
-     (saffron, haldi-gold, sindoor-maroon) on cream. All accents are
-     dark/saturated enough to read clearly on white or the cream zebra. */
-  --as-teal:#c25e10;   /* deep saffron (primary)            */
-  --as-green:#a8451a;  /* burnt orange-brown                */
-  --as-amber:#b8860b;  /* haldi gold (readable on white)    */
-  --as-dorange:#9e2b25;/* sindoor maroon (heading accent)   */
-  --as-slate:#6b4a2f;  /* warm brown ink-2                  */
-  --as-olive:#9c6f1e;  /* antique gold                      */
-  --as-blue:#8a3324;   /* deep terracotta                   */
-  --as-lteal:#c0631e;  /* saffron-orange                    */
-  --as-salmon:#b5471f; /* rust                              */
-  --as-lamber:#9a7b1e; /* gold (readable)                   */
-  --as-gold:#8a5a00;   /* dark saffron-gold (cover)         */
-  --as-tab:#8a1f17;    /* deep maroon page accent           */
-  --as-zebra:#fcf3e3;  /* warm cream zebra (bg only)        */
-  --as-cardbg:#fffaf0; /* ivory card bg                     */
-  --as-ink:#3a2410;    /* deep warm-brown ink               */
-  /* Legacy "secondary" small-muted text → readable warm brown (gold is too
-     light as body text; gold stays for accents/borders). */
+  
+  --as-teal:#c25e10;   
+  --as-green:#a8451a;  
+  --as-amber:#b8860b;  
+  --as-dorange:#9e2b25;
+  --as-slate:#6b4a2f;  
+  --as-olive:#9c6f1e;  
+  --as-blue:#8a3324;   
+  --as-lteal:#c0631e;  
+  --as-salmon:#b5471f; 
+  --as-lamber:#9a7b1e; 
+  --as-gold:#8a5a00;   
+  --as-tab:#8a1f17;    
+  --as-zebra:#fcf3e3;  
+  --as-cardbg:#fffaf0; 
+  --as-ink:#3a2410;    
+  
   --brand-secondary:#7a5a3a;
 }
-/* Typography — airy density (~larger body + generous line-height) so the
-   report reads premium, not a wall of text. */
+
 body { color: var(--as-ink); font-size: 11.5pt; line-height: 1.8; }
 
-/* Section heading — purple title with a DISTINCT gold double-rule underline
-   (thick gold bar + thin purple hairline beneath) — a different signature
-   from the benchmark's slanted single bar. */
+
 .section > h2 {
   color: var(--as-teal); font-size: 21.6pt; font-weight: 700;
   border: none; padding: 0 0 2.5mm; margin: 0 0 5mm; position: relative;
@@ -129,12 +104,15 @@ body { color: var(--as-ink); font-size: 11.5pt; line-height: 1.8; }
   content: ""; position: absolute; left: 0; bottom: 0; height: 1.6mm; width: 52mm;
   background: var(--as-amber);
   border-radius: 1mm;
-  box-shadow: 0 2.4mm 0 -0.9mm var(--as-teal); /* thin purple hairline below the gold bar */
+  box-shadow: 0 2.4mm 0 -0.9mm var(--as-teal); 
 }
+
+h2, h3 { padding-top: 0; }
+.section > h2 { page-break-after: auto; }
 .section:nth-of-type(2n) > h2 { color: var(--as-dorange); }
 .section:nth-of-type(3n) > h2 { color: var(--as-blue); }
 
-/* Tables — colored header row + zebra body. */
+
 .section table { border-collapse: separate; border-spacing: 0; margin: 4mm 0; width: 100%; }
 .section table thead th {
   background: var(--as-teal); color: #fff; font-weight: 600; font-size: 10pt;
@@ -146,27 +124,19 @@ body { color: var(--as-ink); font-size: 11.5pt; line-height: 1.8; }
 }
 .section table tbody tr:nth-child(odd) td { background: var(--as-zebra); }
 .section table tbody tr:nth-child(even) td { background: #ffffff; }
-/* Page-break hygiene: never split a row; keep header with its first rows;
-   don't strand a heading at the page bottom. */
+
+.section.maitri-section table thead th, .section.maitri-section table tbody td { padding-left: 1.2mm; padding-right: 1.2mm; }
+
 .section table tr { page-break-inside: avoid; }
 .section table thead { display: table-header-group; }
 .section h4 { page-break-after: avoid; }
-/* NOTE: h2/h3 do NOT use page-break-after:avoid — gluing a heading to a tall
-   following block (e.g. a 400px divisional chart) pushed the whole group to
-   the next page and left the forced section page nearly blank. */
-.yoga-block, .north-chart { page-break-inside: avoid; }
-/* The diamond chart stays atomic, and the chart+heading stick together, but
-   a divisional block as a whole may break (its table can flow) so a tall
-   first block doesn't orphan an entire blank page before it. */
-/* Keep ONLY the diamond atomic (.north-chart avoid-inside). Do NOT chain
-   the heading→chart with avoid-before/after — that built an unbreakable
-   group taller than a page, which orphaned a whole blank page before it. */
 
-/* Narrative-chapter section headings keep the same slanted-underline look but
-   the per-rule sub-headings (h3) are colored + tight. */
-/* Each per-rule block (h3 + body) gets card-like breathing room so a page
-   holds a few rich blocks, not a wall of text — matches the benchmark's
-   ~230 w/pp feel. */
+.yoga-block, .north-chart { page-break-inside: avoid; }
+
+
+
+
+
 .narrative-chapter h3 {
   color: var(--as-dorange); font-size: 13.5pt; font-weight: 700;
   margin: 9mm 0 3mm; page-break-after: avoid;
@@ -176,51 +146,44 @@ body { color: var(--as-ink); font-size: 11.5pt; line-height: 1.8; }
 .narrative-chapter ul { margin: 0 0 5mm 7mm; }
 .narrative-chapter li { margin-bottom: 2.5mm; line-height: 1.7; }
 
-/* Sub-section h3 inside compute sections (e.g. KP significators, Maitri tables) */
+
 .section h3 { color: var(--as-teal); font-size: 12.5pt; font-weight: 700; margin: 6mm 0 2.5mm; page-break-after: avoid; }
 .section h4 { color: var(--as-slate); font-size: 11pt; font-weight: 700; margin: 4mm 0 2mm; }
 .section p { margin: 3mm 0; line-height: 1.7; }
 
-/* Intro paragraph right under a heading — muted. */
+
 .section > p:first-of-type { color: #555; }
 
-/* Table of contents (विषय-सूची) — teal banner + dotted-leader rows with
-   color-coded page numbers. */
-.toc-section { padding-top: 4mm; }
+
+.toc-section { padding-top: 4mm; page-break-after: always; }
 .toc-banner {
   background: var(--as-teal); color: #fff; font-size: 16pt; font-weight: 700;
   text-align: center; padding: 3mm; border-radius: 4mm; margin: 0 0 6mm;
 }
-.toc-row { display: flex; align-items: baseline; margin: 2.4mm 0; font-size: 12pt; }
+.toc-row { display: flex; align-items: baseline; margin: 1.8mm 0; font-size: 12pt; line-height: 1.5; }
 .toc-row .toc-title { color: #444; white-space: nowrap; }
 .toc-row .toc-dots { flex: 1 1 auto; border-bottom: 1px dotted #bbb; margin: 0 2mm 1mm; }
 .toc-row .toc-page { font-weight: 700; font-size: 13pt; }
-/* 2-level TOC: Part rows bold (level 1), section rows indented (level 2). */
-.toc-row.toc-part { margin: 4mm 0 1.5mm; }
+
+.toc-row.toc-part { margin: 3.2mm 0 1.2mm; page-break-after: avoid; }
 .toc-row.toc-part .toc-title { color: var(--as-teal); font-weight: 700; font-size: 12.5pt; }
 .toc-row.toc-sub { margin-left: 7mm; }
 .toc-row.toc-sub .toc-title { color: #555; }
 
-/* Part banner — a level-1 grouping heading spliced to the TOP of the first
- * section of each Part (NOT its own page, so there's no blank Part page). The
- * host section already forces a page break, so the banner opens that page with
- * the section's content flowing right below it. Rendered LARGER than ordinary
- * section headings (24pt vs 21.6pt) so it reads as the top of the hierarchy
- * and the outline/TOC level-detection by font-size works. */
+
 .part-banner { margin: 0 0 6mm; page-break-after: avoid; }
 .part-banner .part-h2 {
   background: var(--as-teal); color: #fff; text-align: center;
   padding: 6mm 4mm; border-radius: 3mm; font-size: 24pt; border-bottom: none;
   margin: 0;
 }
-/* A merged-in sub-heading: the second piece's old top heading, demoted to a
- * sub-heading when two same-topic sections fold into one. In-section divider. */
+
 h3.merged-sub {
   font-size: 14pt; color: var(--as-teal); margin: 7mm 0 2mm;
   padding-top: 3mm; border-top: 0.3mm solid #e3d9c0;
 }
 
-/* Graha Sthiti — planet cards grid with glyph images (3-up). */
+
 .graha-grid { display: flex; flex-wrap: wrap; gap: 4mm; margin: 5mm 0; }
 .graha-card {
   flex: 0 0 calc(33.333% - 3mm); display: flex; align-items: center; gap: 3mm;
@@ -232,7 +195,30 @@ h3.merged-sub {
 .graha-card .graha-pos { font-size: 9.5pt; color: var(--as-teal); margin-top: 0.5mm; }
 .graha-card .graha-nak { font-size: 9pt; color: #777; }
 
-/* Rajyoga donut — pinned colors. */
+
+.section > ul:last-child { page-break-before: avoid; page-break-inside: avoid; }
+.lalkitab-section > table:last-child { page-break-inside: avoid; }
+.section > p:last-child { widows: 5; }
+.section > p + p:last-child, .section > ul + p:last-child { page-break-before: avoid; }
+.section > div + div + div:last-child { page-break-before: avoid; }
+
+.section.first table { margin: 2mm 0 0; }
+.section.first table thead th { padding-top: 2mm; padding-bottom: 2mm; line-height: 1.5; }
+.section.first table tbody td { padding-top: 1.9mm; padding-bottom: 1.9mm; line-height: 1.5; }
+
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) .section .divisional-block tbody td,
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) .section.short-section table tbody td,
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) .section.compact-section table tbody td {
+  padding-top: 2mm; padding-bottom: 2mm;
+}
+
+.section > span:first-child, .section > span:first-child + span {
+  display: block; height: 2px; line-height: 2px; margin-bottom: -2px; overflow: visible;
+  white-space: nowrap; page-break-after: avoid;
+}
+.section > span:first-child + span { text-indent: 20px; }
+
+
 .rajyoga-power { text-align: center; margin: 6mm 0; }
 .rajyoga-power .rajyoga-pct {
   display: inline-block; font-size: 30pt; font-weight: 700; color: var(--as-teal);
@@ -242,12 +228,13 @@ h3.merged-sub {
 .cover h1 { font-size: 32pt; font-weight: 700; letter-spacing: 1pt; }
 .cover .subtitle { color: var(--brand-secondary); font-size: 14pt; margin-bottom: 14mm; font-style: italic; }
 .cover .subject { font-size: 18pt; font-weight: 600; }
-/* Each top-level section starts on a fresh page for a clean opening. The
-   blank-page bug (a section heading chained avoid-together with a tall
-   440px chart into an unbreakable group) is fixed separately by NOT chaining
-   heading→chart, so this forced break no longer orphans empty pages. */
+
 .section { page-break-before: always; margin-top: 4mm; }
 .section.first { page-break-before: auto; }
+
+.short-section + .section { page-break-before: auto; margin-top: 7mm; }
+.short-section + .section > h2 { page-break-after: avoid; }
+.short-section + .compact-section { page-break-inside: avoid; }
 .planet-block, .house-block {
   margin: 4mm 0; padding: 4mm 5mm; background: #fafafa;
   border-left: 3px solid var(--brand-primary); page-break-inside: avoid;
@@ -255,11 +242,8 @@ h3.merged-sub {
 .planet-block .meta, .house-block .meta {
   color: var(--brand-secondary); font-size: 10pt; margin-bottom: 2mm;
 }
-/* Yoga blocks — each name becomes a numbered colored pill badge (rotating
-   palette like the benchmark). Counter drives the number. */
-/* Yoga blocks — a clean LifeAstro card (NOT the benchmark's garish rotating
-   pill): a numbered gold ✦ disc + maroon name on a cream card with a saffron
-   left rule. Single, consistent, elegant. */
+
+
 .section.yogas-section { counter-reset: yoga; }
 .yoga-block {
   counter-increment: yoga; margin: 5mm 0; padding: 4mm 5mm 4mm 6mm;
@@ -299,7 +283,7 @@ h3.merged-sub {
   color: #fff; font-size: 9pt; border-radius: 1mm; margin-left: 3mm; vertical-align: middle;
 }
 .empty-list { margin: 3mm 0; color: var(--brand-secondary); font-style: italic; }
-/* Mudda-Dasha month-wise timeline cards */
+
 .mudda-period {
   margin: 4mm 0; padding: 3mm 5mm 3mm 5mm; background: var(--as-cardbg, #fffaf0);
   border-left: 4px solid var(--as-teal, #c25e10); border-radius: 1mm;
@@ -318,12 +302,8 @@ h3.merged-sub {
 }
 .mudda-guidance p { margin: 0.8mm 0; font-size: 10pt; }
 .mudda-guidance strong { color: var(--as-dorange, #9e2b25); }
-/* The whole divisional block must NOT be atomic — chart(110mm)+full table is
-   taller than the space left under a section heading, which orphaned a near-
-   blank page. Only the diamond (.north-chart) stays atomic; the table flows. */
-/* Keep each varga's chart + its table together on one page. The chart is
-   sized (300px ≈ 79mm) so the whole block stays under a page height, so this
-   never orphans a blank page (the earlier blank-page issue was at 400px). */
+
+
 .divisional-block { margin: 6mm 0; page-break-inside: avoid; }
 .divisional-block .vsubtitle { color: var(--brand-secondary); font-style: italic; font-size: 10pt; margin: 0 0 2mm; }
 .divisional-block .lagna-line { font-size: 10pt; margin-bottom: 2mm; }
@@ -357,89 +337,562 @@ h3.merged-sub {
 <body>
 <section class="cover">
 
-<h1>बृहत् कुंडली</h1>
-<div class="subtitle">विस्तृत वैदिक ज्योतिष विश्लेषण</div>
+<h1>ਬ੍ਰਿਹਤ ਕੁੰਡਲੀ</h1>
+<div class="subtitle">ਵਿਸਤ੍ਰਿਤ ਵੈਦਿਕ ਜੋਤਿਸ਼ ਵਿਸ਼ਲੇਸ਼ਣ</div>
 <div class="subject">Arjun Mehta</div>
 <div class="meta">
-जन्म  समय <br>
-
+ਜਨਮ 1990-01-15 ਸਮਾਂ 10:30<br>
+ਨਮੂਨੇ ਦਾ ਵਾਕ।
 </div>
 <div class="generated">
-तैयार 
+ਤਿਆਰ 2026-10-31 06:40 UTC
 </div>
 </section>
 
 <section class="section first">
-<div class="part-banner"><h2 class="part-h2">भाग 1: आधार</h2></div>
-<h2>जन्म कुंडली सारांश</h2>
+<div class="part-banner"><h2 class="part-h2">ਭਾਗ 1: ਆਧਾਰ</h2></div>
+<h2>ਜਨਮ ਕੁੰਡਲੀ ਦਾ ਸਾਰ</h2>
 <p>
-<strong>लग्न:</strong>
- (),
-नक्षत्र: ,
-पाद 
+<strong>ਲਗਨ:</strong>
+ਸਿੰਘ (06°00&#39;21&quot;),
+ਨਛੱਤਰ: ਮਘਾ,
+ਪਦ 2
 </p>
+<div style="display:flex;justify-content:center;gap:6mm;flex-wrap:wrap;margin:3mm 0;"><div class="north-chart" style="display:inline-block;text-align:center;margin:2mm 3mm;">
+<div style="font-size:10pt;font-weight:700;color:#1a1a1a;margin-bottom:1.5mm;">ਲਗਨ ਕੁੰਡਲੀ</div>
+<svg viewBox="0 0 100 100" width="260" height="260" style="font-family:Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, sans-serif;">
 
+    <rect x="1" y="1" width="98" height="98" fill="none" stroke="#1a1a1a" stroke-width="0.8"/>
+    <line x1="1" y1="1" x2="99" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <line x1="99" y1="1" x2="1" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <polygon points="50,1 99,50 50,99 1,50" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+<text x="50" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">5</text><text x="25" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">6</text><text x="9" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">7</text><text x="25" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text><text x="9" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">9</text><text x="25" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">10</text><text x="50" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">11</text><text x="75" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">12</text><text x="91" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">1</text><text x="75" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text><text x="91" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">3</text><text x="75" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">4</text>
+<text x="50" y="26.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#e05e18">ਸੂ</tspan></text><text x="25.5" y="16.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#3a7bd5">ਚੰ</tspan></text><text x="12" y="26.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#c0392b">ਮੰ</tspan></text><text x="25" y="51.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#2c3e50">ਸ਼</tspan></text>
+</svg>
+</div><div class="north-chart" style="display:inline-block;text-align:center;margin:2mm 3mm;">
+<div style="font-size:10pt;font-weight:700;color:#1a1a1a;margin-bottom:1.5mm;">ਨਵਾਂਸ਼ ਕੁੰਡਲੀ</div>
+<svg viewBox="0 0 100 100" width="260" height="260" style="font-family:Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, sans-serif;">
+
+    <rect x="1" y="1" width="98" height="98" fill="none" stroke="#1a1a1a" stroke-width="0.8"/>
+    <line x1="1" y1="1" x2="99" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <line x1="99" y1="1" x2="1" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <polygon points="50,1 99,50 50,99 1,50" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+<text x="50" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">1</text><text x="25" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text><text x="9" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">3</text><text x="25" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">4</text><text x="9" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">5</text><text x="25" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">6</text><text x="50" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">7</text><text x="75" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text><text x="91" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">9</text><text x="75" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">10</text><text x="91" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">11</text><text x="75" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">12</text>
+<text x="25" y="51.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#e05e18">ਸੂ</tspan></text>
+</svg>
+</div></div>
 <table>
 <thead>
 <tr>
-<th>ग्रह</th>
-<th>राशि</th>
-<th>अंश</th>
-<th>भाव</th>
-<th>नक्षत्र</th>
+<th>ਗ੍ਰਹਿ</th>
+<th>ਰਾਸ਼ੀ</th>
+<th>ਅੰਸ਼</th>
+<th>ਭਾਵ</th>
+<th>ਨਛੱਤਰ</th>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>ਸੂਰਜ</td>
+<td>ਸਿੰਘ</td>
+<td>06°00&#39;21&quot;</td>
+<td>1</td>
+<td>ਮਘਾ (2)</td>
+</tr>
+<tr>
+<td>ਚੰਦਰਮਾ</td>
+<td>ਕੰਨਿਆ</td>
+<td>06°00&#39;21&quot;</td>
+<td>2</td>
+<td>ਮਘਾ (2)</td>
+</tr>
+<tr>
+<td>ਮੰਗਲ</td>
+<td>ਤੁਲਾ</td>
+<td>06°00&#39;21&quot;</td>
+<td>3</td>
+<td>ਮਘਾ (2)</td>
+</tr>
+<tr>
+<td>ਸ਼ਨੀ (R)</td>
+<td>ਬ੍ਰਿਸ਼ਚਕ</td>
+<td>06°00&#39;21&quot;</td>
+<td>4</td>
+<td>ਮਘਾ (2)</td>
+</tr>
+</tbody>
+</table>
+</section>
 
+<section class="section graha-sthiti-section">
+<h2>ਗ੍ਰਹਿ ਸਥਿਤੀ</h2>
+<div class="graha-grid"><div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#e8821b" stroke-width="2" stroke-linecap="round">
+      <line x1="41.0" y1="24.0" x2="46.0" y2="24.0"/><line x1="38.7" y1="32.5" x2="43.1" y2="35.0"/><line x1="32.5" y1="38.7" x2="35.0" y2="43.1"/><line x1="24.0" y1="41.0" x2="24.0" y2="46.0"/><line x1="15.5" y1="38.7" x2="13.0" y2="43.1"/><line x1="9.3" y1="32.5" x2="4.9" y2="35.0"/><line x1="7.0" y1="24.0" x2="2.0" y2="24.0"/><line x1="9.3" y1="15.5" x2="4.9" y2="13.0"/><line x1="15.5" y1="9.3" x2="13.0" y2="4.9"/><line x1="24.0" y1="7.0" x2="24.0" y2="2.0"/><line x1="32.5" y1="9.3" x2="35.0" y2="4.9"/><line x1="38.7" y1="15.5" x2="43.1" y2="13.0"/>
+    </g>
+    <circle cx="24" cy="24" r="13" fill="#f6a623"/>
+    <circle cx="24" cy="24" r="13" fill="none" stroke="#e8821b" stroke-width="1.5"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">ਸੂਰਜ</div>
+    <div class="graha-pos">ਸਿੰਘ</div>
+    <div class="graha-nak">ਮਘਾ</div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="15" fill="#d7dbe0"/>
+    <circle cx="29" cy="24" r="13" fill="#ffffff"/>
+    <circle cx="19" cy="20" r="2" fill="#c2c8d0"/><circle cx="17" cy="27" r="1.4" fill="#c2c8d0"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">ਚੰਦਰਮਾ</div>
+    <div class="graha-pos">ਕੰਨਿਆ</div>
+    <div class="graha-nak">ਮਘਾ</div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="15" fill="#c0392b"/>
+    <ellipse cx="20" cy="20" rx="6" ry="3" fill="#a93226" transform="rotate(-20 20 20)"/>
+    <ellipse cx="28" cy="29" rx="5" ry="2.5" fill="#e06352"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">ਮੰਗਲ</div>
+    <div class="graha-pos">ਤੁਲਾ</div>
+    <div class="graha-nak">ਮਘਾ</div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="24" cy="24" rx="22" ry="7" fill="none" stroke="#b0884a" stroke-width="2.4" transform="rotate(-18 24 24)"/>
+    <circle cx="24" cy="24" r="12" fill="#cdb06b"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">ਸ਼ਨੀ <span style="color:#c0392b;">(R)</span></div>
+    <div class="graha-pos">ਬ੍ਰਿਸ਼ਚਕ</div>
+    <div class="graha-nak">ਮਘਾ</div>
+  </div>
+</div></div>
+</section>
+
+<section class="section short-section">
+<h2>ਅਵਕਹੜਾ ਚੱਕਰ (ਜਨਮ ਦਾ ਵੇਰਵਾ)</h2>
+<table><tbody><tr><td><strong>ਪਾਇਆ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਵਰਣ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਵਸ਼ਯ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਯੋਨੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਗਣ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਨਾੜੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਤੱਤ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਨਛੱਤਰ ਦਾ ਸੁਆਮੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਰਾਸ਼ੀ ਦਾ ਸੁਆਮੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਲਗਨ ਦਾ ਸੁਆਮੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr></tbody></table>
+</section>
+
+<section class="section compact-section">
+<h2>ਜਨਮ ਵੇਲੇ ਦਾ ਪੰਚਾਂਗ</h2>
+<p>ਤੁਹਾਡੇ ਜਨਮ ਵੇਲੇ ਦਾ ਪੰਚਾਂਗ: ਤਿਥੀ, ਵਾਰ, ਨਛੱਤਰ, ਯੋਗ ਅਤੇ ਕਰਣ।</p>
+<table><tbody><tr><td><strong>ਤਿਥੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਵਾਰ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਨਛੱਤਰ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਯੋਗ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਕਰਣ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr></tbody></table>
+</section>
+
+<section class="section">
+<h2>ਘਾਤ ਚੱਕਰ (ਅਸ਼ੁਭ ਬਿੰਦੂ)</h2>
+<p>ਘਾਤ ਚੱਕਰ ਤੁਹਾਡੇ ਲਈ ਅਸ਼ੁਭ ਵਾਰ, ਤਿਥੀ, ਮਹੀਨਾ ਅਤੇ ਨਛੱਤਰ ਦਰਸਾਉਂਦਾ ਹੈ।</p>
+<table><tbody><tr><td><strong>ਅਸ਼ੁਭ ਵਾਰ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਤਿਥੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਮਹੀਨਾ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਨਛੱਤਰ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਯੋਗ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਕਰਣ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਪਹਿਰ</strong></td><td>2</td></tr>
+<tr><td><strong>ਘਾਤ ਰਾਸ਼ੀ</strong></td><td>ਬ੍ਰਿਸ਼ਭ</td></tr></tbody></table>
+</section>
+
+<section class="section">
+<h2>ਭਾਵ ਚਲਿਤ (ਭਾਵ-ਸੰਧੀ ਕੁੰਡਲੀ)</h2>
+<p>ਚਲਿਤ ਕੁੰਡਲੀ ਗ੍ਰਹਿਆਂ ਨੂੰ ਸਹੀ ਭਾਵ-ਸੰਧੀ (ਸ਼੍ਰੀਪਤੀ) ਅਨੁਸਾਰ ਰੱਖਦੀ ਹੈ, ਜਿਸ ਨਾਲ ਰਾਸ਼ੀ ਕੁੰਡਲੀ ਵਿੱਚ ਲੁਕੇ ਭਾਵ-ਬਦਲਾਅ ਸਾਹਮਣੇ ਆਉਂਦੇ ਹਨ।</p>
+<table>
+<thead><tr><th>ਭਾਵ</th><th>ਆਰੰਭ</th><th>ਮੱਧ</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>ਸਿੰਘ 1°</td><td>ਸਿੰਘ 16°</td></tr>
+</tbody>
+</table>
+<h3>ਗ੍ਰਹਿਆਂ ਦਾ ਭਾਵ-ਬਦਲਾਅ</h3>
+<table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਰਾਸ਼ੀ ਭਾਵ</th><th>ਚਲਿਤ ਭਾਵ</th><th>ਬਦਲਿਆ</th></tr></thead>
+<tbody>
+<tr><td>ਸੂਰਜ</td><td>1</td><td>2</td><td>✓</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section narrative-chapter">
+<div class="part-banner"><h2 class="part-h2">ਭਾਗ 2: ਤੁਹਾਡਾ ਜੀਵਨ-ਦਰਸ਼ਨ</h2></div>
+<h2>ਨਮੂਨੇ ਦਾ ਵਾਕ।</h2>
+<h3>ਨਮੂਨੇ ਦਾ ਵਾਕ।</h3><p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</section>
+
+<section class="section narrative-chapter">
+<h2>ਨਮੂਨੇ ਦਾ ਵਾਕ।</h2>
+<h3>ਨਮੂਨੇ ਦਾ ਵਾਕ।</h3><p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p><ul><li>ਨਮੂਨੇ ਦਾ ਵਾਕ।</li></ul>
+</section>
+
+<section class="section">
+<h2>ਗ੍ਰਹਿ ਵਿਸ਼ਲੇਸ਼ਣ</h2>
+<div class="planet-block">
+<h3>ਸੂਰਜ</h3>
+<div class="meta">
+ਸਿੰਘ (06°00&#39;21&quot;),
+ਭਾਵ 1,
+ਨਛੱਤਰ: ਮਘਾ
+</div>
+<p>ਆਤਮਾ, ਤੇਜ, ਅਧਿਕਾਰ, ਪਿਤਾ: ਆਤਮ-ਬੋਧ ਅਤੇ ਜੀਵਨ-ਸ਼ਕਤੀ ਦਾ ਪ੍ਰਤੀਨਿਧ।</p>
+</div>
+<div class="planet-block">
+<h3>ਚੰਦਰਮਾ</h3>
+<div class="meta">
+ਕੰਨਿਆ (06°00&#39;21&quot;),
+ਭਾਵ 2,
+ਨਛੱਤਰ: ਮਘਾ
+</div>
+<p>ਮਨ, ਭਾਵਨਾਵਾਂ, ਮਾਤਾ, ਲੋਕ: ਮਾਨਸਿਕ ਸੁਖ ਅਤੇ ਅੰਤਰ-ਗਿਆਨ ਦਾ ਸੁਆਮੀ।</p>
+</div>
+<div class="planet-block">
+<h3>ਮੰਗਲ</h3>
+<div class="meta">
+ਤੁਲਾ (06°00&#39;21&quot;),
+ਭਾਵ 3,
+ਨਛੱਤਰ: ਮਘਾ
+</div>
+<p>ਊਰਜਾ, ਹਿੰਮਤ, ਕਰਮ, ਭੈਣ-ਭਰਾ: ਪਹਿਲ ਅਤੇ ਸਰੀਰਕ ਬਲ ਨੂੰ ਚਲਾਉਂਦਾ ਹੈ।</p>
+</div>
+<div class="planet-block">
+<h3>ਸ਼ਨੀ</h3>
+<div class="meta">
+ਬ੍ਰਿਸ਼ਚਕ (06°00&#39;21&quot;),
+ਭਾਵ 4,
+ਨਛੱਤਰ: ਮਘਾ
+</div>
+<p>ਅਨੁਸ਼ਾਸਨ, ਉਮਰ, ਕਰਮ, ਔਕੜਾਂ: ਹੌਲੀ, ਬੱਝਵੇਂ ਅਤੇ ਟਿਕਾਊ ਸਬਕ।</p>
+</div>
+</section>
+
+<section class="section">
+<h2>ਭਾਵ ਵਿਸ਼ਲੇਸ਼ਣ</h2>
+<div class="house-block">
+<h3>ਭਾਵ 1: ਆਤਮਾ, ਲਗਨ, ਸ਼ਖ਼ਸੀਅਤ</h3>
+<div class="meta">
+ਸੁਆਮੀ: ਸੂਰਜ (ਰਾਸ਼ੀ: ਸਿੰਘ)
+</div>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div>
+
+</section>
+
+<section class="section">
+<div class="part-banner"><h2 class="part-h2">ਭਾਗ 3: ਯੋਗ ਅਤੇ ਦੋਸ਼</h2></div>
+<h2>ਕੁੰਡਲੀ ਦੇ ਯੋਗ</h2>
+<div class="yoga-block">
+<div class="name">ਗਜਕੇਸਰੀ ਯੋਗ</div>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div>
+
+<h3 class="merged-sub">ਨਮੂਨੇ ਦਾ ਵਾਕ।</h3>
+<h3>ਨਮੂਨੇ ਦਾ ਵਾਕ।</h3><p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+
+</section>
+
+<section class="section short-section">
+<h2>ਰਾਜਯੋਗ ਦੀ ਸ਼ਕਤੀ ਅਤੇ ਸੁਨਹਿਰੀ ਸਮਾਂ</h2>
+<div class="rajyoga-power">
+<div class="rajyoga-pct">62%</div>
+<div class="rajyoga-label">ਰਾਜਯੋਗ ਦੀ ਸ਼ਕਤੀ</div>
+</div>
+<p>ਯੋਗਕਾਰਕ ਗ੍ਰਹਿ: ਬ੍ਰਹਿਸਪਤੀ</p>
+<h3>ਸੁਨਹਿਰੀ ਸਮਾਂ</h3><table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਤੋਂ</th><th>ਤੱਕ</th></tr></thead>
+<tbody>
+<tr><td>ਬ੍ਰਹਿਸਪਤੀ</td><td>2030</td><td>2046</td></tr>
 </tbody>
 </table>
 </section>
 
 <section class="section">
-<div class="part-banner"><h2 class="part-h2">भाग 2: आपका जीवन-दर्शन</h2></div>
-<h2>भाव विश्लेषण</h2>
-<div class="house-block">
-<h3>भाव 1: आत्म, लग्न, व्यक्तित्व</h3>
-<div class="meta">
-स्वामी: LOCAL_HOUSE_LORD
-</div>
-<p class="empty-list">इस भाव की विस्तृत व्याख्या तैयार की जा रही है।</p>
-</div>
-
-</section>
-
-<section class="section">
-<div class="part-banner"><h2 class="part-h2">भाग 3: योग एवं दोष</h2></div>
-<h2>कुंडली में योग</h2>
-<div class="yoga-block">
-<div class="name">LOCAL_YOGA</div>
-<p>x</p>
-</div>
-
-</section>
-
-<section class="section">
-<h2>दोष विश्लेषण</h2>
+<h2>ਦੋਸ਼ ਵਿਸ਼ਲੇਸ਼ਣ</h2>
 <div class="dosha-block present">
 <div class="header-row">
-<span class="name">LOCAL_DOSHA</span>
-<span class="severity">उपस्थित</span>
+<span class="name">ਮਾਂਗਲਿਕ ਦੋਸ਼</span>
+<span class="severity">ਮੌਜੂਦ</span>
 </div>
-<p>x</p>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div><div class="dosha-block mild">
+<div class="header-row">
+<span class="name">ਕਾਲਸਰਪ ਦੋਸ਼</span>
+<span class="severity">ਹਲਕਾ</span>
+</div>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
 </div>
 
 </section>
 
 <section class="section">
-<div class="part-banner"><h2 class="part-h2">भाग 4: दशा फल</h2></div>
-<h2>विंशोत्तरी दशा, जीवन काल</h2>
-<h3>वर्तमान महादशा</h3>
+<div class="part-banner"><h2 class="part-h2">ਭਾਗ 4: ਦਸ਼ਾ ਫਲ</h2></div>
+<h2>ਵਿੰਸ਼ੋਤਰੀ ਦਸ਼ਾ: ਜੀਵਨ ਕਾਲ</h2>
+<h3>ਮੌਜੂਦਾ ਮਹਾਦਸ਼ਾ</h3>
 <div class="dasha-block">
 <div class="header-row">
-<span class="lord">LOCAL_DASHA_LORD</span>
-<span class="dates">2020 &nbsp;से&nbsp; 2039 (19 वर्ष)</span>
+<span class="lord">ਸ਼ਨੀ</span>
+<span class="dates">2020-01-01 &nbsp;ਤੋਂ&nbsp; 2039-01-01 (19 ਸਾਲ)</span>
 </div>
-<p></p>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div>
+<h3>ਆਉਣ ਵਾਲੀਆਂ ਮਹਾਦਸ਼ਾਵਾਂ</h3>
+<div class="dasha-block upcoming">
+<div class="header-row">
+<span class="lord">ਬੁੱਧ</span>
+<span class="dates">2020-01-01 &nbsp;ਤੋਂ&nbsp; 2039-01-01 (19 ਸਾਲ)</span>
+</div>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div>
+</section>
+
+<section class="section">
+<div class="part-banner"><h2 class="part-h2">ਭਾਗ 5: ਉਪਾਅ ਅਤੇ ਮਾਰਗਦਰਸ਼ਨ</h2></div>
+<h2>ਜੀਵਨ ਦੇ ਖੇਤਰਾਂ ਅਨੁਸਾਰ ਭਵਿੱਖਫਲ</h2>
+<div class="prediction-block">
+<h3>ਕਰੀਅਰ ਅਤੇ ਕਾਰੋਬਾਰ</h3>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div>
+<div class="prediction-block">
+<h3>ਪਰਿਵਾਰ ਅਤੇ ਘਰ</h3>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div>
+</section>
+
+<section class="section">
+<h2>ਇਸ਼ਟ ਦੇਵਤਾ</h2>
+<p>ਇਸ਼ਟ ਦੇਵਤਾ ਅਧਿਆਤਮਕ ਉੱਨਤੀ ਲਈ ਤੁਹਾਡੇ ਆਪਣੇ ਪੂਜਣਯੋਗ ਦੇਵਤਾ ਹਨ, ਜਿਨ੍ਹਾਂ ਨੂੰ ਕਾਰਕਾਂਸ਼ ਤੋਂ ਬਾਰ੍ਹਵੇਂ ਭਾਵ ਤੋਂ ਜਾਣਿਆ ਜਾਂਦਾ ਹੈ।</p>
+<p><strong>ਦੇਵਤਾ:</strong> ਨਮੂਨੇ ਦਾ ਵਾਕ।<br>
+<strong>ਕਾਰਕਾਂਸ਼ ਤੋਂ 12ਵੀਂ ਰਾਸ਼ੀ:</strong> ਕੰਨਿਆ &nbsp;
+<strong>ਨਿਰਧਾਰਕ ਗ੍ਰਹਿ:</strong> ਸ਼ੁੱਕਰ</p>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</section>
+
+<section class="section lalkitab-section">
+<h2>ਲਾਲ ਕਿਤਾਬ ਵਿਸ਼ਲੇਸ਼ਣ</h2>
+<p>ਲਾਲ ਕਿਤਾਬ ਦੇ ਭਾਵ, ਪਿੱਤਰ ਰਿਣ ਅਤੇ ਤੇਵਾ ਵਰਗੀਕਰਨ।</p>
+<h3>ਗ੍ਰਹਿ ਸਥਿਤੀ</h3><table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਭਾਵ</th><th>ਰਾਸ਼ੀ</th></tr></thead>
+<tbody>
+<tr><td>ਸੂਰਜ</td><td>1</td><td>ਮੇਖ</td></tr>
+</tbody>
+</table>
+<h3>ਪਿੱਤਰ ਰਿਣ</h3><table>
+<thead><tr><th>ਰਿਣ</th><th>ਸਥਿਤੀ</th></tr></thead>
+<tbody>
+<tr><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਮੌਜੂਦ</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section">
+<h2>ਸੁਝਾਏ ਗਏ ਉਪਾਅ</h2>
+<div class="remedy-block">
+<span class="title">ਨਮੂਨੇ ਦਾ ਵਾਕ।</span>
+<span class="category">ਮੰਤਰ</span>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+</div>
+</section>
+
+<section class="section">
+<h2>ਰਤਨ ਵਿਚਾਰ</h2>
+<p>ਤੁਹਾਡੀ ਕੁੰਡਲੀ ਦੇ ਸਭ ਤੋਂ ਸ਼ੁਭ ਭਾਵਾਂ (ਲਗਨ ਅਤੇ ਤ੍ਰਿਕੋਣ) ਦੇ ਸੁਆਮੀਆਂ ਨੂੰ ਬਲ ਦੇਣ ਵਾਲੇ ਰਤਨ।</p>
+<table><thead><tr>
+<th>ਕਿਸਮ</th><th>ਰਤਨ</th>
+<th>ਗ੍ਰਹਿ</th><th>ਆਧਾਰ</th>
+</tr></thead><tbody><tr><td><strong>ਨਮੂਨੇ ਦਾ ਵਾਕ।</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਸੂਰਜ</td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr></tbody></table>
+<p class="gems-note">ਆਪਣੀ ਕੁੰਡਲੀ ਚੰਗੀ ਤਰ੍ਹਾਂ ਜਾਂਚੇ ਬਿਨਾਂ ਕੋਈ ਰਤਨ ਨਾ ਪਹਿਨੋ; ਸਹੀ ਵਜ਼ਨ, ਧਾਤ ਅਤੇ ਪਹਿਨਣ ਦਾ ਦਿਨ ਮਹੱਤਵਪੂਰਨ ਹਨ।</p>
+</section>
+
+<section class="section">
+<div class="part-banner"><h2 class="part-h2">ਭਾਗ 6: ਤਕਨੀਕੀ ਸਾਰਣੀਆਂ</h2></div>
+<h2>ਵਰਗ ਕੁੰਡਲੀਆਂ</h2>
+<p class="section-intro">ਵਰਗ ਕੁੰਡਲੀਆਂ ਜੀਵਨ ਦੇ ਖ਼ਾਸ ਖੇਤਰਾਂ ਨੂੰ ਡੂੰਘਾਈ ਨਾਲ ਦੇਖਦੀਆਂ ਹਨ; ਹਰ ਇੱਕ ਵੱਖਰੇ ਪੱਖ ਦਾ ਬਰੀਕ ਵਿਸ਼ਲੇਸ਼ਣ ਦਿੰਦੀ ਹੈ, ਜਿਵੇਂ ਧਨ, ਭੈਣ-ਭਰਾ, ਵਿਆਹ, ਕਰੀਅਰ ਅਤੇ ਅਧਿਆਤਮਕ ਉੱਨਤੀ।</p>
+<div class="divisional-block">
+<h3>D9: ਨਮੂਨੇ ਦਾ ਵਾਕ।</h3>
+<p class="vsubtitle">ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+<div class="lagna-line">
+<strong>ਲਗਨ:</strong>
+ਮੇਖ
+</div>
+<div style="text-align:center;margin:4mm 0;"><div class="north-chart" style="display:inline-block;text-align:center;margin:2mm 3mm;">
+<div style="font-size:10pt;font-weight:700;color:#1a1a1a;margin-bottom:1.5mm;">D9</div>
+<svg viewBox="0 0 100 100" width="300" height="300" style="font-family:Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, sans-serif;">
+
+    <rect x="1" y="1" width="98" height="98" fill="none" stroke="#1a1a1a" stroke-width="0.8"/>
+    <line x1="1" y1="1" x2="99" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <line x1="99" y1="1" x2="1" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <polygon points="50,1 99,50 50,99 1,50" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+<text x="50" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">1</text><text x="25" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text><text x="9" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">3</text><text x="25" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">4</text><text x="9" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">5</text><text x="25" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">6</text><text x="50" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">7</text><text x="75" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text><text x="91" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">9</text><text x="75" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">10</text><text x="91" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">11</text><text x="75" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">12</text>
+<text x="25" y="51.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#e05e18">ਸੂ</tspan></text>
+</svg>
+</div></div>
+<table>
+<thead>
+<tr>
+<th>ਗ੍ਰਹਿ</th>
+<th>ਰਾਸ਼ੀ</th>
+<th>ਭਾਵ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ਸੂਰਜ</td>
+<td>ਕਰਕ</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</section>
+
+<section class="section">
+<h2>ਸ਼ਡਬਲ (ਛੇ ਕਿਸਮਾਂ ਦਾ ਬਲ)</h2>
+<p>ਰੂਪ ਵਿੱਚ ਕੁੱਲ ਸ਼ਡਬਲ, ਸਭ ਤੋਂ ਬਲਵਾਨ ਤੋਂ ਸਭ ਤੋਂ ਕਮਜ਼ੋਰ ਗ੍ਰਹਿ ਤੱਕ ਕ੍ਰਮ ਵਿੱਚ।</p>
+<table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਰੂਪ</th><th>ਕ੍ਰਮ</th></tr></thead>
+<tbody>
+<tr><td>ਸੂਰਜ</td><td>7.20</td><td>1</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section">
+<h2>ਭਾਵ ਬਲ (ਭਾਵ ਦੀ ਤਾਕਤ)</h2>
+<p>ਬਾਰਾਂ ਭਾਵਾਂ ਵਿੱਚੋਂ ਹਰ ਇੱਕ ਦੀ ਤਾਕਤ: ਭਾਵੇਸ਼ ਬਲ, ਦਿਗਬਲ ਅਤੇ ਦ੍ਰਿਸ਼ਟੀ ਬਲ।</p>
+<table>
+<thead><tr><th>ਭਾਵ</th><th>ਭਾਵੇਸ਼ ਬਲ</th><th>ਦਿਗਬਲ</th><th>ਦ੍ਰਿਸ਼ਟੀ ਬਲ</th><th>ਕੁੱਲ</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>1.00</td><td>1.00</td><td>1.00</td><td>3.00</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section">
+<h2>ਅਸ਼ਟਕਵਰਗ</h2>
+<p>ਹਰ ਰਾਸ਼ੀ ਦੇ ਸਰਵਾਸ਼ਟਕਵਰਗ ਦੇ ਸ਼ੁਭ ਬਿੰਦੂਆਂ ਦਾ ਜੋੜ, ਅਤੇ ਗ੍ਰਹਿ ਅਨੁਸਾਰ ਭਿੰਨਾਸ਼ਟਕਵਰਗ।</p>
+<table><thead><tr><th>ਰਾਸ਼ੀ</th><th>1</th><th>2</th><th>3</th></tr></thead>
+<tbody><tr><td><strong>ਬਿੰਦੂ</strong></td><td>28</td><td>30</td><td>25</td></tr>
+<tr><td colspan="4">ਕੁੱਲ: <strong>83</strong></td></tr></tbody></table>
+<h3>ਗ੍ਰਹਿ ਅਨੁਸਾਰ ਕੁੱਲ</h3><table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਕੁੱਲ ਬਿੰਦੂ</th></tr></thead>
+<tbody>
+<tr><td>ਸੂਰਜ</td><td>48</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section maitri-section">
+<h2>ਮੈਤ੍ਰੀ ਚੱਕਰ (ਗ੍ਰਹਿ ਮੈਤ੍ਰੀ)</h2>
+<p>ਗ੍ਰਹਿਆਂ ਵਿਚਕਾਰ ਨੈਸਰਗਿਕ, ਤਤਕਾਲੀ ਅਤੇ ਪੰਚਧਾ (ਸਾਂਝੇ) ਮੈਤ੍ਰੀ ਸੰਬੰਧ।</p>
+<h3>ਨੈਸਰਗਿਕ (ਕੁਦਰਤੀ)</h3><table><thead><tr><th></th><th>ਸੂਰਜ</th></tr></thead><tbody><tr><td><strong>ਚੰਦਰਮਾ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr></tbody></table>
+<h3>ਤਤਕਾਲੀ (ਸਮੇਂ ਅਨੁਸਾਰ)</h3><table><thead><tr><th></th><th>ਸੂਰਜ</th></tr></thead><tbody><tr><td><strong>ਚੰਦਰਮਾ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr></tbody></table>
+<h3>ਪੰਚਧਾ (ਸਾਂਝਾ)</h3><table><thead><tr><th></th><th>ਸੂਰਜ</th></tr></thead><tbody><tr><td><strong>ਚੰਦਰਮਾ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr></tbody></table>
+</section>
+
+<section class="section">
+<h2>ਗ੍ਰਹਿ ਅਵਸਥਾ</h2>
+<p>ਬਾਲਾਦਿ, ਜਾਗ੍ਰਦਾਦਿ ਅਤੇ ਦੀਪਤਾਦਿ ਪੱਧਤੀ ਅਨੁਸਾਰ ਹਰ ਗ੍ਰਹਿ ਦੀਆਂ ਅਵਸਥਾਵਾਂ।</p>
+<table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਬਾਲਾਦਿ</th><th>ਜਾਗ੍ਰਦਾਦਿ</th><th>ਦੀਪਤਾਦਿ</th></tr></thead>
+<tbody>
+<tr><td>ਸੂਰਜ</td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section">
+<h2>ਕੇਪੀ ਪੱਧਤੀ (ਕ੍ਰਿਸ਼ਨਮੂਰਤੀ ਪੱਧਤੀ)</h2>
+<p>ਕੇਪੀ ਨਛੱਤਰ ਪੱਧਤੀ ਅਨੁਸਾਰ ਭਾਵ-ਸੰਧੀ ਦੇ ਉਪ-ਸੁਆਮੀ ਅਤੇ ਗ੍ਰਹਿਆਂ ਦੇ ਕਾਰਕਤਵ।</p>
+<table>
+<thead><tr><th>ਭਾਵ</th><th>ਰਾਸ਼ੀ</th><th>ਨਛੱਤਰ ਦਾ ਸੁਆਮੀ</th><th>ਉਪ-ਸੁਆਮੀ</th><th>ਉਪ-ਉਪ-ਸੁਆਮੀ</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>ਸਿੰਘ 1°</td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+</tbody>
+</table>
+<h3>ਗ੍ਰਹਿ ਕਾਰਕ</h3>
+<table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਕਾਰਕ ਭਾਵ</th></tr></thead>
+<tbody>
+<tr><td>ਸੂਰਜ</td><td>1, 5</td></tr>
+</tbody>
+</table>
+<h3>ਸ਼ਾਸਕ ਗ੍ਰਹਿ</h3><table>
+<thead><tr><th>ਭੂਮਿਕਾ</th><th>ਗ੍ਰਹਿ</th></tr></thead>
+<tbody>
+<tr><td><strong>ਲਗਨ ਨਛੱਤਰ ਦਾ ਸੁਆਮੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+<tr><td><strong>ਵਾਰ ਦਾ ਸੁਆਮੀ</strong></td><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section">
+<h2>ਜੈਮਿਨੀ ਪੱਧਤੀ</h2>
+<h3>ਚਰ ਕਾਰਕ</h3><table>
+<thead><tr><th>ਕਾਰਕ</th><th>ਗ੍ਰਹਿ</th></tr></thead>
+<tbody>
+<tr><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਸੂਰਜ</td></tr>
+</tbody>
+</table>
+<p><strong>ਕਾਰਕਾਂਸ਼:</strong> ਮਿਥੁਨ &nbsp; <strong>ਸਵਾਂਸ਼:</strong> ਮਿਥੁਨ</p>
+<h3>ਆਰੂੜ੍ਹ ਪਦ</h3><table>
+<thead><tr><th>ਪਦ</th><th>ਰਾਸ਼ੀ</th><th>ਭਾਵ</th></tr></thead>
+<tbody>
+<tr><td>A1 (ਨਮੂਨੇ ਦਾ ਵਾਕ।)</td><td>ਕਰਕ</td><td>4</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="section">
+<div class="part-banner"><h2 class="part-h2">ਭਾਗ 7: ਵਰਸ਼ਫਲ (ਸਾਲਾਨਾ)</h2></div>
+<h2>ਵਰਸ਼ਫਲ (ਸਾਲਾਨਾ ਕੁੰਡਲੀ)</h2>
+<p>ਮੁੰਥਾ, ਵਰਸ਼ੇਸ਼, ਸਹਮ ਅਤੇ ਪੰਚਵਰਗੀ ਬਲ ਸਮੇਤ ਸਾਲਾਨਾ ਸੂਰਜ-ਵਾਪਸੀ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ।</p>
+<h3>ਸਾਲ 2026</h3>
+<p><strong>ਮੁੰਥਾ:</strong> ਤੁਲਾ (ਭਾਵ 7) &nbsp;
+<strong>ਵਰਸ਼ੇਸ਼:</strong> ਮੰਗਲ</p>
+<p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+<h4>ਸਹਮ (ਸੰਵੇਦਨਸ਼ੀਲ ਬਿੰਦੂ)</h4><table>
+<thead><tr><th>ਸਹਮ</th><th>ਰਾਸ਼ੀ</th><th>ਸੁਆਮੀ</th></tr></thead>
+<tbody>
+<tr><td>ਨਮੂਨੇ ਦਾ ਵਾਕ।</td><td>ਬ੍ਰਿਸ਼ਭ 2°</td><td>ਸ਼ੁੱਕਰ</td></tr>
+</tbody>
+</table>
+<h4>ਪੰਚਵਰਗੀ ਬਲ</h4><table>
+<thead><tr><th>ਗ੍ਰਹਿ</th><th>ਵਿਸ਼ਵ</th></tr></thead>
+<tbody>
+<tr><td>ਸੂਰਜ</td><td>12.50</td></tr>
+</tbody>
+</table>
+
+<h3 class="merged-sub">ਨਮੂਨੇ ਦਾ ਵਾਕ।</h3>
+<h3>ਨਮੂਨੇ ਦਾ ਵਾਕ।</h3><p>ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+
+</section>
+
+<section class="section mudda-section">
+<h2>ਮਾਸਿਕ ਭਵਿੱਖਫਲ (ਮੁੱਦਾ ਦਸ਼ਾ) 2026</h2>
+<div class="mudda-period">
+<h3 class="mudda-head">2026-01-15 ਤੋਂ 2026-02-02 &nbsp;·&nbsp; ਸੂਰਜ</h3>
+<p class="mudda-summary">ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+<p class="mudda-area"><strong>ਨਮੂਨੇ ਦਾ ਵਾਕ।:</strong> ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+<div class="mudda-guidance">
+<p><strong>ਨਮੂਨੇ ਦਾ ਵਾਕ।:</strong> ਨਮੂਨੇ ਦਾ ਵਾਕ।</p>
+
+
+</div>
 </div>
 </section>
 <footer>Generated using LifeAstroAPI</footer>

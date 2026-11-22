@@ -12,25 +12,7 @@ import 'package:lifeastroapi/src/pdf/renderers.dart';
 import 'package:lifeastroapi/src/pdf/shared.dart';
 import 'package:test/test.dart';
 
-/// Where two strings first differ, with some context, for a readable failure.
-String firstDiff(String expected, String actual) {
-  final n = expected.length < actual.length ? expected.length : actual.length;
-  var i = 0;
-  while (i < n && expected.codeUnitAt(i) == actual.codeUnitAt(i)) {
-    i++;
-  }
-  final line = '\n'.allMatches(expected.substring(0, i)).length + 1;
-  String around(String s) {
-    final a = (i - 120).clamp(0, s.length);
-    final b = (i + 120).clamp(0, s.length);
-    return jsonEncode(s.substring(a, b));
-  }
-
-  return 'first difference at offset $i (line $line); lengths '
-      '${expected.length} vs ${actual.length}\n'
-      'expected: ${around(expected)}\n'
-      'actual:   ${around(actual)}';
-}
+import 'support/html_diff.dart';
 
 Branding? brandingFrom(Object? v) =>
     v is Map ? Branding.fromJson(v.cast<String, Object?>()) : null;
@@ -47,13 +29,7 @@ void main() {
       final render = reportRenderers[fn];
       expect(render, isNotNull, reason: 'no Dart renderer for $fn');
       final data = (c['data'] as Map).cast<String, Object?>();
-      final String html;
-      try {
-        html = render!(data, brandingFrom(c['branding']));
-      } on UnimplementedError {
-        markTestSkipped('$fn is not ported yet');
-        return;
-      }
+      final html = render!(data, brandingFrom(c['branding']));
       final expected = File('$dir/golden/$id.html').readAsStringSync();
       if (html != expected) fail(firstDiff(expected, html));
     });

@@ -186,6 +186,26 @@ const _labels = {
     'remedies_intro':
         'মাঙ্গলিক দোষের জন্য সাধারণত যে প্রথাগত প্রতিকারগুলোর কথা বলা হয়, সেগুলো নিচে দেওয়া হলো। কোনো প্রতিকার শুরু করার আগে নিজের কুণ্ডলী ভালো করে দেখে নেবেন:',
   },
+  'pa': {
+    'title_mangal': 'ਮਾਂਗਲਿਕ ਦੋਸ਼ ਰਿਪੋਰਟ',
+    'born': 'ਜਨਮ',
+    'at': 'ਸਮਾਂ',
+    'generated': 'ਤਿਆਰ',
+    'ascendant': 'ਲਗਨ',
+    'section_diagnostic': 'ਵਿਸ਼ਲੇਸ਼ਣ',
+    'section_cancellation': 'ਦੋਸ਼ ਦਾ ਪਰਿਹਾਰ',
+    'section_marriage': 'ਵਿਆਹ ਉੱਤੇ ਪ੍ਰਭਾਵ',
+    'section_remedies': 'ਸੁਝਾਏ ਗਏ ਉਪਾਅ',
+    'mars_sign': 'ਮੰਗਲ ਦੀ ਰਾਸ਼ੀ',
+    'mars_nakshatra': 'ਮੰਗਲ ਦਾ ਨਛੱਤਰ',
+    'mars_houses': 'ਮੰਗਲ ਦੇ ਭਾਵ',
+    'pada': 'ਪਦ',
+    'diagnosis': 'ਨਿਦਾਨ',
+    'cancellation_intro':
+        'ਸ਼ਾਸਤਰੀ ਨਿਯਮਾਂ ਅਨੁਸਾਰ ਹੇਠ ਲਿਖੇ ਕਾਰਨਾਂ ਨਾਲ ਦੋਸ਼ ਦਾ ਪਰਿਹਾਰ ਹੁੰਦਾ ਹੈ:',
+    'remedies_intro':
+        'ਮਾਂਗਲਿਕ ਦੋਸ਼ ਲਈ ਆਮ ਤੌਰ \'ਤੇ ਸੁਝਾਏ ਜਾਂਦੇ ਰਵਾਇਤੀ ਉਪਾਅ ਹੇਠਾਂ ਦਿੱਤੇ ਗਏ ਹਨ। ਕੋਈ ਵੀ ਉਪਾਅ ਅਪਣਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੀ ਕੁੰਡਲੀ ਚੰਗੀ ਤਰ੍ਹਾਂ ਜਾਂਚ ਲਓ:',
+  },
 };
 
 const _remedies = {
@@ -358,6 +378,25 @@ const _remedies = {
     ],
     'none': [
       'মঙ্গল-সংক্রান্ত বিশেষ প্রতিকারের দরকার নেই। নিয়মিত আধ্যাত্মিক অভ্যাস চালিয়ে যান।',
+    ],
+  },
+  'pa': {
+    'purn': [
+      'ਰੋਜ਼ ਹਨੂਮਾਨ ਚਾਲੀਸਾ ਦਾ ਪਾਠ ਕਰੋ, ਖ਼ਾਸ ਤੌਰ \'ਤੇ ਮੰਗਲਵਾਰ ਨੂੰ।',
+      'ਹਰ ਮੰਗਲਵਾਰ ਨੂੰ ਹਨੂਮਾਨ ਮੰਦਰ ਜਾ ਕੇ ਲਾਲ ਫੁੱਲ ਅਤੇ ਸੰਧੂਰ ਚੜ੍ਹਾਓ।',
+      'ਮੰਗਲਵਾਰ ਨੂੰ ਮਸਰ ਦੀ ਦਾਲ, ਗੁੜ ਜਾਂ ਲਾਲ ਕੱਪੜੇ ਦਾ ਦਾਨ ਕਰੋ।',
+      'ਮੰਗਲਵਾਰ ਦਾ ਵਰਤ ਰੱਖੋ; ਉਸ ਦਿਨ ਸਿਰਫ਼ ਫਲ ਅਤੇ ਦੁੱਧ ਲਓ।',
+      'ਮੰਗਲਵਾਰ ਨੂੰ ਘਰ ਵਿੱਚ ਹਨੂਮਾਨ ਜੀ ਦੇ ਸਾਹਮਣੇ ਦੀਵਾ ਜਗਾ ਕੇ \'ਓਮ ਅੰ ਅੰਗਾਰਕਾਯ ਨਮਃ\' ਦਾ 108 ਵਾਰ ਜਪ ਕਰੋ ਅਤੇ ਸੁਖੀ ਵਿਆਹੁਤਾ ਜੀਵਨ ਲਈ ਪ੍ਰਾਰਥਨਾ ਕਰੋ; ਪਰੰਪਰਾ ਵਿੱਚ ਕੁੰਭ ਵਿਆਹ (ਪਿੱਪਲ ਜਾਂ ਕੁੰਭ ਨਾਲ ਪ੍ਰਤੀਕ ਰੂਪ ਵਿਆਹ) ਦਾ ਵੀ ਜ਼ਿਕਰ ਮਿਲਦਾ ਹੈ।',
+      'ਮੂੰਗਾ ਰਤਨ ਕੁੰਡਲੀ ਦੀ ਜਾਂਚ ਤੋਂ ਬਾਅਦ ਹੀ ਪਹਿਨੋ; ਇਹ ਹਰ ਕਿਸੇ ਲਈ ਢੁਕਵਾਂ ਨਹੀਂ ਹੁੰਦਾ।',
+    ],
+    'mild': [
+      'ਮੰਗਲਵਾਰ ਨੂੰ ਹਨੂਮਾਨ ਚਾਲੀਸਾ ਦਾ ਪਾਠ ਕਰੋ।',
+      'ਮੰਗਲਵਾਰ ਨੂੰ ਮਸਰ ਦੀ ਦਾਲ ਜਾਂ ਗੁੜ ਦਾ ਦਾਨ ਕਰੋ।',
+      'ਨਿਯਮ ਨਾਲ ਹਨੂਮਾਨ ਮੰਦਰ ਜਾਓ।',
+      'ਮੰਗਲਵਾਰ ਨੂੰ ਹਨੂਮਾਨ ਜੀ ਦੇ ਸਾਹਮਣੇ ਸਰ੍ਹੋਂ ਦੇ ਤੇਲ ਦਾ ਦੀਵਾ ਜਗਾਓ।',
+    ],
+    'none': [
+      'ਮੰਗਲ ਨਾਲ ਜੁੜੇ ਖ਼ਾਸ ਉਪਾਵਾਂ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ। ਆਪਣਾ ਨਿਯਮਤ ਅਧਿਆਤਮਕ ਅਭਿਆਸ ਜਾਰੀ ਰੱਖੋ।',
     ],
   },
 };
@@ -538,6 +577,35 @@ final _southProse = <String, _SouthProse>{
           'অল্প মাঙ্গলিক দোষের প্রভাব সীমিত, তবু কুণ্ডলী মিলনের সময় একে মাথায় রাখা উচিত। জীবনসঙ্গীর কুণ্ডলীও এর সঙ্গে মিলিয়ে দেখে নেবেন।'
     },
   ),
+  'pa': _SouthProse(
+    badge: {
+      'none': 'ਮਾਂਗਲਿਕ ਦੋਸ਼ ਨਹੀਂ',
+      'cancelled': 'ਮਾਂਗਲਿਕ ਦੋਸ਼ (ਪਰਿਹਾਰ ਸਮੇਤ)',
+      'purn': 'ਪੂਰਨ ਮਾਂਗਲਿਕ ਦੋਸ਼',
+      'mild': 'ਹਲਕਾ ਮਾਂਗਲਿਕ ਦੋਸ਼',
+    },
+    severity: {
+      'purn': 'ਪੂਰਨ',
+      'mild': 'ਹਲਕਾ',
+      'none': 'ਕੋਈ ਨਹੀਂ',
+    },
+    fromLagna: (String hs) => 'ਲਗਨ ਤੋਂ $hs',
+    fromMoon: (String hs) => 'ਚੰਦਰਮਾ ਤੋਂ $hs',
+    diagnosisNone:
+        'ਮੰਗਲ ਦੋਸ਼ ਵਾਲੇ ਭਾਵਾਂ (1, 4, 7, 8, 12) ਵਿੱਚ ਨਹੀਂ ਹੈ, ਇਸ ਲਈ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਨਹੀਂ ਹੈ।',
+    diagnosis: (String sign, String houses, String sev) =>
+        'ਮੰਗਲ $sign ਰਾਸ਼ੀ ਵਿੱਚ ਹੈ (ਭਾਵ: $houses)। ਇਹ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਦਾ $sev ਰੂਪ ਹੈ।',
+    marriage: {
+      'none':
+          'ਵਿਆਹ ਦੇ ਪੱਖ ਤੋਂ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਨਾਲ ਜੁੜੀ ਕੋਈ ਰੁਕਾਵਟ ਨਹੀਂ ਹੈ। ਕੁੰਡਲੀ ਮਿਲਾਨ ਆਮ ਵਾਂਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।',
+      'cancelled':
+          'ਭਾਵੇਂ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਮੌਜੂਦ ਹੈ, ਪਰ ਸ਼ਾਸਤਰੀ ਪਰਿਹਾਰ ਲਾਗੂ ਹੋਣ ਕਾਰਨ ਇਸ ਦਾ ਪ੍ਰਭਾਵ ਘੱਟ ਜਾਂਦਾ ਹੈ। ਕੁੰਡਲੀ ਮਿਲਾਨ ਵਿੱਚ ਆਮ ਤੌਰ \'ਤੇ ਇਸ ਨੂੰ ਵੱਡੀ ਰੁਕਾਵਟ ਨਹੀਂ ਮੰਨਿਆ ਜਾਂਦਾ।',
+      'purn':
+          'ਪੂਰਨ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਵਿਆਹੁਤਾ ਸੰਬੰਧਾਂ ਵਿੱਚ ਕੁਝ ਚੁਣੌਤੀਆਂ ਲਿਆ ਸਕਦਾ ਹੈ। ਪਰੰਪਰਾ ਅਨੁਸਾਰ ਜੀਵਨ ਸਾਥੀ ਦੀ ਕੁੰਡਲੀ ਵਿੱਚ ਵੀ ਮਾਂਗਲਿਕ ਦੋਸ਼ (ਜਾਂ ਬਰਾਬਰ ਤੀਬਰਤਾ) ਹੋਵੇ ਤਾਂ ਪ੍ਰਭਾਵ ਸੰਤੁਲਿਤ ਹੋ ਜਾਂਦਾ ਹੈ। ਦੋਹਾਂ ਕੁੰਡਲੀਆਂ ਦੀ ਧਿਆਨ ਨਾਲ ਜਾਂਚ ਅਤੇ ਢੁਕਵਾਂ ਮਿਲਾਨ ਮਹੱਤਵਪੂਰਨ ਹੈ।',
+      'mild':
+          'ਹਲਕੇ ਮਾਂਗਲਿਕ ਦੋਸ਼ ਦਾ ਪ੍ਰਭਾਵ ਸੀਮਤ ਹੁੰਦਾ ਹੈ, ਪਰ ਕੁੰਡਲੀ ਮਿਲਾਨ ਵੇਲੇ ਇਸ ਨੂੰ ਧਿਆਨ ਵਿੱਚ ਰੱਖਣਾ ਠੀਕ ਹੈ। ਜੀਵਨ ਸਾਥੀ ਦੀ ਕੁੰਡਲੀ ਵੀ ਇਸ ਨਾਲ ਮਿਲਾ ਕੇ ਜਾਂਚ ਲਓ।',
+    },
+  ),
 };
 
 String _pickLocale(String loc) =>
@@ -555,19 +623,6 @@ String _badgeClass(Map<String, Object?> d) {
   if (truthy(d['Cancelled'])) return 'cancelled';
   if (d['Status'] == 'purn') return 'purn';
   return 'mild';
-}
-
-/// JS `ToNumber` as used by the `h > 0` / `h < 0` comparisons.
-num _jsNumber(Object? v) {
-  if (v == null) return 0;
-  if (v is num) return v;
-  if (v is bool) return v ? 1 : 0;
-  if (v is String || v is List) {
-    final s = jsStr(v).trim();
-    if (s.isEmpty) return 0;
-    return num.tryParse(s) ?? double.nan;
-  }
-  return double.nan;
 }
 
 String _statusBadgeText(String loc, Map<String, Object?> d) {
@@ -693,11 +748,11 @@ String _formatHouses(String loc, Object? houses) {
   final hs = asList(houses);
   final lagna = [
     for (final h in hs)
-      if (_jsNumber(h) > 0) jsStr(h)
+      if (jsNumber(h) > 0) jsStr(h)
   ];
   final moon = [
     for (final h in hs)
-      if (_jsNumber(h) < 0) jsNum(-_jsNumber(h))
+      if (jsNumber(h) < 0) jsNum(-jsNumber(h))
   ];
   final parts = <String>[];
   final south = _southProse[l];
@@ -795,6 +850,7 @@ List<String> _mangalRemediesList(String loc, Object? status) {
 
 /// Renders the Mangal Dosha report as a complete HTML document.
 String renderMangalDoshaHtml(Map<String, Object?> data, [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final locRaw = data['Locale'] ?? '';
   final loc = jsStr(locRaw);
   final b = resolveBranding(data['Branding'], branding);
@@ -816,7 +872,13 @@ String renderMangalDoshaHtml(Map<String, Object?> data, [Branding? branding]) {
 </section>''';
 
   final houses = _formatHouses(loc, data['HousesOccupied']);
-  final housesText = houses.isEmpty ? '—' : houses;
+  // The API lists only the houses that cause the dosha, so without one there
+  // is nothing to show in that row.
+  final housesRow = houses.isEmpty
+      ? ''
+      : '<dt>${esc(_label(loc, 'mars_houses'))}</dt>\n'
+          '    <dd>${esc(houses)}</dd>\n'
+          '    ';
   final diagnostic = '''<h2>${esc(_label(loc, 'section_diagnostic'))}</h2>
 <div class="diagnostic">
   <dl>
@@ -824,9 +886,7 @@ String renderMangalDoshaHtml(Map<String, Object?> data, [Branding? branding]) {
     <dd>${esc(mars['sign'])} (${esc(mars['dms_within'])})</dd>
     <dt>${esc(_label(loc, 'mars_nakshatra'))}</dt>
     <dd>${esc(mars['nakshatra'])}, ${esc(_label(loc, 'pada'))} ${esc(mars['pada'])}</dd>
-    <dt>${esc(_label(loc, 'mars_houses'))}</dt>
-    <dd>${esc(housesText)}</dd>
-    <dt>${esc(_label(loc, 'diagnosis'))}</dt>
+    $housesRow<dt>${esc(_label(loc, 'diagnosis'))}</dt>
     <dd>${esc(_diagnosisText(loc, data))}</dd>
   </dl>
 </div>''';

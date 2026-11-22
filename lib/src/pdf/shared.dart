@@ -3,6 +3,9 @@
 /// src/pdf/shared.ts; output must stay byte-identical (golden tests).
 library;
 
+import 'dart:math' as math;
+
+import 'colors.dart';
 import 'js.dart';
 import 'locales.dart';
 
@@ -84,13 +87,18 @@ class ResolvedBranding {
   final String watermarkText;
 }
 
-const _defaultPrimary = '#1a1a1a';
-const _defaultSecondary = '#666666';
+/// The primary colour of an unbranded report.
+const defaultPrimary = '#1a1a1a';
+
+/// The secondary colour of an unbranded report.
+const defaultSecondary = '#666666';
 const _defaultFooter = 'Generated using LifeAstroAPI';
 
-String _firstNonEmpty(List<Object?> vals) {
+/// The first string with something in it; only whitespace (as JS trims it)
+/// counts as not set.
+String firstNonEmpty(List<Object?> vals) {
   for (final v in vals) {
-    if (v is String && v.trim() != '') return v;
+    if (v is String && jsTrim(v) != '') return v;
   }
   return '';
 }
@@ -100,18 +108,17 @@ String _firstNonEmpty(List<Object?> vals) {
 ResolvedBranding resolveBranding(Object? raw, [Branding? override]) {
   final r = asMap(raw);
   return ResolvedBranding(
-    companyName: _firstNonEmpty([override?.companyName, r['CompanyName']]),
-    logoUrl: _safeUrl(_firstNonEmpty([override?.logoUrl, r['LogoURL']])),
+    companyName: firstNonEmpty([override?.companyName, r['CompanyName']]),
+    logoUrl: _safeUrl(firstNonEmpty([override?.logoUrl, r['LogoURL']])),
     primaryColor: _safeColor(
-        _firstNonEmpty([override?.primaryColor, r['PrimaryColor']]),
-        _defaultPrimary),
+        firstNonEmpty([override?.primaryColor, r['PrimaryColor']]),
+        defaultPrimary),
     secondaryColor: _safeColor(
-        _firstNonEmpty([override?.secondaryColor, r['SecondaryColor']]),
-        _defaultSecondary),
+        firstNonEmpty([override?.secondaryColor, r['SecondaryColor']]),
+        defaultSecondary),
     footerText:
-        _firstNonEmpty([override?.footerText, r['FooterText'], _defaultFooter]),
-    watermarkText:
-        _firstNonEmpty([override?.watermarkText, r['WatermarkText']]),
+        firstNonEmpty([override?.footerText, r['FooterText'], _defaultFooter]),
+    watermarkText: firstNonEmpty([override?.watermarkText, r['WatermarkText']]),
   );
 }
 
@@ -121,16 +128,19 @@ final _safeColorRe = RegExp(
     r'^(#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|[a-zA-Z]+|(?:rgb|rgba|hsl|hsla)\([0-9.,%/\s]+\))$');
 
 String _safeColor(String value, String fallback) {
-  final v = value.trim();
+  final v = jsTrim(value);
   return _safeColorRe.hasMatch(v) ? v : fallback;
 }
 
 // `logoUrl` is rendered into `<img src>`. Only http(s), `data:image/...` and
-// relative URLs are kept. This does not prevent SSRF to an internal host;
+// relative URLs are kept; `//host/x` becomes https. This does not prevent SSRF to an internal host;
 // render untrusted branding with restricted network egress.
 String _safeUrl(String value) {
-  final v = value.trim();
+  final v = jsTrim(value);
   if (v == '') return '';
+  // The PDF is printed from about:blank, where `//cdn/logo.png` has no scheme
+  // to borrow.
+  if (v.startsWith('//')) return 'https:$v';
   final scheme =
       RegExp(r'^([a-z][a-z0-9+.-]*):', caseSensitive: false).firstMatch(v);
   if (scheme == null) return v;
@@ -146,7 +156,7 @@ String cssString(Object? value) {
   return jsStr(value)
       .replaceAllMapped(RegExp(r'[\\"<>]'),
           (m) => '\\${m[0]!.codeUnitAt(0).toRadixString(16)} ')
-      .replaceAll(RegExp('[\u0000-\u001F  ]'), ' ');
+      .replaceAll(RegExp('[\u0000-\u001F\u2028\u2029]'), ' ');
 }
 
 const _esc = {
@@ -160,7 +170,7 @@ const _esc = {
 /// Replaces em/en dashes and arrows used in prose with a comma, and tidies
 /// the punctuation that leaves behind. Works for every script.
 String humanize(String text) {
-  final t = text.trim();
+  final t = jsTrim(text);
   if (t == '—' || t == '–') return text;
   var s = text
       .replaceAll(RegExp(r'\s*(?:⟶|⇒|→|->|=>)\s*'), ', ')
@@ -184,16 +194,22 @@ String humanize(String text) {
 /// third-person "native" / "जातक" into "you" / "आप" / "तुम्ही".
 String cleanNarrative(String text, [String locale = 'en']) {
   var s = text;
-  s = s.replaceAll(
-      RegExp(
-          r'(?:वैदिक\s*ज्योतिष|यह\s*कुंडली|यह\s*स्थिति|शास्त्र)[^।]*?तीन\s*स्तर(?:ों|ां)[\s\S]*?(?:शास्त्र\s*है।|शास्त्र\s*आहे\.?|दिशा\s*देने[^।]*।)'),
-      '');
-  s = s.replaceAll(
-      RegExp(r'[^।]*इन\s*तीन\s*स्तर(?:ों|ां)[\s\S]*?देख[^।]*।'), '');
-  s = s.replaceAll(
-      RegExp(
-          r'(In Vedic astrology[^.]*three levels[\s\S]*?(?:guidance\.|direction to life\.))'),
-      '');
+  // Each filler pattern needs its pivot words. Without them the scan is
+  // quadratic on a long text, so it is skipped.
+  if (RegExp(r'तीन\s*स्तर').hasMatch(s)) {
+    s = s.replaceAll(
+        RegExp(
+            r'(?:वैदिक\s*ज्योतिष|यह\s*कुंडली|यह\s*स्थिति|शास्त्र)[^।]*?तीन\s*स्तर(?:ों|ां)[\s\S]*?(?:शास्त्र\s*है।|शास्त्र\s*आहे\.?|दिशा\s*देने[^।]*।)'),
+        '');
+    s = s.replaceAll(
+        RegExp(r'[^।]*इन\s*तीन\s*स्तर(?:ों|ां)[\s\S]*?देख[^।]*।'), '');
+  }
+  if (s.contains('three levels')) {
+    s = s.replaceAll(
+        RegExp(
+            r'(In Vedic astrology[^.]*three levels[\s\S]*?(?:guidance\.|direction to life\.))'),
+        '');
+  }
 
   if (locale == 'hi') {
     s = s
@@ -212,7 +228,8 @@ String cleanNarrative(String text, [String locale = 'en']) {
         .replaceAll('जातकाचे', 'तुमचे')
         .replaceAll('जातकाचा', 'तुमचा')
         .replaceAll('जातक', 'तुम्ही');
-  } else if (const ['te', 'ta', 'kn', 'ml', 'gu', 'bn'].contains(locale)) {
+  } else if (const ['te', 'ta', 'kn', 'ml', 'gu', 'bn', 'pa']
+      .contains(locale)) {
     // No rewrite: these corpora are written in the second person at the
     // source, and the English rules must not run on this prose.
   } else {
@@ -227,9 +244,8 @@ String cleanNarrative(String text, [String locale = 'en']) {
 
   s = s
       .replaceAll(RegExp(r'\n{3,}'), '\n\n')
-      .replaceAll(RegExp(r'[ \t]+\n'), '\n')
-      .trim();
-  return s;
+      .replaceAll(RegExp(r'[ \t]+\n'), '\n');
+  return jsTrim(s);
 }
 
 /// HTML-escapes a value after [humanize]. `null` gives `''`.
@@ -257,15 +273,39 @@ String orDash(Object? value) {
   return s == '' ? '—' : s;
 }
 
+/// A list joined for print, or a lone string or number as it is, so a
+/// malformed report cannot stop the PDF. Anything else is `''`. (The Node
+/// SDK's `listOf`, a list or else an empty one, is `asList` in js.dart.)
+String listText(Object? value) {
+  if (value is List) {
+    return value.map((e) => e == null ? '' : jsStr(e)).join(', ');
+  }
+  return value is String || value is num ? jsStr(value) : '';
+}
+
+/// Watermark size in points: up to 80, smaller for a long word or a long line,
+/// so it is not cut at the page edge. Counted in code points.
+int _watermarkSize(String text) {
+  final t = jsTrim(text);
+  var longestWord = 1;
+  for (final word in t.split(RegExp(r'\s+'))) {
+    longestWord = math.max(longestWord, word.runes.length);
+  }
+  final total = math.max(1, t.runes.length);
+  final fits = math.min(620 ~/ longestWord, math.sqrt(80000 / total).floor());
+  return math.max(10, math.min(80, fits));
+}
+
 String _watermarkCss(ResolvedBranding b) {
   if (b.watermarkText.isEmpty) return '';
   return '''
 
 body::before {
   content: "${cssString(b.watermarkText)}";
-  position: fixed; top: 50%; left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  font-size: 80pt; color: rgba(0,0,0,0.06); font-weight: 700;
+  position: fixed; top: 50%; left: 5%; right: 5%;
+  transform: translateY(-50%) rotate(-30deg);
+  text-align: center; line-height: 1.2; overflow-wrap: anywhere;
+  font-size: ${_watermarkSize(b.watermarkText)}pt; color: rgba(0,0,0,0.06); font-weight: 700;
   pointer-events: none; z-index: 0;
 }''';
 }
@@ -279,34 +319,36 @@ String _footerCss(ResolvedBranding b) {
     content: "${cssString(b.footerText)}";
     font-family: $indicFontStack;
     font-size: 8pt;
-    color: ${_cssColor(b.secondaryColor)};
+    color: ${printableColor(b.secondaryColor, defaultSecondary)};
   }
 }''';
 }
 
-String _cssColor(String value) {
-  return RegExp(
-              r'^(#[0-9a-fA-F]{3,8}|[a-zA-Z]+|rgba?\([0-9.,%\s]+\)|hsla?\([0-9.,%\sdeg]+\))$')
-          .hasMatch(value.trim())
-      ? value.trim()
-      : '#666666';
-}
+/// HTML-escapes a value that must stay as written, such as a URL or the
+/// caller's branding text (no [humanize]).
+String escAttr(String value) =>
+    value.replaceAllMapped(RegExp('[&<>"\']'), (m) => _esc[m[0]]!);
 
 /// The logo and company-name block of a cover page.
 String coverBrandingHtml(ResolvedBranding b) {
   var html = '';
   if (b.logoUrl.isNotEmpty) {
-    html += '<img src="${esc(b.logoUrl)}" alt="" class="logo">';
+    html += '<img src="${escAttr(b.logoUrl)}" alt="" class="logo">';
   }
   if (b.companyName.isNotEmpty) {
-    html += '<div class="company">${esc(b.companyName)}</div>';
+    html += '<div class="company">${escAttr(b.companyName)}</div>';
   }
   return html;
 }
 
 /// The footer line shown after the content on screen.
 String footerHtml(ResolvedBranding b) =>
-    b.footerText.isNotEmpty ? '<footer>${esc(b.footerText)}</footer>' : '';
+    b.footerText.isNotEmpty ? '<footer>${escAttr(b.footerText)}</footer>' : '';
+
+// CSS without its comments: those are notes for maintainers, not for the
+// customer's HTML. Branding is added afterwards and is never stripped.
+String _stripCssComments(String css) =>
+    css.replaceAll(RegExp(r'/\*[\s\S]*?\*/'), '');
 
 /// Wraps a report body in a complete, self-contained HTML document.
 String layoutDocument({
@@ -318,17 +360,19 @@ String layoutDocument({
   bool pageFooter = true,
 }) {
   final l = esc(lang ?? 'en');
+  final primary = printableColor(branding.primaryColor, defaultPrimary);
+  final secondary = printableColor(branding.secondaryColor, defaultSecondary);
   return '''<!doctype html>
 <html lang="${l.isNotEmpty ? l : 'en'}">
 <head>
 <meta charset="utf-8">
 <title>${esc(title)}</title>
 <style>
-:root { --brand-primary: ${esc(branding.primaryColor)}; --brand-secondary: ${esc(branding.secondaryColor)}; }
-$baseCss
+:root { --brand-primary: $primary; --brand-secondary: $secondary; }
+${_stripCssComments(baseCss)}
 ${_watermarkCss(branding)}
 ${pageFooter ? _footerCss(branding) : ''}
-$extraCss
+${_stripCssComments(extraCss)}
 </style>
 </head>
 <body>
@@ -356,6 +400,83 @@ String narrativeSectionsHtml(Object? sections,
   }).join('\n');
 }
 
+// The names every JS object has (`Object.prototype`). They are not languages.
+const _objectPropertyNames = {
+  'constructor',
+  '__defineGetter__',
+  '__defineSetter__',
+  'hasOwnProperty',
+  '__lookupGetter__',
+  '__lookupSetter__',
+  'isPrototypeOf',
+  'propertyIsEnumerable',
+  'toString',
+  'valueOf',
+  '__proto__',
+  'toLocaleString',
+};
+
+/// A report's locale, unless it names something every JS object has
+/// (`toString`): that is not a language, so it is English.
+Object? safeLocale(Object? value) =>
+    _objectPropertyNames.contains(value) ? 'en' : value;
+
+/// [data] with [safeLocale] applied to its [key], as at the entry of every
+/// renderer. The caller's map is never changed.
+Map<String, Object?> withSafeLocale(Map<String, Object?> data,
+    [String key = 'Locale']) {
+  final locale = data[key];
+  final safe = safeLocale(locale);
+  return identical(safe, locale) ? data : {...data, key: safe};
+}
+
+/// The report without a null inside any list (the Node SDK's
+/// `withoutNullItems`). A null among plain values becomes `''`, so the places
+/// of the others hold; any other null item is dropped. The caller's map is
+/// never changed, and a report without such a null comes back as it is.
+Map<String, Object?> withoutNullItems(Map<String, Object?> data) =>
+    asMap(_withoutNulls(data, 0));
+
+Object? _withoutNulls(Object? value, int depth) {
+  if (depth > 32) return value;
+  if (value is List) {
+    List<Object?>? copy;
+    if (value.any((e) => e == null)) {
+      final present = <Object?>[
+        for (final e in value)
+          if (e != null) e,
+      ];
+      final plain = present.isNotEmpty &&
+          present.every((e) => e is String || e is num || e is bool);
+      copy = plain ? <Object?>[for (final e in value) e ?? ''] : present;
+    }
+    final items = copy ?? value;
+    for (var i = 0; i < items.length; i++) {
+      final item = items[i] as Object?;
+      // Only a list or a map can change (and NaN is not identical to itself
+      // on the web).
+      if (item is! List && item is! Map) continue;
+      final next = _withoutNulls(item, depth + 1);
+      if (!identical(next, item)) (copy ??= List<Object?>.of(value))[i] = next;
+    }
+    return copy ?? value;
+  }
+  if (value is Map) {
+    Map<String, Object?>? copy;
+    for (final entry in value.entries) {
+      final item = entry.value as Object?;
+      if (item is! List && item is! Map) continue;
+      final next = _withoutNulls(item, depth + 1);
+      if (!identical(next, item)) {
+        copy ??= <String, Object?>{...asMap(value)};
+        copy['${entry.key}'] = next;
+      }
+    }
+    return copy ?? value;
+  }
+  return value;
+}
+
 /// A label lookup for [locale], falling back to English, then `''`.
 String Function(String key) makeLabeler(
     Map<String, Map<String, String>> labels, String? locale) {
@@ -369,4 +490,4 @@ String Function(String key) makeLabeler(
 
 /// The CSS skeleton shared by every report.
 const baseCss =
-    '\n* { box-sizing: border-box; }\n/* Form controls and headings do not always inherit font-family in print, so\n   the Indic stack is set on them explicitly too. */\nh1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }\nhtml, body {\n  font-family: \'Noto Sans\', \'Noto Sans Devanagari\', \'Noto Sans Telugu\', \'Noto Sans Tamil\', \'Noto Sans Kannada\', \'Noto Sans Bengali\', \'Noto Sans Gujarati\', \'Noto Sans Gurmukhi\', \'Noto Sans Malayalam\', sans-serif;\n  color: #1a1a1a;\n  font-size: 11pt;\n  line-height: 1.45;\n  margin: 0;\n}\n@page { size: A4; margin: 18mm 15mm 22mm 15mm; }\n/* Print the brand colours (table headers, cards) as designed. Chromium does so\n   with printBackground; the iOS and Android print engines drop backgrounds\n   unless the page asks for exact colours. */\nhtml { -webkit-print-color-adjust: exact; print-color-adjust: exact; }\nh2 {\n  color: var(--brand-primary);\n  border-bottom: 2px solid var(--brand-primary);\n  padding-bottom: 2mm;\n  font-size: 16pt;\n  margin-top: 8mm;\n}\nh3 { font-size: 12pt; margin: 6mm 0 2mm; }\np { margin: 2mm 0; }\ntable { width: 100%; border-collapse: collapse; margin: 4mm 0; }\nth, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }\nth { background: var(--brand-primary); color: #fff; font-weight: 600; font-size: 10pt; }\n.cover { page-break-after: always; text-align: center; padding: 40mm 0 0; }\n.cover img.logo { max-height: 24mm; max-width: 60mm; margin-bottom: 8mm; }\n.cover h1 { color: var(--brand-primary); font-size: 28pt; margin: 0 0 4mm; }\n.cover .company { color: var(--brand-secondary); font-size: 14pt; margin-bottom: 16mm; }\n.cover .subject { font-size: 16pt; margin-bottom: 4mm; }\n.cover .meta { color: var(--brand-secondary); font-size: 11pt; }\n.cover .generated { margin-top: 32mm; color: var(--brand-secondary); font-size: 9pt; }\n.narrative-section { margin-top: 6mm; page-break-inside: avoid; }\n.narrative-section .body { margin: 2mm 0; white-space: pre-wrap; }\n.narrative-section ul { margin: 1mm 0 2mm 6mm; padding: 0; }\n.narrative-section .citations { color: var(--brand-secondary); font-size: 9pt; font-style: italic; }\n.cards { display: flex; gap: 4mm; margin: 4mm 0; flex-wrap: wrap; }\n.card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }\n.card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }\n.card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }\n/* On screen the footer is an ordinary block after the content. In print it\n   is hidden and the same text is drawn in the page\'s bottom margin instead\n   (see footerCss): a position:fixed footer is laid out against the page\n   CONTENT box, so it prints on top of the last lines of body text. */\nfooter {\n  text-align: center; color: var(--brand-secondary); font-size: 8pt;\n  margin-top: 10mm;\n}\n@media print { footer { display: none; } }\n/* Telugu and Kannada stack vowel signs and conjuncts above and below the\n   line and Tamil has tall marks too, so their lines get a little more height\n   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin\n   typography; spacing splits Indic clusters apart, so drop it.\n   :where() keeps the specificity of a plain "body" rule, so a report\'s own\n   body line-height (Brihad sets 1.8) still wins. */\n:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }\n:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }\n';
+    '\n* { box-sizing: border-box; }\n/* Form controls and headings do not always inherit font-family in print, so\n   the Indic stack is set on them explicitly too. */\nh1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }\nhtml, body {\n  font-family: \'Noto Sans\', \'Noto Sans Devanagari\', \'Noto Sans Telugu\', \'Noto Sans Tamil\', \'Noto Sans Kannada\', \'Noto Sans Bengali\', \'Noto Sans Gujarati\', \'Noto Sans Gurmukhi\', \'Noto Sans Malayalam\', sans-serif;\n  color: #1a1a1a;\n  font-size: 11pt;\n  line-height: 1.45;\n  margin: 0;\n}\n@page { size: A4; margin: 18mm 15mm 22mm 15mm; }\n/* Print the brand colours (table headers, cards) as designed. Chromium does so\n   with printBackground; the iOS and Android print engines drop backgrounds\n   unless the page asks for exact colours. */\nhtml { -webkit-print-color-adjust: exact; print-color-adjust: exact; }\nh2 {\n  color: var(--brand-primary);\n  border-bottom: 2px solid var(--brand-primary);\n  padding-bottom: 2mm;\n  font-size: 16pt;\n  margin-top: 6mm;\n  padding-top: 2mm;\n}\nh3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }\n/* The padding keeps tall Indic glyph tops inside the heading\'s own box: at a page break they used to print\n   at the foot of the page before. A heading also never ends a page. */\nh2, h3 { page-break-after: avoid; }\np { margin: 2mm 0; }\ntable { width: 100%; border-collapse: collapse; margin: 4mm 0; }\nth, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }\nth { background: var(--brand-primary); color: #fff; font-weight: 600; font-size: 10pt; }\n.cover { page-break-after: always; text-align: center; padding: 40mm 0 0; }\n.cover img.logo { max-height: 24mm; max-width: 60mm; margin-bottom: 8mm; }\n.cover h1 { color: var(--brand-primary); font-size: 28pt; margin: 0 0 4mm; }\n.cover .company { color: var(--brand-secondary); font-size: 14pt; margin-bottom: 16mm; }\n.cover .subject { font-size: 16pt; margin-bottom: 4mm; }\n.cover .meta { color: var(--brand-secondary); font-size: 11pt; }\n.cover .generated { margin-top: 32mm; color: var(--brand-secondary); font-size: 9pt; }\n.narrative-section { margin-top: 6mm; page-break-inside: avoid; }\n.narrative-section .body { margin: 2mm 0; white-space: pre-wrap; }\n.narrative-section ul { margin: 1mm 0 2mm 6mm; padding: 0; }\n.narrative-section .citations { color: var(--brand-secondary); font-size: 9pt; font-style: italic; }\n.cards { display: flex; gap: 4mm; margin: 4mm 0; flex-wrap: wrap; }\n.card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }\n.card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }\n.card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }\n/* On screen the footer is an ordinary block after the content. In print it\n   is hidden and the same text is drawn in the page\'s bottom margin instead\n   (see footerCss): a position:fixed footer is laid out against the page\n   CONTENT box, so it prints on top of the last lines of body text. */\nfooter {\n  text-align: center; color: var(--brand-secondary); font-size: 8pt;\n  margin-top: 10mm;\n}\n@media print { footer { display: none; } }\n/* Telugu and Kannada stack vowel signs and conjuncts above and below the\n   line and Tamil has tall marks too, so their lines get a little more height\n   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin\n   typography; spacing splits Indic clusters apart, so drop it.\n   :where() keeps the specificity of a plain "body" rule, so a report\'s own\n   body line-height (Brihad sets 1.8) still wins. */\n:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }\n:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }\n';

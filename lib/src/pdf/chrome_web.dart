@@ -13,14 +13,16 @@ class ChromePdfEngine implements PdfEngine {
   /// Not available on this platform.
   static Future<ChromePdfEngine> launch({
     String? executablePath,
-    bool noSandbox = false,
+    bool? noSandbox,
     List<String> args = const [],
     Duration timeout = const Duration(seconds: 30),
-  }) =>
+    Future<void>? abortTrigger,
+  }) async =>
       throw UnsupportedError(_message);
 
   /// Not available on this platform.
-  static Future<ChromePdfEngine> connect(String webSocketDebuggerUrl) =>
+  static Future<ChromePdfEngine> connect(String webSocketDebuggerUrl,
+          {Duration timeout = const Duration(seconds: 10)}) async =>
       throw UnsupportedError(_message);
 
   /// Always `null` on this platform.
@@ -28,12 +30,12 @@ class ChromePdfEngine implements PdfEngine {
 
   /// Not available on this platform.
   Future<Object?> evaluate(String html, String expression,
-          {Duration timeout = const Duration(seconds: 30)}) =>
+          {Duration timeout = const Duration(seconds: 30)}) async =>
       throw UnsupportedError(_message);
 
   @override
   Future<Uint8List> htmlToPdf(String html,
-          [HtmlToPdfOptions options = const HtmlToPdfOptions()]) =>
+          [HtmlToPdfOptions options = const HtmlToPdfOptions()]) async =>
       throw UnsupportedError(_message);
 
   @override
@@ -45,6 +47,7 @@ const _message = 'ChromePdfEngine needs dart:io. On the web, pass a '
     'print dialog.';
 
 /// No default engine on the web.
-Future<PdfEngine> launchDefaultEngine() => throw UnsupportedError(
-    'No default PDF engine on the web: pass engine: GotenbergPdfEngine(...), '
-    'or render the HTML (render*Html) and print it from the browser.');
+Future<PdfEngine> launchDefaultEngine({Future<void>? abortTrigger}) async =>
+    throw UnsupportedError(
+        'No default PDF engine on the web: pass engine: GotenbergPdfEngine(...), '
+        'or render the HTML (render*Html) and print it from the browser.');

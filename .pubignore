@@ -9,5 +9,6 @@ live-dump/
 .env.*
 .DS_Store
 
-# Large test fixtures (PDF golden HTML); the tests run from the git repo.
-test/fixtures/pdf/
+# Test fixtures (API examples, PDF golden HTML); the tests run from the git
+# repo. Keep this: without it the package carries more than 6 MB of test data.
+test/fixtures/

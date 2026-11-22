@@ -5,10 +5,8 @@ library;
 ///
 /// Named `Lang` (not `Locale`) so it does not clash with Flutter's `Locale`.
 ///
-/// - Complete: [en], [hi], [mr], [te], [ta], [kn], [ml], [gu], [bn]. Names,
+/// - Complete: [en], [hi], [mr], [te], [ta], [kn], [ml], [gu], [bn], [pa]. Names,
 ///   terms and prose all come back in the language.
-/// - Partial: [pa]. Names and terms come back in Punjabi; longer prose is
-///   still English.
 ///
 /// Ids, dates, numbers and explicit `*_en` / `*_hi` fields stay the same in
 /// every language. Western, tarot, geo and meta methods answer in English
@@ -41,7 +39,7 @@ enum Lang {
   /// Bengali.
   bn,
 
-  /// Punjabi (names and terms; longer prose is still English).
+  /// Punjabi.
   pa;
 
   /// The code sent to the API, for example `gu`.

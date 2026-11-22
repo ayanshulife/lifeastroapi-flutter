@@ -134,6 +134,20 @@ const houseTopics = {
     11: 'লাভ, বন্ধু, আকাঙ্ক্ষা',
     12: 'ব্যয়, মোক্ষ, বিদেশ',
   },
+  'pa': {
+    1: 'ਆਤਮਾ, ਲਗਨ, ਸ਼ਖ਼ਸੀਅਤ',
+    2: 'ਧਨ, ਪਰਿਵਾਰ, ਬੋਲੀ',
+    3: 'ਭੈਣ-ਭਰਾ, ਹਿੰਮਤ, ਸੰਚਾਰ',
+    4: 'ਮਾਤਾ, ਘਰ, ਸੁਖ',
+    5: 'ਸੰਤਾਨ, ਸਿੱਖਿਆ, ਸਿਰਜਣਾ',
+    6: 'ਵਿਰੋਧੀ, ਸਿਹਤ, ਸੇਵਾ',
+    7: 'ਵਿਆਹ, ਭਾਈਵਾਲੀ, ਕਾਰੋਬਾਰ',
+    8: 'ਉਮਰ, ਗੁਪਤ ਵਿਸ਼ੇ, ਬਦਲਾਅ',
+    9: 'ਪਿਤਾ, ਭਾਗ, ਧਰਮ',
+    10: 'ਕਰਮ, ਅਹੁਦਾ, ਕੰਮ',
+    11: 'ਲਾਭ, ਦੋਸਤ, ਇੱਛਾਵਾਂ',
+    12: 'ਖ਼ਰਚ, ਮੋਕਸ਼, ਵਿਦੇਸ਼',
+  },
 };
 
 /// House number 1..12 to its primary significations, in [loc].
@@ -141,7 +155,7 @@ String houseTopic(String loc, int n) =>
     houseTopics[loc]?[n] ?? houseTopics['en']?[n] ?? '';
 
 /// House lord label: `LordLocal`, else `LordHI` (hi/mr), else the native
-/// name (te/ta/kn/ml/gu/bn), else `LordEN`.
+/// name (te/ta/kn/ml/gu/bn/pa), else `LordEN`.
 String houseLordLabel(String loc, Map<String, Object?> h) {
   if (truthy(h['LordLocal'])) return jsStr(h['LordLocal']);
   return lordLabel(loc, asStr(h['LordEN']), asStr(h['LordHI']));

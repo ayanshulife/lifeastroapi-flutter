@@ -6,6 +6,7 @@
 /// the narrative chapters read `narrative_chapters`.
 library;
 
+import '../colors.dart';
 import '../js.dart';
 import '../locales.dart';
 import '../shared.dart';
@@ -49,7 +50,7 @@ String renderGrahaSthiti(Object? planets, String title) {
 // ── North-Indian chart glue ─────────────────────────────────────────────────
 
 // Sign name to 0-based index: English, Hindi/Marathi, Malayalam month-style
-// names and the te/ta/kn/ml/gu/bn names (locales.dart southSignIndex).
+// names and the te/ta/kn/ml/gu/bn/pa names (locales.dart southSignIndex).
 const _signIndex = {
   'Aries': 0,
   'Taurus': 1,
@@ -149,6 +150,18 @@ const _signIndex = {
   'মকর': 9,
   'কুম্ভ': 10,
   'মীন': 11,
+  'ਮੇਖ': 0,
+  'ਬ੍ਰਿਸ਼ਭ': 1,
+  'ਮਿਥੁਨ': 2,
+  'ਕਰਕ': 3,
+  'ਸਿੰਘ': 4,
+  'ਕੰਨਿਆ': 5,
+  'ਤੁਲਾ': 6,
+  'ਬ੍ਰਿਸ਼ਚਕ': 7,
+  'ਧਨੂੰ': 8,
+  'ਮਕਰ': 9,
+  'ਕੁੰਭ': 10,
+  'ਮੀਨ': 11,
 };
 
 const _planetNameToEn = {
@@ -163,6 +176,11 @@ const _planetNameToEn = {
   'शनि': 'Saturn',
   'राहु': 'Rahu',
   'केतु': 'Ketu',
+  'मंगळ': 'Mars',
+  'बृहस्पती': 'Jupiter',
+  'शनी': 'Saturn',
+  'राहू': 'Rahu',
+  'केतू': 'Ketu',
 };
 
 /// Builds the chart planets from `{name, house, retro}` rows, labelled for
@@ -207,6 +225,117 @@ String renderNorthChart(Object? lagnaSign, List<Object?> rows, String title,
   );
 }
 
+// ── Brand palette ───────────────────────────────────────────────────────────
+
+/// The brand's colours as Brihad prints them. A field without a brand colour
+/// keeps the saffron design.
+class BrihadPalette {
+  /// Creates a palette.
+  const BrihadPalette(
+      {this.primary, required this.accent, required this.muted});
+
+  /// Headings, banners, table heads, contents, header and footer text.
+  final Rgb? primary;
+
+  /// Gold details: heading underline, number discs, stars.
+  final Rgb accent;
+
+  /// Small muted text.
+  final Rgb muted;
+}
+
+// Brihad prints small text in the brand colour on tinted cards and white text
+// on it, so it asks for more than 4.5:1 against white: that leaves 4.5:1 on
+// the darkest tint.
+const _brihadContrast = 5.2;
+
+bool _sameColor(Rgb? a, String hex) => a != null && toHex(a) == hex;
+
+/// The palette for the caller's ([override]) or the report's ([report]) brand
+/// colours, or `null` for the saffron design. The API puts its default
+/// colours into every report, so those are no brand: not in the report, and
+/// not when the caller passes that same pair on.
+BrihadPalette? brihadPalette(Object? report, [Branding? override]) {
+  final resolved = resolveBranding(report, override);
+  final callerPrimary = parseColor(firstNonEmpty([override?.primaryColor]));
+  final callerSecondary = parseColor(firstNonEmpty([override?.secondaryColor]));
+  final defaultPair = _sameColor(callerPrimary, defaultPrimary) &&
+      _sameColor(callerSecondary, defaultSecondary);
+  Rgb? brand(String value, bool fromCaller, String fallback) {
+    final rgb = parseColor(value);
+    if (rgb == null ||
+        ((!fromCaller || defaultPair) && _sameColor(rgb, fallback))) {
+      return null;
+    }
+    return darkenToContrast(rgb, _brihadContrast);
+  }
+
+  final primary =
+      brand(resolved.primaryColor, callerPrimary != null, defaultPrimary);
+  final secondary =
+      brand(resolved.secondaryColor, callerSecondary != null, defaultSecondary);
+  final accent = secondary ?? primary;
+  if (accent == null) return null;
+  return BrihadPalette(
+    primary: primary,
+    accent: accent,
+    muted: secondary ?? parseColor(defaultSecondary)!,
+  );
+}
+
+/// The CSS that puts the palette over the saffron design; `''` without one.
+String brihadPaletteCss(BrihadPalette? palette) {
+  if (palette == null) return '';
+  final a = toHex(palette.accent);
+  final base = '''\n:root {
+  --as-amber:$a; --as-olive:$a; --as-lamber:$a; --as-slate:$a;
+  --brand-secondary:${toHex(palette.muted)};
+}''';
+  final primary = palette.primary;
+  if (primary == null) return base;
+  final p = toHex(primary);
+  final zebra = toHex(tintOnWhite(primary, 5));
+  final card = toHex(tintOnWhite(primary, 3));
+  final rule = toHex(tintOnWhite(primary, 25));
+  return '''$base
+:root {
+  --brand-primary:$p;
+  --as-teal:$p; --as-green:$p; --as-dorange:$p; --as-blue:$p; --as-lteal:$p;
+  --as-salmon:$p; --as-gold:$p; --as-tab:$p;
+  --as-zebra:$zebra; --as-cardbg:$card; --as-ink:#1a1a1a;
+}
+.yoga-block .shloka, .prediction-block h3 { color: $p; }
+.prediction-block { background: $card; border-left-color: $p; }
+.mudda-guidance { background: $zebra; }
+.mudda-head { border-bottom-color: $rule; }
+h3.merged-sub { border-top-color: $rule; }
+.toc-row .toc-page { color: $p !important; }''';
+}
+
+/// With a watermark every light fill becomes see-through (the same colour on
+/// white paper), so the watermark behind the content still shows under rows
+/// and cards.
+String brihadWatermarkCss(ResolvedBranding branding, BrihadPalette? palette) {
+  if (branding.watermarkText.isEmpty) return '';
+  final brand = palette?.primary;
+  String fill(String hex) => seeThrough(parseColor(hex)!);
+  final zebra =
+      brand != null ? seeThrough(tintOnWhite(brand, 5)) : fill('#fcf3e3');
+  final card =
+      brand != null ? seeThrough(tintOnWhite(brand, 3)) : fill('#fffaf0');
+  final guidance = brand != null ? zebra : fill('#fff7e8');
+  final prediction = brand != null ? card : fill('#f5f3ff');
+  return '''\n.section table tbody tr:nth-child(odd) td { background: $zebra; }
+.section table tbody tr:nth-child(even) td, .graha-card { background: transparent; box-shadow: none; }
+.planet-block, .house-block, .remedy-block, .dasha-block.upcoming { background: ${fill('#fafafa')}; }
+.yoga-block, .mudda-period { background: $card; }
+.mudda-guidance { background: $guidance; }
+.prediction-block { background: $prediction; }
+.dasha-block:not(.upcoming), .dosha-block.cancelled { background: ${fill('#f0fdf4')}; }
+.dosha-block:not(.cancelled):not(.mild) { background: ${fill('#fef2f2')}; }
+.dosha-block.mild { background: ${fill('#fefce8')}; }''';
+}
+
 // ── Running header / footer (Puppeteer margin-box templates) ────────────────
 
 /// Page margins the Brihad PDF uses (room for the running header/footer).
@@ -215,14 +344,13 @@ const brihadPdfMargin =
 
 // ── Table of contents — 2-pass page resolution ──────────────────────────────
 
-String _unescapeTitle(String s) => s
+String _unescapeTitle(String s) => jsTrim(s
     .replaceAll(RegExp(r'<[^>]+>'), '')
     .replaceAll('&amp;', '&')
     .replaceAll('&lt;', '<')
     .replaceAll('&gt;', '>')
     .replaceAll('&quot;', '"')
-    .replaceAll('&#39;', "'")
-    .trim();
+    .replaceAll('&#39;', "'"));
 
 // Invisible page-locator marker (white, ~1px): the PDF step scans page text
 // for ⟦T<idx>⟧ to resolve the page each TOC entry lands on.
@@ -307,7 +435,7 @@ $rows
 }
 
 String _tocRow(({String title, int page}) e, String col) {
-  final isPart = partPrefixRe.hasMatch(e.title.trim());
+  final isPart = partPrefixRe.hasMatch(jsTrim(e.title));
   final cls = isPart ? 'toc-row toc-part' : 'toc-row toc-sub';
   return '''<div class="$cls">
   <span class="toc-title">${esc(e.title)}</span>
@@ -318,18 +446,23 @@ String _tocRow(({String title, int page}) e, String col) {
 
 /// Running header: page number (left) + company wordmark (right).
 ///
-/// [branding] is read like the report's raw PascalCase `Branding` map (as
-/// the Node SDK does), so a [Branding] object gives the defaults.
-String brihadHeaderTemplate(Object? branding) {
-  final b = resolveBranding(branding);
-  final company = jsOr(esc(b.companyName), 'LifeAstro');
-  return '''<div style="width:100%;font-family:$indicFontStackAttr;-webkit-print-color-adjust:exact;padding:8mm 14mm 0;">
-  <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:0.35mm solid #e3d9c0;padding-bottom:2mm;">
-    <div style="color:#9e2b25;font-size:12px;font-weight:bold;letter-spacing:.5px;">
-      <span style="color:#c25e10;">✦</span>&nbsp;<span class="pageNumber"></span>
+/// [report] is the report's `Branding` map, [override] the caller's branding:
+/// resolved here like the pages resolve them.
+String brihadHeaderTemplate(Object? report, [Branding? override]) {
+  final b = resolveBranding(report, override);
+  final company = jsOr(escAttr(b.companyName), 'LifeAstro');
+  final palette = brihadPalette(report, override);
+  final primary = palette?.primary;
+  final ink = primary != null ? toHex(primary) : '#9e2b25';
+  final star = palette != null ? toHex(palette.accent) : '#c25e10';
+  final rule = primary != null ? toHex(tintOnWhite(primary, 25)) : '#e3d9c0';
+  return '''<div style="width:100%;font-family:$printMarginFontStackAttr;-webkit-print-color-adjust:exact;padding:8mm 14mm 0;">
+  <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:0.35mm solid $rule;padding-bottom:2mm;">
+    <div style="color:$ink;font-size:12px;font-weight:bold;letter-spacing:.5px;">
+      <span style="color:$star;">✦</span>&nbsp;<span class="pageNumber"></span>
     </div>
-    <div style="color:#9e2b25;font-weight:bold;font-size:13px;letter-spacing:.4px;">
-      <span style="color:#c25e10;">✦</span> $company
+    <div style="color:$ink;font-weight:bold;font-size:13px;letter-spacing:.4px;">
+      <span style="color:$star;">✦</span> $company
     </div>
   </div>
 </div>''';
@@ -337,14 +470,18 @@ String brihadHeaderTemplate(Object? branding) {
 
 /// Running footer: star flourishes around the footer text.
 ///
-/// [branding] is read like [brihadHeaderTemplate]'s.
-String brihadFooterTemplate(Object? branding) {
-  final b = resolveBranding(branding);
-  final txt = jsOr(esc(b.footerText), 'www.lifeastroapi.com');
-  const star =
-      '<span style="color:#c25e10;font-size:10px;">✦</span><span style="color:#9e2b25;font-size:7px;">✦</span>';
-  return '''<div style="width:100%;font-family:$indicFontStackAttr;-webkit-print-color-adjust:exact;
-              text-align:center;font-size:9px;color:#9e2b25;padding-bottom:5mm;">
+/// [report] and [override] are read like [brihadHeaderTemplate]'s.
+String brihadFooterTemplate(Object? report, [Branding? override]) {
+  final b = resolveBranding(report, override);
+  final txt = jsOr(escAttr(b.footerText), 'www.lifeastroapi.com');
+  final palette = brihadPalette(report, override);
+  final primary = palette?.primary;
+  final ink = primary != null ? toHex(primary) : '#9e2b25';
+  final accent = palette != null ? toHex(palette.accent) : '#c25e10';
+  final star = '<span style="color:$accent;font-size:10px;">✦</span>'
+      '<span style="color:$ink;font-size:7px;">✦</span>';
+  return '''<div style="width:100%;font-family:$printMarginFontStackAttr;-webkit-print-color-adjust:exact;
+              text-align:center;font-size:9px;color:$ink;padding-bottom:5mm;">
   $star<span style="margin:0 5mm;letter-spacing:.3px;">$txt</span>$star
 </div>''';
 }
@@ -353,10 +490,6 @@ String brihadFooterTemplate(Object? branding) {
 
 String _yesNo(BrihadLabel label, Object? v) =>
     esc(label(truthy(v) ? 'lk_present' : 'lk_absent'));
-
-/// JS `(list ?? []).join(sep)` for a JSON array (not escaped).
-String _join(Object? list, String sep) =>
-    asList(list).map((e) => e == null ? '' : jsStr(e)).join(sep);
 
 /// JS `(n ?? 0).toFixed(2)`.
 String _fixed2(Object? n) => toFixed(asNum(n) ?? 0, 2);
@@ -416,7 +549,7 @@ String _renderAvakahada(BrihadLabel label, Object? a) {
     ('avk_lagna_lord', 'lagna_lord'),
   ]);
   if (body.isEmpty) return '';
-  return '''<section class="section">
+  return '''<section class="section short-section">
 <h2>${esc(label('section_avakahada'))}</h2>
 <table><tbody>$body</tbody></table>
 </section>''';
@@ -432,7 +565,7 @@ String _renderPanchang(BrihadLabel label, Object? p) {
     ('panchang_karana', 'karana'),
   ]);
   if (body.isEmpty) return '';
-  return '''<section class="section">
+  return '''<section class="section compact-section">
 <h2>${esc(label('section_panchang'))}</h2>
 <p>${esc(label('panchang_intro'))}</p>
 <table><tbody>$body</tbody></table>
@@ -530,7 +663,7 @@ String _renderKP(BrihadLabel label, Object? k) {
   }).join('\n');
   final sigRows = asList(m['planet_significators']).map((raw) {
     final s = asMap(raw);
-    return '<tr><td>${esc(s['key'])}</td><td>${_join(s['values'], ', ')}</td></tr>';
+    return '<tr><td>${esc(s['key'])}</td><td>${esc(listText(s['values']))}</td></tr>';
   }).join('\n');
   final rp = asMap(m['ruling_planets']);
   final rpRows = jsKeys(rp)
@@ -606,7 +739,7 @@ String _renderIshta(BrihadLabel label, Object? i, [String locale = 'en']) {
   if (!truthy(m['deity'])) return '';
   final bodyHtml =
       truthy(m['body']) ? '<p>${escBody(m['body'], locale)}</p>' : '';
-  return '''<section class="section">
+  return '''<section class="section${truthy(m['body']) ? '' : ' short-section'}">
 <h2>${esc(label('section_ishta'))}</h2>
 <p>${esc(label('ishta_intro'))}</p>
 <p><strong>${esc(label('ishta_deity'))}:</strong> ${esc(m['deity'])}<br>
@@ -615,6 +748,13 @@ String _renderIshta(BrihadLabel label, Object? i, [String locale = 'en']) {
 $bodyHtml
 </section>''';
 }
+
+// The API translates these two in every language but English, where it sends
+// the code.
+const _temporalRelations = {
+  'TempFriend': 'Temporary friend',
+  'TempEnemy': 'Temporary enemy',
+};
 
 String _renderMaitri(BrihadLabel label, Object? mt) {
   if (!truthy(mt)) return '';
@@ -628,12 +768,18 @@ String _renderMaitri(BrihadLabel label, Object? mt) {
     final body = rows.map((raw) {
       final r = asMap(raw);
       final rel = asMap(r['relations']);
-      return '<tr><td><strong>${esc(r['planet'])}</strong></td>${order.map((o) => '<td>${esc(rel[jsStr(o)])}</td>').join()}</tr>';
+      String cell(Object? o) {
+        final v = rel[jsStr(o, nullAs: 'null')];
+        final words = v == null ? null : _temporalRelations[jsStr(v)];
+        return '<td>${esc(words ?? v)}</td>';
+      }
+
+      return '<tr><td><strong>${esc(r['planet'])}</strong></td>${order.map(cell).join()}</tr>';
     }).join('\n');
     return '<table><thead>$head</thead><tbody>$body</tbody></table>';
   }
 
-  return '''<section class="section">
+  return '''<section class="section maitri-section">
 <h2>${esc(label('section_maitri'))}</h2>
 <p>${esc(label('maitri_intro'))}</p>
 <h3>${esc(label('maitri_naisargik'))}</h3>${tbl(m['naisargik'])}
@@ -691,7 +837,7 @@ String _renderLalKitab(BrihadLabel label, Object? lk) {
               rinRows
             ])}'
       : '';
-  return '''<section class="section">
+  return '''<section class="section lalkitab-section">
 <h2>${esc(label('section_lalkitab'))}</h2>
 <p>${esc(label('lalkitab_intro'))}</p>
 $planetsHtml
@@ -872,13 +1018,13 @@ String _renderRajyoga(BrihadLabel label, Object? rp) {
               skRows
             ])}'
       : '';
-  return '''<section class="section">
+  return '''<section class="section${asList(r['swarnim_kaal']).length <= 2 ? ' short-section' : ''}">
 <h2>${esc(label('section_rajyoga'))}</h2>
 <div class="rajyoga-power">
 <div class="rajyoga-pct">${esc(r['percent'])}%</div>
 <div class="rajyoga-label">${esc(label('rajyoga_strength'))}</div>
 </div>
-<p>${esc(label('rajyoga_planets'))}: ${_join(r['planets'], ', ')}</p>
+<p>${esc(label('rajyoga_planets'))}: ${esc(listText(r['planets']))}</p>
 $skHtml
 </section>''';
 }

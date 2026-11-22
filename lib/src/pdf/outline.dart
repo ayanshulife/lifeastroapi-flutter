@@ -13,59 +13,121 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
-/// One bookmark. [level] is 1-based (1 = top level).
+import 'js.dart';
+
+/// One bookmark. `level` is 1-based (1 = top level).
 typedef OutlineItem = ({String title, int page, int level});
 
 class _ParsedPdf {
-  _ParsedPdf(this.text, this.maxObj, this.rootObj, this.pageObjs,
+  _ParsedPdf(this.maxObj, this.rootObj, this.infoObj, this.pageObjs,
       this.prevStartXref, this.bodies);
-  final String text;
   final int maxObj;
   final int rootObj;
+  final int? infoObj;
   final List<int> pageObjs;
   final int prevStartXref;
   final Map<int, String> bodies;
 }
 
-final _defRe = RegExp(r'(\d+)\s+0\s+obj([\s\S]*?)endobj');
+const _objKeyword = ' 0 obj';
+
+bool _isDigit(int c) => c >= 0x30 && c <= 0x39;
+
+bool _isPdfSpace(int c) => c == 0x20 || (c >= 0x09 && c <= 0x0d);
+
+/// Object number to dictionary, in file order (a later definition replaces
+/// the value and keeps the place). Stream data is stepped over without
+/// regexes: a long report embeds megabytes of fonts and images.
+Map<int, String> _objects(String text) {
+  final out = <int, String>{};
+  var from = 0;
+  // The next `stream` keyword, kept between objects: a tagged PDF has tens of
+  // thousands of objects after its last stream, and searching from each one
+  // to the end of the file would be quadratic.
+  var nextStream = text.indexOf('stream');
+  while (true) {
+    final at = text.indexOf(_objKeyword, from);
+    if (at == -1) break;
+    from = at + _objKeyword.length;
+    var start = at;
+    while (start > 0 && _isDigit(text.codeUnitAt(start - 1))) {
+      start--;
+    }
+    if (start == at || from >= text.length) continue;
+    final next = text.codeUnitAt(from);
+    // A definition is followed by white space, `<<` or `[`.
+    if (!_isPdfSpace(next) && next != 0x3c && next != 0x5b) continue;
+    var end = text.indexOf('endobj', from);
+    if (end == -1) break;
+    var bodyEnd = end;
+    if (nextStream != -1 && nextStream < from) {
+      nextStream = text.indexOf('stream', from);
+    }
+    var stream = nextStream;
+    while (stream != -1 && stream < bodyEnd) {
+      // The keyword follows `>>` and ends its line; anything else is text.
+      var before = stream;
+      while (before > from && _isPdfSpace(text.codeUnitAt(before - 1))) {
+        before--;
+      }
+      if (text.startsWith('>>', before - 2) &&
+          stream + 6 < text.length &&
+          const [0x0a, 0x0d].contains(text.codeUnitAt(stream + 6))) {
+        final dataEnd = text.indexOf('endstream', stream);
+        if (dataEnd == -1) {
+          throw const FormatException('pdf outline: a stream has no end');
+        }
+        final close = text.indexOf('endobj', dataEnd);
+        if (close == -1) {
+          throw const FormatException('pdf outline: an object has no end');
+        }
+        bodyEnd = stream;
+        end = close;
+        break;
+      }
+      stream = nextStream = text.indexOf('stream', stream + 6);
+    }
+    out[int.parse(text.substring(start, at))] = text.substring(from, bodyEnd);
+    from = end + 6;
+  }
+  return out;
+}
 
 _ParsedPdf _parsePdf(Uint8List pdf) {
   final text = latin1.decode(pdf);
+  final bodies = _objects(text);
 
-  var maxObj = 0;
-  for (final m in RegExp(r'(\d+)\s+0\s+obj\b').allMatches(text)) {
-    final n = int.parse(m[1]!);
-    if (n > maxObj) maxObj = n;
-  }
-
-  final rootM = RegExp(r'/Root\s+(\d+)\s+0\s+R').firstMatch(text);
+  final trailerAt = text.lastIndexOf('trailer');
+  final trailer = trailerAt == -1 ? '' : text.substring(trailerAt);
+  final rootM = RegExp(r'/Root\s+(\d+)\s+0\s+R').firstMatch(trailer);
+  final infoM = RegExp(r'/Info\s+(\d+)\s+0\s+R').firstMatch(trailer);
   if (rootM == null) {
     throw const FormatException('pdf outline: /Root not found in trailer');
   }
-  final rootObj = int.parse(rootM[1]!);
 
   // Page objects in the order they appear (Chromium writes them in page order).
+  final pageRe = RegExp(r'/Type\s*/Page\b');
   final pageObjs = <int>[];
-  final bodies = <int, String>{};
-  for (final m in _defRe.allMatches(text)) {
-    final obj = int.parse(m[1]!);
-    final body = m[2] ?? '';
-    bodies[obj] = body;
-    if (RegExp(r'/Type\s*/Page\b').hasMatch(body) &&
-        !RegExp(r'/Type\s*/Pages\b').hasMatch(body)) {
-      pageObjs.add(obj);
-    }
-  }
-
-  var prevStartXref = 0;
-  for (final m in RegExp(r'startxref\s+(\d+)').allMatches(text)) {
-    prevStartXref = int.parse(m[1]!);
-  }
-
+  var maxObj = 0;
+  bodies.forEach((obj, body) {
+    if (obj > maxObj) maxObj = obj;
+    if (pageRe.hasMatch(body)) pageObjs.add(obj);
+  });
   if (pageObjs.isEmpty) {
     throw const FormatException('pdf outline: no /Type /Page objects found');
   }
-  return _ParsedPdf(text, maxObj, rootObj, pageObjs, prevStartXref, bodies);
+
+  final startXref = text.lastIndexOf('startxref');
+  final prev = startXref == -1
+      ? null
+      : RegExp(r'^startxref\s+(\d+)').firstMatch(text.substring(startXref));
+  return _ParsedPdf(
+      maxObj,
+      int.parse(rootM[1]!),
+      infoM == null ? null : int.parse(infoM[1]!),
+      pageObjs,
+      prev == null ? 0 : int.parse(prev[1]!),
+      bodies);
 }
 
 /// The number of pages of a Chromium-rendered PDF.
@@ -121,8 +183,19 @@ String _pdfText(String s) {
   }
   final out = StringBuffer('(');
   for (final b in bytes) {
-    if (b == 0x28 || b == 0x29 || b == 0x5c) out.write('\\');
-    out.writeCharCode(b);
+    switch (b) {
+      case 0x28 || 0x29 || 0x5c:
+        out.write('\\');
+        out.writeCharCode(b);
+      // A reader turns a bare CR in a literal string into LF, so every U+0Dxx
+      // (Malayalam) title read as Gurmukhi.
+      case 0x0d:
+        out.write(r'\r');
+      case 0x0a:
+        out.write(r'\n');
+      default:
+        out.writeCharCode(b);
+    }
   }
   out.write(')');
   return out.toString();
@@ -137,7 +210,7 @@ Uint8List addPdfOutline(Uint8List pdf, List<OutlineItem> items) {
 
   final valid = [
     for (final it in items)
-      if (it.title.trim().isNotEmpty)
+      if (jsTrim(it.title).isNotEmpty)
         (
           title: it.title,
           page: it.page.clamp(1, pageObjs.length),
@@ -216,12 +289,11 @@ Uint8List addPdfOutline(Uint8List pdf, List<OutlineItem> items) {
   }
 
   // The Catalog again, with /Outlines and /PageMode /UseOutlines added.
-  final rootBody = RegExp('\\b${parsed.rootObj}\\s+0\\s+obj([\\s\\S]*?)endobj')
-      .firstMatch(parsed.text);
+  final rootBody = parsed.bodies[parsed.rootObj];
   if (rootBody == null) {
     throw const FormatException('pdf outline: could not read /Root object');
   }
-  var rootInner = rootBody[1]!
+  var rootInner = rootBody
       .trim()
       .replaceAll(RegExp(r'/Outlines\s+\d+\s+0\s+R'), '')
       .replaceAll(RegExp(r'/PageMode\s*/\w+'), '');
@@ -263,7 +335,11 @@ Uint8List addPdfOutline(Uint8List pdf, List<OutlineItem> items) {
     i = j + 1;
   }
   final maxNewObj = xrefEntries.last.obj;
+  // The last trailer replaces the earlier one, so it carries the document
+  // information (the PDF's title) over.
+  final info = parsed.infoObj == null ? '' : '/Info ${ref(parsed.infoObj!)} ';
   xref.write('trailer\n<< /Size ${maxNewObj + 1} /Root ${ref(parsed.rootObj)} '
+      '$info'
       '/Prev ${parsed.prevStartXref} >>\nstartxref\n$xrefStart\n%%EOF\n');
   add(xref.toString());
   return out.takeBytes();

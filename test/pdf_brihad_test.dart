@@ -8,62 +8,67 @@ import 'dart:io';
 
 import 'package:lifeastroapi/src/pdf/shared.dart';
 import 'package:lifeastroapi/src/pdf/templates/kundli_brihad_sections.dart';
+import 'package:lifeastroapi/src/pdf/templates/north_indian_chart.dart';
 import 'package:test/test.dart';
-
-const acme = Branding(
-  companyName: 'Acme Astro',
-  logoUrl: 'https://cdn.example/acme/logo.png',
-  primaryColor: '#6b21a8',
-  secondaryColor: '#9333ea',
-  footerText: 'Acme Astro · confidential',
-  watermarkText: 'SAMPLE',
-);
 
 void main() {
   final g = jsonDecode(File('test/fixtures/pdf/brihad.json').readAsStringSync())
       as Map<String, Object?>;
 
-  T orSkip<T>(T Function() f) {
-    try {
-      return f();
-    } on UnimplementedError {
-      markTestSkipped('not ported yet');
-      rethrow;
-    }
-  }
-
-  test('running header', () {
-    final h = (g['header'] as List).cast<String>();
-    try {
-      expect(orSkip(() => brihadHeaderTemplate(null)), h[0]);
-      expect(brihadHeaderTemplate(acme), h[1]);
-    } on UnimplementedError {
-      return;
-    }
-  });
-
-  test('running footer', () {
-    final f = (g['footer'] as List).cast<String>();
-    try {
-      expect(orSkip(() => brihadFooterTemplate(null)), f[0]);
-      expect(brihadFooterTemplate(acme), f[1]);
-    } on UnimplementedError {
-      return;
+  test('palette, running header and footer, for every branding pair', () {
+    List<int>? rgb((int, int, int)? c) => c == null ? null : [c.$1, c.$2, c.$3];
+    final bands = (g['bands'] as List).cast<Map<String, Object?>>();
+    expect(bands, hasLength(10));
+    for (final band in bands) {
+      final report = band['report'];
+      final branding = band['branding'] is Map
+          ? Branding.fromJson((band['branding'] as Map).cast<String, Object?>())
+          : null;
+      final why = jsonEncode([report, band['branding']]);
+      final palette = brihadPalette(report, branding);
+      final want = band['palette'] as Map?;
+      expect(palette == null, want == null, reason: why);
+      if (palette != null) {
+        expect(rgb(palette.primary), want!['primary'], reason: why);
+        expect(rgb(palette.accent), want['accent'], reason: why);
+        expect(rgb(palette.muted), want['muted'], reason: why);
+      }
+      expect(brihadHeaderTemplate(report, branding), band['header'],
+          reason: why);
+      expect(brihadFooterTemplate(report, branding), band['footer'],
+          reason: why);
     }
   });
 
   test('table of contents', () {
-    for (final t in (g['toc'] as List).cast<Map<String, Object?>>()) {
+    final all = (g['toc'] as List).cast<Map<String, Object?>>();
+    expect(all, hasLength(10), reason: 'every language has a heading');
+    for (final t in all) {
       final entries = [
         for (final e in (t['entries'] as List).cast<Map<String, Object?>>())
           (title: e['title'] as String, page: e['page'] as int),
       ];
-      try {
-        expect(orSkip(() => buildBrihadToc(entries, t['heading'] as String)),
-            t['html']);
-      } on UnimplementedError {
-        return;
-      }
+      expect(buildBrihadToc(entries, t['heading'] as String), t['html']);
+    }
+  });
+
+  test('chart: every cell, 0 to 12 bodies', () {
+    final charts =
+        jsonDecode(File('test/fixtures/pdf/charts.json').readAsStringSync())
+            as List;
+    expect(charts, hasLength(13));
+    for (final c in charts.cast<Map<String, Object?>>()) {
+      final svg = northIndianChartSvg(
+        lagnaSignIndex: c['lagnaSignIndex'] as int,
+        planets: [
+          for (final p in (c['planets'] as List).cast<Map<String, Object?>>())
+            ChartPlanet(
+                label: p['label'] as String,
+                house: p['house'],
+                color: p['color'] as String?),
+        ],
+      );
+      expect(svg, c['svg']);
     }
   });
 
@@ -71,13 +76,9 @@ void main() {
     for (final t in (g['tagged'] as List).cast<Map<String, Object?>>()) {
       final golden =
           File('test/fixtures/pdf/golden/${t['id']}.html').readAsStringSync();
-      try {
-        final r = orSkip(() => tagBrihadSectionsForToc(golden));
-        expect(r.titles, t['titles'], reason: '${t['id']}');
-        expect(r.html == t['html'], isTrue, reason: '${t['id']} tagged html');
-      } on UnimplementedError {
-        return;
-      }
+      final r = tagBrihadSectionsForToc(golden);
+      expect(r.titles, t['titles'], reason: '${t['id']}');
+      expect(r.html == t['html'], isTrue, reason: '${t['id']} tagged html');
     }
   });
 }

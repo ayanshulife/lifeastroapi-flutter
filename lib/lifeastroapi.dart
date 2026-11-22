@@ -1,7 +1,8 @@
 /// Official Dart and Flutter SDK for LifeAstroAPI: Vedic astrology and the
 /// Hindu calendar (panchang, festivals, kundli, dasha, kundli matching,
 /// muhurta, transits, numerology, Lal Kitab, remedies, readings, horoscopes,
-/// JSON reports), plus Western astrology and tarot.
+/// JSON reports), plus Western astrology and tarot. `package:lifeastroapi/pdf.dart`
+/// turns the report JSON into branded HTML and PDF on your side.
 ///
 /// ```dart
 /// final client = LifeAstro(apiKey: 'dv_live_...');

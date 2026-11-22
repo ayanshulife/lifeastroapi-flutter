@@ -213,6 +213,29 @@ const _labels = {
     'lucky_time': 'সময়',
     'sources': 'সূত্র',
   },
+  'pa': {
+    'title_daily': 'ਰੋਜ਼ਾਨਾ ਰਾਸ਼ੀਫਲ',
+    'title_weekly': 'ਹਫ਼ਤਾਵਾਰੀ ਰਾਸ਼ੀਫਲ',
+    'title_monthly': 'ਮਾਸਿਕ ਰਾਸ਼ੀਫਲ',
+    'period': 'ਮਿਆਦ',
+    'section_transits': 'ਗੋਚਰ ਦਾ ਪ੍ਰਭਾਵ',
+    'section_panchang': 'ਅੱਜ ਦਾ ਪੰਚਾਂਗ',
+    'section_lucky': 'ਸ਼ੁਭ ਤੱਤ',
+    'tithi': 'ਤਿਥੀ',
+    'nakshatra': 'ਨਛੱਤਰ',
+    'yoga': 'ਯੋਗ',
+    'karana': 'ਕਰਣ',
+    'vaar': 'ਵਾਰ',
+    'rahu_kaal': 'ਰਾਹੂ ਕਾਲ',
+    'auspicious_window': 'ਸ਼ੁਭ ਸਮਾਂ',
+    'sunrise': 'ਸੂਰਜ ਚੜ੍ਹਨਾ',
+    'sunset': 'ਸੂਰਜ ਡੁੱਬਣਾ',
+    'lucky_color': 'ਰੰਗ',
+    'lucky_number': 'ਅੰਕ',
+    'lucky_direction': 'ਦਿਸ਼ਾ',
+    'lucky_time': 'ਸਮਾਂ',
+    'sources': 'ਸਰੋਤ',
+  },
 };
 
 String _row(String label, Object? value) {
@@ -232,6 +255,7 @@ String _card(String label, Object? value) {
 /// The horoscope entry carries no branding of its own, so [branding] is the
 /// only source of branding.
 String renderHoroscopeHtml(Map<String, Object?> data, [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data, 'language'));
   final b = resolveBranding(null, branding);
   final locale = jsStr(jsOr(data['language'], 'en'));
   final t = makeLabeler(_labels, locale);

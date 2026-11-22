@@ -178,6 +178,25 @@ const _labels = {
     'section_compatibility': 'সঙ্গতিপূর্ণ সংখ্যা',
     'compat_intro': 'আপনার মূলাঙ্কের সঙ্গে অনুকূল সংখ্যা',
   },
+  'pa': {
+    'title': 'ਅੰਕ ਜੋਤਿਸ਼ ਰਿਪੋਰਟ',
+    'born': 'ਜਨਮ',
+    'generated': 'ਤਿਆਰ',
+    'driver': 'ਮੂਲਾਂਕ',
+    'driver_alt': 'ਜਨਮ ਤਰੀਕ ਦਾ ਅੰਕ',
+    'conductor': 'ਭਾਗਯਾਂਕ',
+    'conductor_alt': 'ਜੀਵਨ ਪੰਧ',
+    'soul': 'ਅੰਤਰ-ਆਤਮਾ ਅੰਕ',
+    'personality': 'ਸ਼ਖ਼ਸੀਅਤ ਅੰਕ',
+    'destiny': 'ਨਾਮ ਅੰਕ',
+    'section_driver': 'ਮੂਲਾਂਕ',
+    'section_conductor': 'ਭਾਗਯਾਂਕ',
+    'section_soul': 'ਅੰਤਰ-ਆਤਮਾ ਅੰਕ',
+    'section_personality': 'ਸ਼ਖ਼ਸੀਅਤ ਅੰਕ',
+    'section_destiny': 'ਨਾਮ ਅੰਕ',
+    'section_compatibility': 'ਮੇਲ ਖਾਂਦੇ ਅੰਕ',
+    'compat_intro': 'ਤੁਹਾਡੇ ਮੂਲਾਂਕ ਨਾਲ ਅਨੁਕੂਲ ਅੰਕ',
+  },
 };
 
 const _factorLabels = {
@@ -252,6 +271,14 @@ const _factorLabels = {
     'gemstone': 'রত্ন',
     'deity': 'দেবতা',
     'direction': 'দিক',
+  },
+  'pa': {
+    'planet': 'ਗ੍ਰਹਿ',
+    'day': 'ਵਾਰ',
+    'color': 'ਰੰਗ',
+    'gemstone': 'ਰਤਨ',
+    'deity': 'ਦੇਵਤਾ',
+    'direction': 'ਦਿਸ਼ਾ',
   },
 };
 
@@ -382,10 +409,24 @@ const _numberMeanings = {
     22: 'মাস্টার নির্মাতা: বড় স্বপ্নকে বাস্তবে রূপ দেওয়ার ক্ষমতা। 4 সংখ্যার শক্তির বর্ধিত রূপ; আপনি আদর্শকে বাস্তব উত্তরাধিকারে পরিণত করেন।',
     33: 'মাস্টার শিক্ষক: দক্ষতার সঙ্গে নিষ্ঠা। 6 সংখ্যার শক্তির বর্ধিত রূপ; আপনি করুণাময় সেবার দৃষ্টান্ত হয়ে জীবন কাটান।',
   },
+  'pa': {
+    1: 'ਅਗਵਾਈ, ਸੁਤੰਤਰਤਾ, ਮੌਲਿਕਤਾ। ਪੱਕੀ ਇੱਛਾ-ਸ਼ਕਤੀ ਅਤੇ ਪਹਿਲ ਕਰਨ ਦੀ ਸਮਰੱਥਾ। ਆਪਣੀ ਪ੍ਰੇਰਨਾ ਨਾਲ ਸ਼ੁਰੂ ਕੀਤੇ ਕੰਮਾਂ ਵਿੱਚ ਤੁਸੀਂ ਸਭ ਤੋਂ ਵਧੀਆ ਰਹਿੰਦੇ ਹੋ; ਕਿਸੇ ਹੋਰ ਦੇ ਹੁਕਮ ਹੇਠ ਚੱਲਣਾ ਤੁਹਾਨੂੰ ਪਸੰਦ ਨਹੀਂ।',
+    2: 'ਸੰਵੇਦਨਸ਼ੀਲਤਾ, ਸਹਿਯੋਗ, ਭਾਈਵਾਲੀ। ਤੁਸੀਂ ਭਾਵਨਾਵਾਂ ਦੇ ਵਹਾਅ ਨੂੰ ਚੰਗੀ ਤਰ੍ਹਾਂ ਪੜ੍ਹ ਲੈਂਦੇ ਹੋ; ਸਹਿਯੋਗ ਵਾਲੇ ਮਾਹੌਲ ਵਿੱਚ ਤੁਸੀਂ ਵਧਦੇ-ਫੁੱਲਦੇ ਹੋ।',
+    3: 'ਪ੍ਰਗਟਾਵਾ, ਰਚਨਾਤਮਕਤਾ, ਆਸ਼ਾਵਾਦ। ਗੱਲਬਾਤ ਅਤੇ ਸਿੱਖਣਾ ਤੁਹਾਡੀਆਂ ਕੁਦਰਤੀ ਤਾਕਤਾਂ ਹਨ; ਪੜ੍ਹਾਉਣਾ, ਲਿਖਣਾ ਅਤੇ ਕਲਾ ਅਨੁਕੂਲ ਹਨ।',
+    4: 'ਵਿਹਾਰਕਤਾ, ਬਣਤਰ, ਮਿਹਨਤ। ਤੁਸੀਂ ਢੰਗ ਨਾਲ ਅਤੇ ਅਨੁਸ਼ਾਸਨ ਵਿੱਚ ਕੰਮ ਕਰਦੇ ਹੋ; ਧੀਰਜ ਨਾਲ ਟਿਕਾਊ ਨੀਂਹ ਬਣਾਉਂਦੇ ਹੋ।',
+    5: 'ਸੁਤੰਤਰਤਾ, ਬਦਲਾਅ, ਬਹੁਪੱਖੀ ਪ੍ਰਤਿਭਾ। ਤੁਸੀਂ ਜਿਗਿਆਸੂ, ਹਿੰਮਤੀ ਅਤੇ ਛੇਤੀ ਸਿੱਖਣ ਵਾਲੇ ਹੋ; ਰੁਚੀ ਬਣਾਈ ਰੱਖਣ ਲਈ ਤੁਹਾਨੂੰ ਵੰਨ-ਸੁਵੰਨਤਾ ਦੀ ਲੋੜ ਹੈ।',
+    6: 'ਜ਼ਿੰਮੇਵਾਰੀ, ਮੇਲ-ਜੋਲ, ਪਰਿਵਾਰ। ਪਾਲਣ ਵਾਲਾ ਸੁਭਾਅ; ਦੂਜਿਆਂ ਦੀ ਦੇਖਭਾਲ ਅਤੇ ਸੁੰਦਰਤਾ ਦੀ ਸਿਰਜਣਾ ਵਿੱਚ ਤੁਸੀਂ ਜੀਵਨ ਦਾ ਮਕਸਦ ਲੱਭਦੇ ਹੋ।',
+    7: 'ਅਧਿਆਤਮਕਤਾ, ਆਤਮ-ਨਿਰੀਖਣ, ਵਿਸ਼ਲੇਸ਼ਣ। ਤੁਸੀਂ ਡੂੰਘੇ ਸੱਚ ਦੇ ਖੋਜੀ ਹੋ; ਖੋਜ, ਦਰਸ਼ਨ ਅਤੇ ਸਾਧਨਾ ਵਿੱਚ ਤੁਸੀਂ ਵਧਦੇ-ਫੁੱਲਦੇ ਹੋ।',
+    8: 'ਸ਼ਕਤੀ, ਉੱਚੀਆਂ ਇੱਛਾਵਾਂ, ਦੁਨਿਆਵੀ ਕੰਮਾਂ ਦੀ ਮੁਹਾਰਤ। ਪ੍ਰਾਪਤੀ ਦੀ ਤੀਬਰ ਇੱਛਾ; ਜਾਇਦਾਦ ਅਤੇ ਕਾਰੋਬਾਰ ਖੜ੍ਹਾ ਕਰਨ ਦੀ ਸਮਰੱਥਾ ਤੁਹਾਡੇ ਵਿੱਚ ਹੈ।',
+    9: 'ਦਇਆ, ਸਰਬ-ਵਿਆਪਕਤਾ, ਸੰਪੂਰਨਤਾ। ਮਨੁੱਖਤਾ-ਪੱਖੀ ਰੁਝਾਨ; ਤੁਸੀਂ ਖੁੱਲ੍ਹੇ ਦਿਲ ਨਾਲ ਦਿੰਦੇ ਹੋ ਅਤੇ ਆਪਣੀ ਮਿਸਾਲ ਨਾਲ ਦੂਜਿਆਂ ਨੂੰ ਪ੍ਰੇਰਿਤ ਕਰਦੇ ਹੋ।',
+    11: 'ਮਾਸਟਰ ਅੰਤਰਦਰਸ਼ੀ: ਉੱਚੀ ਅਧਿਆਤਮਕ ਸੰਵੇਦਨਸ਼ੀਲਤਾ। ਅੰਕ 2 ਦੀ ਊਰਜਾ ਦਾ ਵਧਿਆ ਹੋਇਆ ਰੂਪ; ਦੂਰਦਰਸ਼ੀ ਸਮਰੱਥਾ ਦੇ ਨਾਲ ਨਸਾਂ ਦੀ ਤੀਬਰਤਾ।',
+    22: 'ਮਾਸਟਰ ਨਿਰਮਾਤਾ: ਵੱਡੇ ਸੁਪਨਿਆਂ ਨੂੰ ਸਾਕਾਰ ਕਰਨ ਦੀ ਸਮਰੱਥਾ। ਅੰਕ 4 ਦੀ ਊਰਜਾ ਦਾ ਵਧਿਆ ਹੋਇਆ ਰੂਪ; ਤੁਸੀਂ ਆਦਰਸ਼ਾਂ ਨੂੰ ਠੋਸ ਵਿਰਾਸਤ ਵਿੱਚ ਬਦਲਦੇ ਹੋ।',
+    33: 'ਮਾਸਟਰ ਅਧਿਆਪਕ: ਹੁਨਰ ਦੇ ਨਾਲ ਸਮਰਪਣ। ਅੰਕ 6 ਦੀ ਊਰਜਾ ਦਾ ਵਧਿਆ ਹੋਇਆ ਰੂਪ; ਤੁਸੀਂ ਦਇਆ ਭਰੀ ਸੇਵਾ ਦੀ ਮਿਸਾਲ ਬਣ ਕੇ ਜੀਵਨ ਜਿਊਂਦੇ ਹੋ।',
+  },
 };
 
 const _extraCss =
-    '\n.cover .summary {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  gap: 4mm;\n  margin: 12mm 0;\n  padding: 0 8mm;\n}\n.summary-card {\n  padding: 5mm;\n  background: var(--brand-primary);\n  color: #fff;\n  border-radius: 2mm;\n  text-align: center;\n}\n.summary-card .number { font-size: 22pt; font-weight: 700; line-height: 1; }\n.summary-card .label {\n  font-size: 9pt;\n  margin-top: 2mm;\n  letter-spacing: 0.3pt;\n  text-transform: uppercase;\n  opacity: 0.85;\n}\n.number-block { margin: 6mm 0; page-break-inside: avoid; }\n.number-block .header-row { display: flex; align-items: baseline; gap: 4mm; margin-bottom: 3mm; }\n.number-block .number {\n  display: inline-block;\n  padding: 2mm 5mm;\n  background: var(--brand-primary);\n  color: #fff;\n  font-size: 20pt;\n  font-weight: 700;\n  border-radius: 1.5mm;\n}\n.number-block .name { font-size: 14pt; color: var(--brand-primary); }\n.number-block .meaning { margin: 2mm 0 4mm; }\n.factors-grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: 2mm 6mm;\n  padding: 4mm;\n  background: #fafafa;\n  border-left: 3px solid var(--brand-secondary);\n}\n.factors-grid dt {\n  font-size: 9pt;\n  color: var(--brand-secondary);\n  text-transform: uppercase;\n  letter-spacing: 0.5pt;\n}\n.factors-grid dd { margin: 0 0 2mm; font-size: 11pt; font-weight: 600; }\n.compatibility {\n  margin: 6mm 0;\n  padding: 5mm;\n  background: #fafafa;\n  border-left: 3px solid var(--brand-primary);\n}\n.compatibility .label {\n  font-size: 9pt;\n  color: var(--brand-secondary);\n  text-transform: uppercase;\n  letter-spacing: 0.5pt;\n  margin-bottom: 2mm;\n}\n.compatibility .numbers { display: flex; gap: 3mm; flex-wrap: wrap; }\n.compatibility .num-chip {\n  display: inline-block;\n  padding: 2mm 5mm;\n  background: var(--brand-primary);\n  color: #fff;\n  font-size: 14pt;\n  font-weight: 600;\n  border-radius: 1.5mm;\n}\n';
+    '\n.cover .summary {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  gap: 4mm;\n  margin: 12mm 0;\n  padding: 0 8mm;\n}\n.summary-card {\n  padding: 5mm;\n  background: var(--brand-primary);\n  color: #fff;\n  border-radius: 2mm;\n  text-align: center;\n}\n.summary-card .number { font-size: 22pt; font-weight: 700; line-height: 1; }\n.summary-card .label {\n  font-size: 9pt;\n  margin-top: 2mm;\n  letter-spacing: 0.3pt;\n  text-transform: uppercase;\n  opacity: 0.85;\n}\n.number-block { margin: 6mm 0; page-break-inside: avoid; }\n.number-block .header-row { display: flex; align-items: baseline; gap: 4mm; margin-bottom: 3mm; }\n.number-block .number {\n  display: inline-block;\n  padding: 2mm 5mm;\n  background: var(--brand-primary);\n  color: #fff;\n  font-size: 20pt;\n  font-weight: 700;\n  border-radius: 1.5mm;\n}\n.number-block .name { font-size: 14pt; color: var(--brand-primary); }\n.number-block .meaning { margin: 2mm 0 4mm; }\n.factors-grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: repeat(4, auto);\n  grid-auto-flow: column;\n  gap: 2mm 6mm;\n  padding: 4mm;\n  background: #fafafa;\n  border-left: 3px solid var(--brand-secondary);\n}\n.factors-grid dt {\n  font-size: 9pt;\n  color: var(--brand-secondary);\n  text-transform: uppercase;\n  letter-spacing: 0.5pt;\n}\n.factors-grid dd { margin: 0 0 2mm; font-size: 11pt; font-weight: 600; }\n.compatibility {\n  margin: 6mm 0;\n  padding: 5mm;\n  background: #fafafa;\n  border-left: 3px solid var(--brand-primary);\n}\n.compatibility .label {\n  font-size: 9pt;\n  color: var(--brand-secondary);\n  text-transform: uppercase;\n  letter-spacing: 0.5pt;\n  margin-bottom: 2mm;\n}\n.compatibility .numbers { display: flex; gap: 3mm; flex-wrap: wrap; }\n.compatibility .num-chip {\n  display: inline-block;\n  padding: 2mm 5mm;\n  background: var(--brand-primary);\n  color: #fff;\n  font-size: 14pt;\n  font-weight: 600;\n  border-radius: 1.5mm;\n}\n';
 
 /// Mirror of Go `pickNumerologyLocale`: fall back to "en".
 String _pickLocale(Object? loc) =>
@@ -415,7 +456,7 @@ String _factorsHtml(
   if (!truthy(factors)) return '';
   final f = asMap(factors);
   // The API sends every factor value in the request language. Older API
-  // builds sent English for te/ta/kn/ml/gu/bn, so planet and weekday names
+  // builds sent English for te/ta/kn/ml/gu/bn/pa, so planet and weekday names
   // are still mapped to the engine's native names.
   final planet = f['planet'];
   final day = f['day'];
@@ -453,13 +494,15 @@ String _numberSection(
 
 /// Renders the Numerology report as a complete HTML document.
 String renderNumerologyHtml(Map<String, Object?> data, [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final b = resolveBranding(data['Branding'], branding);
   final locale = _pickLocale(data['Locale']);
   final label = makeLabeler(_labels, locale);
   final fl = makeLabeler(_factorLabels, locale);
 
   final subject = asMap(data['Subject']);
-  final subjectName = subject['Name'] ?? '';
+  // The endpoint sends the name at the top level.
+  final subjectName = jsOr(jsOr(subject['Name'], data['name']), '');
   // DOB on the cover: prefer the subject header, else the compute `dob` key.
   final dob = subject['DOB'] ?? data['dob'] ?? '';
 

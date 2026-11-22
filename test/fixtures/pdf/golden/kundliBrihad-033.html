@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<title>बृहद् कुंडली: </title>
+<style>
+:root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
+
+* { box-sizing: border-box; }
+
+h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
+html, body {
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
+  color: #1a1a1a;
+  font-size: 11pt;
+  line-height: 1.45;
+  margin: 0;
+}
+@page { size: A4; margin: 18mm 15mm 22mm 15mm; }
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+h2 {
+  color: var(--brand-primary);
+  border-bottom: 2px solid var(--brand-primary);
+  padding-bottom: 2mm;
+  font-size: 16pt;
+  margin-top: 6mm;
+  padding-top: 2mm;
+}
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
+p { margin: 2mm 0; }
+table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
+th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
+th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size: 10pt; }
+.cover { page-break-after: always; text-align: center; padding: 40mm 0 0; }
+.cover img.logo { max-height: 24mm; max-width: 60mm; margin-bottom: 8mm; }
+.cover h1 { color: var(--brand-primary); font-size: 28pt; margin: 0 0 4mm; }
+.cover .company { color: var(--brand-secondary); font-size: 14pt; margin-bottom: 16mm; }
+.cover .subject { font-size: 16pt; margin-bottom: 4mm; }
+.cover .meta { color: var(--brand-secondary); font-size: 11pt; }
+.cover .generated { margin-top: 32mm; color: var(--brand-secondary); font-size: 9pt; }
+.narrative-section { margin-top: 6mm; page-break-inside: avoid; }
+.narrative-section .body { margin: 2mm 0; white-space: pre-wrap; }
+.narrative-section ul { margin: 1mm 0 2mm 6mm; padding: 0; }
+.narrative-section .citations { color: var(--brand-secondary); font-size: 9pt; font-style: italic; }
+.cards { display: flex; gap: 4mm; margin: 4mm 0; flex-wrap: wrap; }
+.card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
+.card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
+.card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
+
+footer {
+  text-align: center; color: var(--brand-secondary); font-size: 8pt;
+  margin-top: 10mm;
+}
+@media print { footer { display: none; } }
+
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
+
+
+
+
+
+@page { size: A4; margin: 26mm 0 16mm 0; }
+body > footer { display: none !important; }
+
+body::before { z-index: -1; }
+
+.section { padding-left: 14mm; padding-right: 14mm; }
+.cover { padding-left: 0; padding-right: 0; }
+
+
+:root {
+  
+  --as-teal:#c25e10;   
+  --as-green:#a8451a;  
+  --as-amber:#b8860b;  
+  --as-dorange:#9e2b25;
+  --as-slate:#6b4a2f;  
+  --as-olive:#9c6f1e;  
+  --as-blue:#8a3324;   
+  --as-lteal:#c0631e;  
+  --as-salmon:#b5471f; 
+  --as-lamber:#9a7b1e; 
+  --as-gold:#8a5a00;   
+  --as-tab:#8a1f17;    
+  --as-zebra:#fcf3e3;  
+  --as-cardbg:#fffaf0; 
+  --as-ink:#3a2410;    
+  
+  --brand-secondary:#7a5a3a;
+}
+
+body { color: var(--as-ink); font-size: 11.5pt; line-height: 1.8; }
+
+
+.section > h2 {
+  color: var(--as-teal); font-size: 21.6pt; font-weight: 700;
+  border: none; padding: 0 0 2.5mm; margin: 0 0 5mm; position: relative;
+}
+.section > h2::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1.6mm; width: 52mm;
+  background: var(--as-amber);
+  border-radius: 1mm;
+  box-shadow: 0 2.4mm 0 -0.9mm var(--as-teal); 
+}
+
+h2, h3 { padding-top: 0; }
+.section > h2 { page-break-after: auto; }
+.section:nth-of-type(2n) > h2 { color: var(--as-dorange); }
+.section:nth-of-type(3n) > h2 { color: var(--as-blue); }
+
+
+.section table { border-collapse: separate; border-spacing: 0; margin: 4mm 0; width: 100%; }
+.section table thead th {
+  background: var(--as-teal); color: #fff; font-weight: 600; font-size: 10pt;
+  padding: 2.5mm 3mm; text-align: left; border: none;
+}
+.section table tbody td {
+  padding: 3mm 3.5mm; font-size: 10.5pt; border: none; border-bottom: 1px solid #eaeaea;
+  vertical-align: top;
+}
+.section table tbody tr:nth-child(odd) td { background: var(--as-zebra); }
+.section table tbody tr:nth-child(even) td { background: #ffffff; }
+
+.section.maitri-section table thead th, .section.maitri-section table tbody td { padding-left: 1.2mm; padding-right: 1.2mm; }
+
+.section table tr { page-break-inside: avoid; }
+.section table thead { display: table-header-group; }
+.section h4 { page-break-after: avoid; }
+
+.yoga-block, .north-chart { page-break-inside: avoid; }
+
+
+
+
+
+.narrative-chapter h3 {
+  color: var(--as-dorange); font-size: 13.5pt; font-weight: 700;
+  margin: 9mm 0 3mm; page-break-after: avoid;
+}
+.narrative-chapter h3:first-of-type { margin-top: 4mm; }
+.narrative-chapter p { margin: 0 0 5mm; text-align: justify; line-height: 1.85; }
+.narrative-chapter ul { margin: 0 0 5mm 7mm; }
+.narrative-chapter li { margin-bottom: 2.5mm; line-height: 1.7; }
+
+
+.section h3 { color: var(--as-teal); font-size: 12.5pt; font-weight: 700; margin: 6mm 0 2.5mm; page-break-after: avoid; }
+.section h4 { color: var(--as-slate); font-size: 11pt; font-weight: 700; margin: 4mm 0 2mm; }
+.section p { margin: 3mm 0; line-height: 1.7; }
+
+
+.section > p:first-of-type { color: #555; }
+
+
+.toc-section { padding-top: 4mm; page-break-after: always; }
+.toc-banner {
+  background: var(--as-teal); color: #fff; font-size: 16pt; font-weight: 700;
+  text-align: center; padding: 3mm; border-radius: 4mm; margin: 0 0 6mm;
+}
+.toc-row { display: flex; align-items: baseline; margin: 1.8mm 0; font-size: 12pt; line-height: 1.5; }
+.toc-row .toc-title { color: #444; white-space: nowrap; }
+.toc-row .toc-dots { flex: 1 1 auto; border-bottom: 1px dotted #bbb; margin: 0 2mm 1mm; }
+.toc-row .toc-page { font-weight: 700; font-size: 13pt; }
+
+.toc-row.toc-part { margin: 3.2mm 0 1.2mm; page-break-after: avoid; }
+.toc-row.toc-part .toc-title { color: var(--as-teal); font-weight: 700; font-size: 12.5pt; }
+.toc-row.toc-sub { margin-left: 7mm; }
+.toc-row.toc-sub .toc-title { color: #555; }
+
+
+.part-banner { margin: 0 0 6mm; page-break-after: avoid; }
+.part-banner .part-h2 {
+  background: var(--as-teal); color: #fff; text-align: center;
+  padding: 6mm 4mm; border-radius: 3mm; font-size: 24pt; border-bottom: none;
+  margin: 0;
+}
+
+h3.merged-sub {
+  font-size: 14pt; color: var(--as-teal); margin: 7mm 0 2mm;
+  padding-top: 3mm; border-top: 0.3mm solid #e3d9c0;
+}
+
+
+.graha-grid { display: flex; flex-wrap: wrap; gap: 4mm; margin: 5mm 0; }
+.graha-card {
+  flex: 0 0 calc(33.333% - 3mm); display: flex; align-items: center; gap: 3mm;
+  background: #fff; border: 1px solid #eee; border-radius: 2mm; padding: 3mm;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); page-break-inside: avoid;
+}
+.graha-card .graha-glyph { flex: 0 0 auto; line-height: 0; }
+.graha-card .graha-name { font-weight: 700; font-size: 11pt; color: var(--as-ink); }
+.graha-card .graha-pos { font-size: 9.5pt; color: var(--as-teal); margin-top: 0.5mm; }
+.graha-card .graha-nak { font-size: 9pt; color: #777; }
+
+
+.section > ul:last-child { page-break-before: avoid; page-break-inside: avoid; }
+.lalkitab-section > table:last-child { page-break-inside: avoid; }
+.section > p:last-child { widows: 5; }
+.section > p + p:last-child, .section > ul + p:last-child { page-break-before: avoid; }
+.section > div + div + div:last-child { page-break-before: avoid; }
+
+.section.first table { margin: 2mm 0 0; }
+.section.first table thead th { padding-top: 2mm; padding-bottom: 2mm; line-height: 1.5; }
+.section.first table tbody td { padding-top: 1.9mm; padding-bottom: 1.9mm; line-height: 1.5; }
+
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) .section .divisional-block tbody td,
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) .section.short-section table tbody td,
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) .section.compact-section table tbody td {
+  padding-top: 2mm; padding-bottom: 2mm;
+}
+
+.section > span:first-child, .section > span:first-child + span {
+  display: block; height: 2px; line-height: 2px; margin-bottom: -2px; overflow: visible;
+  white-space: nowrap; page-break-after: avoid;
+}
+.section > span:first-child + span { text-indent: 20px; }
+
+
+.rajyoga-power { text-align: center; margin: 6mm 0; }
+.rajyoga-power .rajyoga-pct {
+  display: inline-block; font-size: 30pt; font-weight: 700; color: var(--as-teal);
+  border: 5px solid var(--as-teal); border-radius: 50%; width: 36mm; height: 36mm;
+  line-height: 36mm; }
+.rajyoga-power .rajyoga-label { color: var(--as-slate); font-size: 11pt; margin-top: 2mm; }
+.cover h1 { font-size: 32pt; font-weight: 700; letter-spacing: 1pt; }
+.cover .subtitle { color: var(--brand-secondary); font-size: 14pt; margin-bottom: 14mm; font-style: italic; }
+.cover .subject { font-size: 18pt; font-weight: 600; }
+
+.section { page-break-before: always; margin-top: 4mm; }
+.section.first { page-break-before: auto; }
+
+.short-section + .section { page-break-before: auto; margin-top: 7mm; }
+.short-section + .section > h2 { page-break-after: avoid; }
+.short-section + .compact-section { page-break-inside: avoid; }
+.planet-block, .house-block {
+  margin: 4mm 0; padding: 4mm 5mm; background: #fafafa;
+  border-left: 3px solid var(--brand-primary); page-break-inside: avoid;
+}
+.planet-block .meta, .house-block .meta {
+  color: var(--brand-secondary); font-size: 10pt; margin-bottom: 2mm;
+}
+
+
+.section.yogas-section { counter-reset: yoga; }
+.yoga-block {
+  counter-increment: yoga; margin: 5mm 0; padding: 4mm 5mm 4mm 6mm;
+  background: var(--as-cardbg); border-left: 1mm solid var(--as-teal);
+  border-radius: 0 2mm 2mm 0; page-break-inside: avoid;
+}
+.yoga-block .name {
+  display: block; position: relative; padding-left: 11mm;
+  font-size: 13pt; font-weight: 700; color: var(--as-dorange);
+  margin-bottom: 1.5mm; line-height: 1.3;
+}
+.yoga-block .name::before {
+  content: counter(yoga); position: absolute; left: 0; top: -0.5mm;
+  width: 7.5mm; height: 7.5mm; border-radius: 50%;
+  background: var(--as-amber); color: #fff; font-size: 11pt; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.yoga-block .shloka { color: #9e2b25; font-style: italic; text-align: center; margin: 2mm 6mm; line-height: 1.55; }
+.yoga-block .body { text-align: justify; }
+.yoga-block .summary { font-weight: 700; color: var(--as-teal); text-align: center; margin: 2.5mm 4mm 0; }
+.yoga-block .source { color: var(--as-slate); font-size: 9pt; font-style: italic; margin-top: 2mm; }
+.dasha-block {
+  margin: 4mm 0; padding: 5mm; background: #f0fdf4;
+  border-left: 4px solid #16a34a; page-break-inside: avoid;
+}
+.dasha-block.upcoming { background: #fafafa; border-left-color: var(--brand-secondary); }
+.dasha-block .header-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2mm; }
+.dasha-block .lord { font-size: 14pt; font-weight: 700; color: var(--brand-primary); }
+.dasha-block .dates { color: var(--brand-secondary); font-size: 10pt; }
+.remedy-block {
+  margin: 3mm 0; padding: 3mm 5mm; background: #fafafa;
+  border-left: 3px solid var(--brand-secondary); page-break-inside: avoid;
+}
+.remedy-block .title { font-weight: 600; margin-bottom: 1mm; }
+.remedy-block .category {
+  display: inline-block; padding: 1mm 3mm; background: var(--brand-secondary);
+  color: #fff; font-size: 9pt; border-radius: 1mm; margin-left: 3mm; vertical-align: middle;
+}
+.empty-list { margin: 3mm 0; color: var(--brand-secondary); font-style: italic; }
+
+.mudda-period {
+  margin: 4mm 0; padding: 3mm 5mm 3mm 5mm; background: var(--as-cardbg, #fffaf0);
+  border-left: 4px solid var(--as-teal, #c25e10); border-radius: 1mm;
+  page-break-inside: avoid;
+}
+.mudda-head {
+  font-size: 12pt; font-weight: 700; color: var(--as-dorange, #9e2b25);
+  margin: 0 0 1.5mm; padding-bottom: 1mm; border-bottom: 1px solid #eadcc0;
+}
+.mudda-summary { font-style: italic; color: var(--as-ink, #3a2410); margin: 0 0 2mm; }
+.mudda-area { margin: 1mm 0; font-size: 10.5pt; }
+.mudda-area strong { color: var(--as-teal, #c25e10); }
+.mudda-guidance {
+  margin: 2.5mm 0 0; padding: 2mm 3mm; background: #fff7e8;
+  border: 1px dashed var(--as-amber, #b8860b); border-radius: 1mm;
+}
+.mudda-guidance p { margin: 0.8mm 0; font-size: 10pt; }
+.mudda-guidance strong { color: var(--as-dorange, #9e2b25); }
+
+
+.divisional-block { margin: 6mm 0; page-break-inside: avoid; }
+.divisional-block .vsubtitle { color: var(--brand-secondary); font-style: italic; font-size: 10pt; margin: 0 0 2mm; }
+.divisional-block .lagna-line { font-size: 10pt; margin-bottom: 2mm; }
+.dosha-block {
+  margin: 4mm 0; padding: 4mm 5mm; border-left: 4px solid #b91c1c;
+  background: #fef2f2; page-break-inside: avoid;
+}
+.dosha-block.cancelled { border-left-color: #16a34a; background: #f0fdf4; }
+.dosha-block.mild { border-left-color: #ca8a04; background: #fefce8; }
+.dosha-block .header-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2mm; }
+.dosha-block .name { font-size: 13pt; font-weight: 700; color: var(--brand-primary); }
+.dosha-block .severity {
+  display: inline-block; padding: 1mm 3mm; font-size: 9pt; font-weight: 600;
+  border-radius: 1mm; color: #fff; background: #b91c1c;
+}
+.dosha-block.cancelled .severity { background: #16a34a; }
+.dosha-block.mild .severity { background: #ca8a04; }
+.dosha-block .source { color: var(--brand-secondary); font-size: 9pt; font-style: italic; margin-top: 2mm; }
+.prediction-block {
+  margin: 4mm 0; padding: 4mm 5mm; background: #f5f3ff;
+  border-left: 3px solid #7c3aed; page-break-inside: avoid;
+}
+.prediction-block h3 { margin: 0 0 2mm; color: #5b21b6; }
+.citation-row { display: flex; gap: 4mm; padding: 2mm 0; border-bottom: 1px dotted #d4d4d4; font-size: 10pt; }
+.citation-row .topic { width: 38%; font-weight: 600; }
+.citation-row .source { width: 30%; font-style: italic; color: var(--brand-secondary); }
+.citation-row .note { flex: 1; color: var(--brand-secondary); }
+
+</style>
+</head>
+<body>
+<section class="cover">
+
+<h1>बृहद् कुंडली</h1>
+<div class="subtitle">विस्तृत वैदिक ज्योतिष विश्लेषण</div>
+<div class="subject"></div>
+<div class="meta">
+जन्म  वेळ <br>
+
+</div>
+<div class="generated">
+तयार 
+</div>
+</section>
+
+<section class="section first">
+<div class="part-banner"><h2 class="part-h2">भाग 1: आधार</h2></div>
+<h2>जन्म कुंडली सारांश</h2>
+<p>
+<strong>लग्न:</strong>
+मेष (),
+नक्षत्र: ,
+चरण 
+</p>
+<div style="display:flex;justify-content:center;gap:6mm;flex-wrap:wrap;margin:3mm 0;"><div class="north-chart" style="display:inline-block;text-align:center;margin:2mm 3mm;">
+<div style="font-size:10pt;font-weight:700;color:#1a1a1a;margin-bottom:1.5mm;">लग्न कुण्डली</div>
+<svg viewBox="0 0 100 100" width="260" height="260" style="font-family:Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, sans-serif;">
+
+    <rect x="1" y="1" width="98" height="98" fill="none" stroke="#1a1a1a" stroke-width="0.8"/>
+    <line x1="1" y1="1" x2="99" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <line x1="99" y1="1" x2="1" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <polygon points="50,1 99,50 50,99 1,50" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+<text x="50" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">1</text><text x="25" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text><text x="9" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">3</text><text x="25" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">4</text><text x="9" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">5</text><text x="25" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">6</text><text x="50" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">7</text><text x="75" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text><text x="91" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">9</text><text x="75" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">10</text><text x="91" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">11</text><text x="75" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">12</text>
+<text x="50" y="26.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#e05e18">सू</tspan></text><text x="25.5" y="16.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#3a7bd5">चं</tspan></text><text x="12" y="26.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#c0392b">मं</tspan></text><text x="25" y="51.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#27928a">बु</tspan></text><text x="12" y="76.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#b8860b">गु</tspan></text><text x="25.5" y="93.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#c026a0">शु</tspan></text><text x="50" y="76.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#2c3e50">श</tspan></text><text x="74.5" y="93.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#6d4c41">रा</tspan></text><text x="88" y="76.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#00897b">के</tspan></text>
+</svg>
+</div><div class="north-chart" style="display:inline-block;text-align:center;margin:2mm 3mm;">
+<div style="font-size:10pt;font-weight:700;color:#1a1a1a;margin-bottom:1.5mm;">नवमांश कुण्डली</div>
+<svg viewBox="0 0 100 100" width="260" height="260" style="font-family:Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, sans-serif;">
+
+    <rect x="1" y="1" width="98" height="98" fill="none" stroke="#1a1a1a" stroke-width="0.8"/>
+    <line x1="1" y1="1" x2="99" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <line x1="99" y1="1" x2="1" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <polygon points="50,1 99,50 50,99 1,50" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+<text x="50" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">1</text><text x="25" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text><text x="9" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">3</text><text x="25" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">4</text><text x="9" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">5</text><text x="25" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">6</text><text x="50" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">7</text><text x="75" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text><text x="91" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">9</text><text x="75" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">10</text><text x="91" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">11</text><text x="75" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">12</text>
+<text x="50" y="26.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#e05e18">सू</tspan></text><text x="25.5" y="16.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#3a7bd5">चं</tspan></text><text x="12" y="26.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#c0392b">मं</tspan></text><text x="25" y="51.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#27928a">बु</tspan></text><text x="12" y="76.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#b8860b">गु</tspan></text><text x="25.5" y="93.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#c026a0">शु</tspan></text><text x="50" y="76.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#2c3e50">श</tspan></text><text x="74.5" y="93.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#6d4c41">रा</tspan></text><text x="88" y="76.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#00897b">के</tspan></text>
+</svg>
+</div></div>
+<table>
+<thead>
+<tr>
+<th>ग्रह</th>
+<th>राशी</th>
+<th>अंश</th>
+<th>स्थान</th>
+<th>नक्षत्र</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>सूर्य</td>
+<td>मेष</td>
+<td></td>
+<td>1</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>चंद्र</td>
+<td>मेष</td>
+<td></td>
+<td>2</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>मंगळ</td>
+<td>मेष</td>
+<td></td>
+<td>3</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>बुध</td>
+<td>मेष</td>
+<td></td>
+<td>4</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>बृहस्पती</td>
+<td>मेष</td>
+<td></td>
+<td>5</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>शुक्र</td>
+<td>मेष</td>
+<td></td>
+<td>6</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>शनी</td>
+<td>मेष</td>
+<td></td>
+<td>7</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>राहू</td>
+<td>मेष</td>
+<td></td>
+<td>8</td>
+<td> ()</td>
+</tr>
+<tr>
+<td>केतू</td>
+<td>मेष</td>
+<td></td>
+<td>9</td>
+<td> ()</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section class="section graha-sthiti-section">
+<h2>ग्रह स्थिति</h2>
+<div class="graha-grid"><div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#e8821b" stroke-width="2" stroke-linecap="round">
+      <line x1="41.0" y1="24.0" x2="46.0" y2="24.0"/><line x1="38.7" y1="32.5" x2="43.1" y2="35.0"/><line x1="32.5" y1="38.7" x2="35.0" y2="43.1"/><line x1="24.0" y1="41.0" x2="24.0" y2="46.0"/><line x1="15.5" y1="38.7" x2="13.0" y2="43.1"/><line x1="9.3" y1="32.5" x2="4.9" y2="35.0"/><line x1="7.0" y1="24.0" x2="2.0" y2="24.0"/><line x1="9.3" y1="15.5" x2="4.9" y2="13.0"/><line x1="15.5" y1="9.3" x2="13.0" y2="4.9"/><line x1="24.0" y1="7.0" x2="24.0" y2="2.0"/><line x1="32.5" y1="9.3" x2="35.0" y2="4.9"/><line x1="38.7" y1="15.5" x2="43.1" y2="13.0"/>
+    </g>
+    <circle cx="24" cy="24" r="13" fill="#f6a623"/>
+    <circle cx="24" cy="24" r="13" fill="none" stroke="#e8821b" stroke-width="1.5"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">सूर्य</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="15" fill="#d7dbe0"/>
+    <circle cx="29" cy="24" r="13" fill="#ffffff"/>
+    <circle cx="19" cy="20" r="2" fill="#c2c8d0"/><circle cx="17" cy="27" r="1.4" fill="#c2c8d0"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">चंद्र</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="15" fill="#c0392b"/>
+    <ellipse cx="20" cy="20" rx="6" ry="3" fill="#a93226" transform="rotate(-20 20 20)"/>
+    <ellipse cx="28" cy="29" rx="5" ry="2.5" fill="#e06352"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">मंगळ</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="15" fill="#9aa3ab"/>
+    <circle cx="19" cy="20" r="3" fill="#828b94"/><circle cx="30" cy="28" r="2" fill="#828b94"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">बुध</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="15" fill="#d9a441"/>
+    <path d="M9 19 H39 M9 24 H39 M11 29 H37" stroke="#b8860b" stroke-width="2.4" fill="none"/>
+    <ellipse cx="28" cy="27" rx="3.5" ry="2" fill="#a8521b"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">बृहस्पती</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="15" fill="#e9d27a"/>
+    <ellipse cx="22" cy="22" rx="7" ry="4" fill="#f0dd9a" transform="rotate(-15 22 22)"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">शुक्र</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="24" cy="24" rx="22" ry="7" fill="none" stroke="#b0884a" stroke-width="2.4" transform="rotate(-18 24 24)"/>
+    <circle cx="24" cy="24" r="12" fill="#cdb06b"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">शनी</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="16" fill="#6d4c8c"/>
+    <path d="M16 30 q-2 -12 8 -12 q10 0 8 12" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="24" cy="30" r="2.4" fill="#fff"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">राहू</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div>
+<div class="graha-card">
+  <div class="graha-glyph"><svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="16" fill="#0f8a7e"/>
+    <path d="M16 18 q-2 12 8 12 q10 0 8 -12" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="24" cy="18" r="2.4" fill="#fff"/></svg></div>
+  <div class="graha-info">
+    <div class="graha-name">केतू</div>
+    <div class="graha-pos">मेष</div>
+    <div class="graha-nak"></div>
+  </div>
+</div></div>
+</section>
+
+<section class="section">
+<div class="part-banner"><h2 class="part-h2">भाग 2: तुमचे जीवन-दर्शन</h2></div>
+<h2>ग्रह विश्लेषण</h2>
+<div class="planet-block">
+<h3>सूर्य</h3>
+<div class="meta">
+मेष (),
+स्थान 1,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>चंद्र</h3>
+<div class="meta">
+मेष (),
+स्थान 2,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>मंगळ</h3>
+<div class="meta">
+मेष (),
+स्थान 3,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>बुध</h3>
+<div class="meta">
+मेष (),
+स्थान 4,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>बृहस्पती</h3>
+<div class="meta">
+मेष (),
+स्थान 5,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>शुक्र</h3>
+<div class="meta">
+मेष (),
+स्थान 6,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>शनी</h3>
+<div class="meta">
+मेष (),
+स्थान 7,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>राहू</h3>
+<div class="meta">
+मेष (),
+स्थान 8,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+<div class="planet-block">
+<h3>केतू</h3>
+<div class="meta">
+मेष (),
+स्थान 9,
+नक्षत्र: 
+</div>
+<p></p>
+</div>
+</section>
+
+<section class="section">
+<div class="part-banner"><h2 class="part-h2">भाग 6: तांत्रिक तक्ते</h2></div>
+<h2>वर्ग कुंडल्या</h2>
+<p class="section-intro">वर्ग कुंडल्या जीवनाच्या विशिष्ट क्षेत्रांचा सखोल वेध घेतात, प्रत्येक वेगळ्या पैलूचे सूक्ष्म विश्लेषण देते, जसे धन, भावंडे, विवाह, करिअर व आध्यात्मिक उन्नती.</p>
+<div class="divisional-block">
+<h3>D9: </h3>
+<p class="vsubtitle"></p>
+<div class="lagna-line">
+<strong>लग्न:</strong>
+मेष
+</div>
+<div style="text-align:center;margin:4mm 0;"><div class="north-chart" style="display:inline-block;text-align:center;margin:2mm 3mm;">
+<div style="font-size:10pt;font-weight:700;color:#1a1a1a;margin-bottom:1.5mm;">D9</div>
+<svg viewBox="0 0 100 100" width="300" height="300" style="font-family:Noto Sans, Noto Sans Devanagari, Noto Sans Telugu, Noto Sans Tamil, Noto Sans Kannada, Noto Sans Bengali, Noto Sans Gujarati, Noto Sans Gurmukhi, Noto Sans Malayalam, sans-serif;">
+
+    <rect x="1" y="1" width="98" height="98" fill="none" stroke="#1a1a1a" stroke-width="0.8"/>
+    <line x1="1" y1="1" x2="99" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <line x1="99" y1="1" x2="1" y2="99" stroke="#1a1a1a" stroke-width="0.5"/>
+    <polygon points="50,1 99,50 50,99 1,50" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+<text x="50" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">1</text><text x="25" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text><text x="9" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">3</text><text x="25" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">4</text><text x="9" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">5</text><text x="25" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">6</text><text x="50" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">7</text><text x="75" y="86" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">8</text><text x="91" y="69" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">9</text><text x="75" y="44" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">10</text><text x="91" y="19" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">11</text><text x="75" y="10.5" font-size="4.4" fill="#5a5a5a" font-weight="600" text-anchor="middle" dominant-baseline="middle">12</text>
+<text x="50" y="26.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#e05e18">सू</tspan></text><text x="25.5" y="16.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#3a7bd5">चं</tspan></text><text x="12" y="26.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#c0392b">मं</tspan></text><text x="25" y="51.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#27928a">बु</tspan></text><text x="12" y="76.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#b8860b">गु</tspan></text><text x="25.5" y="93.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#c026a0">शु</tspan></text><text x="50" y="76.5" font-size="4.6" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#2c3e50">श</tspan></text><text x="74.5" y="93.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#6d4c41">रा</tspan></text><text x="88" y="76.5" font-size="4" font-weight="bold" text-anchor="middle" dominant-baseline="middle"><tspan fill="#00897b">के</tspan></text>
+</svg>
+</div></div>
+<table>
+<thead>
+<tr>
+<th>ग्रह</th>
+<th>राशी</th>
+<th>स्थान</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>सूर्य</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>चंद्र</td>
+<td></td>
+<td>2</td>
+</tr>
+<tr>
+<td>मंगळ</td>
+<td></td>
+<td>3</td>
+</tr>
+<tr>
+<td>बुध</td>
+<td></td>
+<td>4</td>
+</tr>
+<tr>
+<td>बृहस्पती</td>
+<td></td>
+<td>5</td>
+</tr>
+<tr>
+<td>शुक्र</td>
+<td></td>
+<td>6</td>
+</tr>
+<tr>
+<td>शनी</td>
+<td></td>
+<td>7</td>
+</tr>
+<tr>
+<td>राहू</td>
+<td></td>
+<td>8</td>
+</tr>
+<tr>
+<td>केतू</td>
+<td></td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</section>
+<footer>Generated using LifeAstroAPI</footer>
+</body>
+</html>

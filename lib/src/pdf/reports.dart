@@ -8,6 +8,7 @@ import 'engine.dart';
 import 'js.dart';
 import 'locales.dart';
 import 'outline.dart';
+import 'print_css.dart';
 import 'shared.dart';
 import 'templates/dasha_analysis.dart';
 import 'templates/horoscope.dart';
@@ -26,16 +27,17 @@ import 'templates/varshaphal.dart';
 /// With no [engine], a headless Chrome/Chromium/Edge is launched for this
 /// one call and closed afterwards (`dart:io` platforms). On a server, launch
 /// one [ChromePdfEngine] and pass it to every call; on the web or in a
-/// Flutter app, pass a [GotenbergPdfEngine].
+/// Flutter app, pass a [GotenbergPdfEngine]. Nothing is sent to LifeAstroAPI.
 Future<Uint8List> htmlToPdf(String html,
     {HtmlToPdfOptions options = const HtmlToPdfOptions(), PdfEngine? engine}) {
-  return _withEngine(engine, (e) => e.htmlToPdf(html, options));
+  final page = withPrintOptionsCss(html, options);
+  return _withEngine(engine, options, (e) => e.htmlToPdf(page, options));
 }
 
-Future<T> _withEngine<T>(
-    PdfEngine? engine, Future<T> Function(PdfEngine e) body) async {
+Future<T> _withEngine<T>(PdfEngine? engine, HtmlToPdfOptions options,
+    Future<T> Function(PdfEngine e) body) async {
   if (engine != null) return body(engine);
-  final own = await launchDefaultEngine();
+  final own = await launchDefaultEngine(abortTrigger: options.abortTrigger);
   try {
     return await body(own);
   } finally {
@@ -48,7 +50,7 @@ Future<Uint8List> _toPdf(
         Map<String, Object?> data,
         Branding? branding,
         HtmlToPdfOptions options,
-        PdfEngine? engine) =>
+        PdfEngine? engine) async =>
     htmlToPdf(render(data, branding), options: options, engine: engine);
 
 /// Kundli (lite) report JSON (`client.reports.kundliLite`) → PDF.
@@ -124,27 +126,35 @@ Future<Uint8List> mangalDoshaPdf(Map<String, Object?> data,
 Future<Uint8List> kundliBrihadPdf(Map<String, Object?> data,
     {Branding? branding,
     HtmlToPdfOptions options = const HtmlToPdfOptions(),
-    PdfEngine? engine}) {
-  final raw = _rawBranding(data['Branding'], branding);
+    PdfEngine? engine}) async {
+  // Header and footer resolve branding like the pages do: the caller's
+  // fields, unless blank, over the report's.
+  final report = data['Branding'];
   final pdfOptions = options.copyWith(
-    displayHeaderFooter: true,
-    headerTemplate: brihadHeaderTemplate(raw),
-    footerTemplate: brihadFooterTemplate(raw),
-    margin: options.margin ??
-        PdfMargin(
-          top: brihadPdfMargin.top,
-          bottom: brihadPdfMargin.bottom,
-          left: brihadPdfMargin.left,
-          right: brihadPdfMargin.right,
-        ),
+    displayHeaderFooter: headerFooterChoice(options) ?? true,
+    headerTemplate:
+        jsOr(options.headerTemplate, brihadHeaderTemplate(report, branding)),
+    footerTemplate:
+        jsOr(options.footerTemplate, brihadFooterTemplate(report, branding)),
+    margin: mergeMargin(
+      PdfMargin(
+        top: brihadPdfMargin.top,
+        bottom: brihadPdfMargin.bottom,
+        left: brihadPdfMargin.left,
+        right: brihadPdfMargin.right,
+      ),
+      options.margin,
+    ),
   );
   final baseHtml = renderKundliBrihadHtml(data, branding);
   final tagged = tagBrihadSectionsForToc(baseHtml);
 
-  return _withEngine(engine, (e) async {
-    if (tagged.titles.isEmpty) return e.htmlToPdf(baseHtml, pdfOptions);
-    final heading =
-        tocHeading[jsStr(data['Locale'], nullAs: 'en')] ?? tocHeading['en']!;
+  return _withEngine(engine, pdfOptions, (e) async {
+    Future<Uint8List> print(String html) =>
+        e.htmlToPdf(withPrintOptionsCss(html, pdfOptions), pdfOptions);
+    if (tagged.titles.isEmpty) return print(baseHtml);
+    final heading = tocHeading[asStr(safeLocale(data['Locale'])) ?? 'en'] ??
+        tocHeading['en']!;
 
     // Pass 1: a placeholder TOC with the right number of rows, and each
     // section marker made a link so the PDF tells which page it landed on.
@@ -152,9 +162,8 @@ Future<Uint8List> kundliBrihadPdf(Map<String, Object?> data,
       for (var i = 0; i < tagged.titles.length; i++)
         (title: tagged.titles[i], page: i + 1),
     ], heading);
-    final pass1 = await e.htmlToPdf(
-        _linkMarkers(_insertTocAfterCover(tagged.html, placeholder)),
-        pdfOptions);
+    final pass1 = await print(
+        _insertTocAfterCover(_linkMarkers(tagged.html), placeholder));
 
     final entries = <({String title, int page})>[];
     try {
@@ -167,19 +176,21 @@ Future<Uint8List> kundliBrihadPdf(Map<String, Object?> data,
       entries.clear();
     }
     // No page numbers found: print without a TOC rather than with wrong ones.
-    if (entries.isEmpty) return e.htmlToPdf(baseHtml, pdfOptions);
+    if (entries.isEmpty) return print(baseHtml);
 
-    // Pass 2: the TOC with the real page numbers, then PDF bookmarks.
-    final pdf = await e.htmlToPdf(
-        _insertTocAfterCover(tagged.html, buildBrihadToc(entries, heading)),
-        pdfOptions);
+    // Pass 2: the TOC with the real page numbers, then PDF bookmarks. The
+    // markers did their job in pass 1; a no-break space keeps the same line
+    // box without leaving the token in the PDF's text.
+    final unmarked = tagged.html.replaceAll(tocMarkerRe, '&nbsp;');
+    final pdf = await print(
+        _insertTocAfterCover(unmarked, buildBrihadToc(entries, heading)));
     try {
       return addPdfOutline(pdf, [
         for (final x in entries)
           (
             title: x.title,
             page: x.page,
-            level: partPrefixRe.hasMatch(x.title.trim()) ? 1 : 2,
+            level: partPrefixRe.hasMatch(jsTrim(x.title)) ? 1 : 2,
           ),
       ]);
     } on Object {
@@ -201,21 +212,4 @@ String _insertTocAfterCover(String html, String toc) {
   if (coverEnd == -1) return toc + html;
   final at = coverEnd + '</section>'.length;
   return '${html.substring(0, at)}\n$toc\n${html.substring(at)}';
-}
-
-/// The report's PascalCase branding with the caller's overrides applied, for
-/// the Brihad running header/footer.
-Map<String, Object?> _rawBranding(Object? raw, Branding? override) {
-  final out = Map<String, Object?>.of(asMap(raw));
-  void set(String key, String? v) {
-    if (v != null && v.trim().isNotEmpty) out[key] = v;
-  }
-
-  set('CompanyName', override?.companyName);
-  set('LogoURL', override?.logoUrl);
-  set('PrimaryColor', override?.primaryColor);
-  set('SecondaryColor', override?.secondaryColor);
-  set('FooterText', override?.footerText);
-  set('WatermarkText', override?.watermarkText);
-  return out;
 }

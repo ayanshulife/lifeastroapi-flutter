@@ -27,7 +27,7 @@ const _labels = {
     'title_match': 'कुंडली मिलान — मिलान पात्रता',
     'born': 'जन्म',
     'generated': 'तैयार',
-    'section_ashtakoota': 'अष्टकूट — 8 गुण मिलान',
+    'section_ashtakoota': 'अष्टकूट — 36 गुण मिलान',
     'section_doshas': 'दोष',
     'section_final': 'अंतिम निष्कर्ष',
     'koota': 'कूट',
@@ -44,7 +44,7 @@ const _labels = {
     'title_match': 'कुंडली जुळवणी — मिलन पात्रता',
     'born': 'जन्म',
     'generated': 'तयार',
-    'section_ashtakoota': 'अष्टकूट — 8 गुण जुळवणी',
+    'section_ashtakoota': 'अष्टकूट — 36 गुण जुळवणी',
     'section_doshas': 'दोष',
     'section_final': 'अंतिम निष्कर्ष',
     'koota': 'कूट',
@@ -129,7 +129,7 @@ const _labels = {
     'title_match': 'કુંડળી મેળાપ: વિવાહ પાત્રતા',
     'born': 'જન્મ',
     'generated': 'તૈયાર',
-    'section_ashtakoota': 'અષ્ટકૂટ: 8 ગુણ મેળાપ',
+    'section_ashtakoota': 'અષ્ટકૂટ: 36 ગુણ મેળાપ',
     'section_doshas': 'દોષ',
     'section_final': 'અંતિમ નિષ્કર્ષ',
     'koota': 'કૂટ',
@@ -146,7 +146,7 @@ const _labels = {
     'title_match': 'কুণ্ডলী মিলন: যোটক বিচার',
     'born': 'জন্ম',
     'generated': 'তৈরি',
-    'section_ashtakoota': 'অষ্টকূট: 8 গুণের মিলন',
+    'section_ashtakoota': 'অষ্টকূট: 36 গুণের মিলন',
     'section_doshas': 'দোষ',
     'section_final': 'চূড়ান্ত সিদ্ধান্ত',
     'koota': 'কূট',
@@ -158,6 +158,23 @@ const _labels = {
     'ashtakoota_verdict': 'অষ্টকূটের সিদ্ধান্ত',
     'mangal_dosha': 'মাঙ্গলিক দোষ',
     'nadi_dosha': 'নাড়ী দোষ',
+  },
+  'pa': {
+    'title_match': 'ਕੁੰਡਲੀ ਮਿਲਾਨ: ਮੇਲ ਦੀ ਯੋਗਤਾ',
+    'born': 'ਜਨਮ',
+    'generated': 'ਤਿਆਰ',
+    'section_ashtakoota': 'ਅਸ਼ਟਕੂਟ: 36 ਗੁਣਾਂ ਦਾ ਮਿਲਾਨ',
+    'section_doshas': 'ਦੋਸ਼',
+    'section_final': 'ਅੰਤਿਮ ਨਤੀਜਾ',
+    'koota': 'ਕੂਟ',
+    'max': 'ਵੱਧ ਤੋਂ ਵੱਧ',
+    'score': 'ਅੰਕ',
+    'details': 'ਵੇਰਵਾ',
+    'total': 'ਕੁੱਲ',
+    'nakshatra': 'ਨਛੱਤਰ',
+    'ashtakoota_verdict': 'ਅਸ਼ਟਕੂਟ ਦਾ ਨਤੀਜਾ',
+    'mangal_dosha': 'ਮਾਂਗਲਿਕ ਦੋਸ਼',
+    'nadi_dosha': 'ਨਾੜੀ ਦੋਸ਼',
   },
 };
 
@@ -216,10 +233,16 @@ const _verdictLabels = {
     'good': 'ভালো',
     'excellent': 'উত্তম',
   },
+  'pa': {
+    'poor': 'ਪ੍ਰਤੀਕੂਲ',
+    'fair': 'ਸਾਧਾਰਨ',
+    'good': 'ਚੰਗਾ',
+    'excellent': 'ਉੱਤਮ',
+  },
 };
 
 const _extraCss =
-    '\n.cover .subjects { display: flex; justify-content: space-around; align-items: flex-start; margin-top: 8mm; }\n.cover .subject-col { flex: 1; max-width: 40%; }\n.cover .subject-col h2 { color: var(--brand-primary); border: none; font-size: 18pt; margin-bottom: 4mm; padding: 0; }\n.cover .subject-col .meta { color: var(--brand-secondary); font-size: 10pt; }\n.cover .vs { align-self: center; font-size: 24pt; color: var(--brand-secondary); padding: 0 8mm; }\ntd.score { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }\ntr.total td { background: #fafafa; font-weight: 700; border-top: 2px solid var(--brand-primary); border-bottom: none; }\n.verdict { margin-top: 6mm; padding: 5mm; border: 1px solid var(--brand-primary); border-radius: 3mm; background: #fafafa; }\n.verdict.excellent { border-color: #166534; }\n.verdict.good { border-color: #65a30d; }\n.verdict.fair { border-color: #ca8a04; }\n.verdict.poor { border-color: #dc2626; }\n.verdict h3 { margin: 0 0 2mm; font-size: 14pt; }\n.dosha-block { margin-top: 4mm; padding: 4mm; background: #fafafa; border-left: 3px solid var(--brand-secondary); }\n.dosha-block.has-dosha { border-left-color: #dc2626; }\n.dosha-block.cancelled { border-left-color: #ca8a04; }\n.dosha-block.no-dosha { border-left-color: #166534; }\n';
+    '\n.cover .subjects { display: flex; justify-content: space-around; align-items: flex-start; margin-top: 8mm; }\n.cover .subject-col { flex: 1; max-width: 40%; }\n.cover .subject-col h2 { color: var(--brand-primary); border: none; font-size: 18pt; margin-bottom: 4mm; padding: 0; }\n.cover .subject-col .meta { color: var(--brand-secondary); font-size: 10pt; }\n.cover .vs { align-self: center; font-size: 24pt; color: var(--brand-secondary); padding: 0 8mm; }\nth.score { text-align: right; }\ntd.score { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }\ntr.total td { background: #fafafa; font-weight: 700; border-top: 2px solid var(--brand-primary); border-bottom: none; }\n.verdict { margin-top: 6mm; padding: 5mm; border: 1px solid var(--brand-primary); border-radius: 3mm; background: #fafafa; }\n.verdict.excellent { border-color: #166534; }\n.verdict.good { border-color: #65a30d; }\n.verdict.fair { border-color: #ca8a04; }\n.verdict.poor { border-color: #dc2626; }\n.verdict h3 { margin: 0 0 2mm; font-size: 14pt; }\n.dosha-block { margin-top: 4mm; padding: 4mm; background: #fafafa; border-left: 3px solid var(--brand-secondary); }\n.dosha-block.has-dosha { border-left-color: #dc2626; }\n.dosha-block.cancelled { border-left-color: #ca8a04; }\n.dosha-block.no-dosha { border-left-color: #166534; }\n';
 
 /// Verdict, dosha and nadi prose for te / ta / kn / ml / gu / bn (written from
 /// the Hindi).
@@ -407,6 +430,31 @@ final _southMatch = <String, _SouthMatchProse>{
     nadiHigh: (String boy) =>
         'নাড়ী দোষ: দুজনেরই একই নাড়ী ($boy)। শাস্ত্রমতে প্রতিকূল।',
   ),
+  'pa': _SouthMatchProse(
+    verdict: {
+      'excellent': 'ਉੱਤਮ ਮਿਲਾਨ: ਸਾਰੇ ਖੇਤਰਾਂ ਵਿੱਚ ਤਾਲਮੇਲ ਦੀ ਸੰਭਾਵਨਾ ਵੱਧ ਹੈ।',
+      'good': 'ਚੰਗਾ ਮਿਲਾਨ: ਵਿਆਹ ਲਈ ਅਨੁਕੂਲ ਯੋਗ।',
+      'fair': 'ਸਾਧਾਰਨ ਮਿਲਾਨ: ਕੁਝ ਕੂਟਾਂ ਵਿੱਚ ਕਮੀ ਹੈ, ਪਰ ਅੱਗੇ ਵਧਿਆ ਜਾ ਸਕਦਾ ਹੈ।',
+      'poor':
+          'ਘੱਟ ਮਿਲਾਨ: ਕਈ ਕੂਟਾਂ ਵਿੱਚ ਕਮੀ ਹੈ, ਸੋਚ-ਸਮਝ ਕੇ ਵਿਚਾਰ ਕਰਨਾ ਜ਼ਰੂਰੀ ਹੈ।',
+    },
+    mangalNotComputed:
+        'ਮਾਂਗਲਿਕ ਦੋਸ਼ ਦੀ ਜਾਂਚ ਨਹੀਂ ਹੋਈ: ਜਨਮ ਸਥਾਨ (ਅਕਸ਼ਾਂਸ਼/ਦੇਸ਼ਾਂਤਰ) ਨਹੀਂ ਦਿੱਤਾ ਗਿਆ।',
+    mangalNone: 'ਮਾਂਗਲਿਕ ਦੋਸ਼ ਨਹੀਂ ਹੈ।',
+    typePurn: 'ਪੂਰਨ',
+    typeMild: 'ਹਲਕਾ',
+    fromLagna: (String hs) => 'ਲਗਨ ਤੋਂ $hs',
+    fromMoon: (String hs) => 'ਚੰਦਰਮਾ ਤੋਂ $hs',
+    mangal: (String type, String houses) =>
+        'ਮਾਂਗਲਿਕ ਦੋਸ਼ ($type), ਭਾਵ: $houses।',
+    cancelled: ' ਨਿਵਾਰਨ: ',
+    nadiNone: (String boy, String girl) =>
+        'ਨਾੜੀ ਦੋਸ਼ ਨਹੀਂ ਹੈ। (ਵਰ: $boy, ਲਾੜੀ: $girl)',
+    nadiExempted: (String exc) =>
+        'ਨਾੜੀ ਦੋਸ਼ ਹੈ, ਪਰ ਸ਼ਾਸਤਰੀ ਛੋਟ ਕਾਰਨ ਇਸ ਦਾ ਨਿਵਾਰਨ ਹੋ ਜਾਂਦਾ ਹੈ ($exc)',
+    nadiHigh: (String boy) =>
+        'ਨਾੜੀ ਦੋਸ਼: ਦੋਹਾਂ ਦੀ ਨਾੜੀ ਇੱਕੋ ਹੈ ($boy)। ਸ਼ਾਸਤਰ ਅਨੁਸਾਰ ਪ੍ਰਤੀਕੂਲ।',
+  ),
 };
 
 /// Narrows a request locale to one with labels (fail-open to `en`).
@@ -481,27 +529,6 @@ String _doshaClass(Map<String, Object?> d) {
 String _joinStrings(Object? items, String sep) =>
     items is List ? items.map((e) => e == null ? '' : jsStr(e)).join(sep) : '';
 
-/// JS `Number(v)`: the coercion behind `h > 0` and `total >= 24`.
-double _toNumber(Object? v) {
-  if (v == null) return 0;
-  if (v is num) return v.toDouble();
-  if (v is bool) return v ? 1 : 0;
-  if (v is List) return _toNumber(jsStr(v));
-  if (v is! String) return double.nan;
-  final s = v.trim();
-  if (s.isEmpty) return 0;
-  final hex = RegExp(r'^0[xX]([0-9a-fA-F]+)$').firstMatch(s);
-  if (hex != null) return BigInt.parse(hex[1]!, radix: 16).toDouble();
-  final inf = RegExp(r'^([+-]?)Infinity$').firstMatch(s);
-  if (inf != null) {
-    return inf[1] == '-' ? double.negativeInfinity : double.infinity;
-  }
-  if (!RegExp(r'^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$').hasMatch(s)) {
-    return double.nan;
-  }
-  return double.parse(s);
-}
-
 /// Mangal Dosha trigger houses: positive = from the Lagna, negative (its
 /// absolute value) = from the Moon. JS `hs.filter((h) => h > 0).map(String)`
 /// and `hs.filter((h) => h < 0).map((h) => String(-h))`.
@@ -510,11 +537,11 @@ double _toNumber(Object? v) {
   return (
     [
       for (final h in hs)
-        if (_toNumber(h) > 0) jsStr(h)
+        if (jsNumber(h) > 0) jsStr(h)
     ],
     [
       for (final h in hs)
-        if (_toNumber(h) < 0) jsNum(-_toNumber(h))
+        if (jsNumber(h) < 0) jsNum(-jsNumber(h))
     ],
   );
 }
@@ -678,7 +705,7 @@ Object _matchVerdict(Map<String, Object?> data) {
   final finalVerdict = data['FinalVerdict'];
   if (finalVerdict != null && truthy(finalVerdict)) return finalVerdict;
   final total = asMap(data['Ashtakoota'])['Total'] ?? 0;
-  if (_toNumber(total) >= 24) {
+  if (jsNumber(total) >= 24) {
     return 'Marriage indications are favorable. Study both charts for the timing.';
   }
   return 'Score is below conventional threshold (24/36). Consider remedies and a detailed study of both charts.';
@@ -688,6 +715,7 @@ Object _matchVerdict(Map<String, Object?> data) {
 /// (`client.reports.matchMaking`) as a complete HTML document. [branding]
 /// fields win over the branding in the report JSON.
 String renderMatchMakingHtml(Map<String, Object?> data, [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final resolved = resolveBranding(data['Branding'], branding);
   final localeRaw = data['Locale'];
   final locale = localeRaw == null ? null : jsStr(localeRaw);
@@ -733,8 +761,8 @@ String renderMatchMakingHtml(Map<String, Object?> data, [Branding? branding]) {
   <thead>
     <tr>
       <th>${esc(t('koota'))}</th>
-      <th>${esc(t('max'))}</th>
-      <th>${esc(t('score'))}</th>
+      <th class="score">${esc(t('max'))}</th>
+      <th class="score">${esc(t('score'))}</th>
       <th>${esc(t('details'))}</th>
     </tr>
   </thead>

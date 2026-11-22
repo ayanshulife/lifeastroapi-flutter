@@ -11,7 +11,7 @@
 // every key of that object is numeric), arrays become List literals, strings
 // are single-quoted with `$`, `\` and `'` escaped.
 import { createRequire } from "node:module";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -33,17 +33,20 @@ const pairs = names.map((n) => {
 
 const tmpDir = join(ROOT, ".dart_tool", "ts_tables");
 mkdirSync(tmpDir, { recursive: true });
-const entry = join(dirname(src), `.__tables_${process.pid}.ts`);
-writeFileSync(
-  entry,
-  readFileSync(src, "utf8") + `\nexport const __tables = { ${pairs.map((p) => p.ts).join(", ")} };\n`,
-);
 const out = join(tmpDir, `t${process.pid}.mjs`);
-try {
-  await esbuild.build({ entryPoints: [entry], bundle: true, format: "esm", platform: "node", outfile: out, logLevel: "error" });
-} finally {
-  (await import("node:fs")).rmSync(entry, { force: true });
-}
+// Built from stdin, so nothing is written into the Node SDK checkout.
+await esbuild.build({
+  stdin: {
+    contents: readFileSync(src, "utf8") + `\nexport const __tables = { ${pairs.map((p) => p.ts).join(", ")} };\n`,
+    resolveDir: dirname(src),
+    loader: "ts",
+  },
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  outfile: out,
+  logLevel: "error",
+});
 const mod = await import(pathToFileURL(out).href);
 
 function str(s) {

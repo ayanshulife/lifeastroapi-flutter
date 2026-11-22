@@ -199,6 +199,27 @@ const _labels = {
     'remedies_intro':
         'শনির সাড়েসাতির সময় প্রচলিত প্রথাগত প্রতিকারগুলো নিচে দেওয়া হলো। কোনো প্রতিকার শুরু করার আগে নিজের কুণ্ডলী ভালো করে দেখে নেবেন:',
   },
+  'pa': {
+    'title_sade': 'ਸ਼ਨੀ ਦੀ ਸਾੜ੍ਹਸਤੀ ਰਿਪੋਰਟ',
+    'born': 'ਜਨਮ',
+    'at': 'ਸਮਾਂ',
+    'generated': 'ਤਿਆਰ',
+    'moon_sign': 'ਚੰਦਰ ਰਾਸ਼ੀ',
+    'section_current': 'ਮੌਜੂਦਾ ਸਥਿਤੀ',
+    'section_past': 'ਪਿਛਲੀ ਸਾੜ੍ਹਸਤੀ ਦੇ ਪੜਾਅ',
+    'section_active_window': 'ਮੌਜੂਦਾ ਪੜਾਅ',
+    'section_future': 'ਆਉਣ ਵਾਲਾ ਪੜਾਅ',
+    'section_remedies': 'ਸੁਝਾਏ ਗਏ ਉਪਾਅ',
+    'current_phase': 'ਮੌਜੂਦਾ ਪੜਾਅ',
+    'from': 'ਸ਼ੁਰੂ',
+    'to': 'ਅੰਤ',
+    'duration': 'ਮਿਆਦ',
+    'signs_traversed': 'ਗੋਚਰ ਦੀਆਂ ਰਾਸ਼ੀਆਂ',
+    'no_past': 'ਖੋਜ ਦੀ ਸੀਮਾ ਵਿੱਚ ਸਾੜ੍ਹਸਤੀ ਦਾ ਕੋਈ ਪਿਛਲਾ ਪੜਾਅ ਨਹੀਂ ਮਿਲਿਆ।',
+    'no_future': 'ਖੋਜ ਦੀ ਸੀਮਾ ਵਿੱਚ ਸਾੜ੍ਹਸਤੀ ਦਾ ਕੋਈ ਆਉਣ ਵਾਲਾ ਪੜਾਅ ਨਹੀਂ ਹੈ।',
+    'remedies_intro':
+        'ਸ਼ਨੀ ਦੀ ਸਾੜ੍ਹਸਤੀ (ਸਾਢੇ ਸੱਤ ਸਾਲ ਦਾ ਦੌਰ) ਦੌਰਾਨ ਪ੍ਰਚਲਿਤ ਰਵਾਇਤੀ ਉਪਾਅ ਹੇਠਾਂ ਦਿੱਤੇ ਗਏ ਹਨ। ਕੋਈ ਵੀ ਉਪਾਅ ਅਪਣਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੀ ਕੁੰਡਲੀ ਚੰਗੀ ਤਰ੍ਹਾਂ ਜਾਂਚ ਲਓ:',
+  },
 };
 
 const _statusLabels = {
@@ -255,6 +276,12 @@ const _statusLabels = {
     'peak': 'শীর্ষ (দ্বিতীয় পর্যায়)',
     'setting': 'শেষ (তৃতীয় পর্যায়)',
     'clear': 'মুক্ত (সাড়েসাতি নেই)',
+  },
+  'pa': {
+    'rising': 'ਆਰੰਭ (ਪਹਿਲਾ ਪੜਾਅ)',
+    'peak': 'ਸਿਖਰ (ਦੂਜਾ ਪੜਾਅ)',
+    'setting': 'ਅੰਤ (ਤੀਜਾ ਪੜਾਅ)',
+    'clear': 'ਮੁਕਤ (ਸਾੜ੍ਹਸਤੀ ਨਹੀਂ)',
   },
 };
 
@@ -322,6 +349,13 @@ const _remedies = {
     'কুণ্ডলী ভালো করে যাচাই না করে নীলা ধারণ করবেন না; শনির রত্ন সবার জন্য উপযুক্ত নয়।',
     'নিয়মমাফিক দিনচর্যা রাখুন, সৎ আচরণ করুন আর অপ্রয়োজনীয় খরচ এড়িয়ে চলবেন।',
   ],
+  'pa': [
+    'ਰੋਜ਼ ਹਨੂਮਾਨ ਚਾਲੀਸਾ ਦਾ ਪਾਠ ਕਰੋ, ਖ਼ਾਸ ਤੌਰ \'ਤੇ ਮੰਗਲਵਾਰ ਅਤੇ ਸ਼ਨੀਵਾਰ ਨੂੰ।',
+    'ਸ਼ਨੀਵਾਰ ਨੂੰ ਕਾਲੇ ਤਿਲ, ਸਰ੍ਹੋਂ ਦੇ ਤੇਲ ਜਾਂ ਲੋਹੇ ਦੀਆਂ ਚੀਜ਼ਾਂ ਦਾ ਦਾਨ ਕਰੋ।',
+    'ਸ਼ਨੀ ਦੇਵ ਦੀ ਪੂਜਾ ਤਿਲ ਦੇ ਤੇਲ ਅਤੇ ਨੀਲੇ ਫੁੱਲਾਂ ਨਾਲ ਕਰੋ।',
+    'ਨੀਲਮ ਕੁੰਡਲੀ ਦੀ ਜਾਂਚ ਤੋਂ ਬਾਅਦ ਹੀ ਪਹਿਨੋ; ਸ਼ਨੀ ਦਾ ਰਤਨ ਹਰ ਕਿਸੇ ਲਈ ਢੁਕਵਾਂ ਨਹੀਂ ਹੁੰਦਾ।',
+    'ਅਨੁਸ਼ਾਸਨ ਵਾਲੀ ਦਿਨਚਰਿਆ ਰੱਖੋ, ਨੈਤਿਕ ਆਚਰਣ ਕਰੋ ਅਤੇ ਬੇਲੋੜੇ ਖ਼ਰਚ ਤੋਂ ਬਚੋ।',
+  ],
 };
 
 const _extraCss =
@@ -368,6 +402,8 @@ String _durationLabel(String loc, Object? years) {
       return 'આશરે $y વર્ષ';
     case 'bn':
       return 'প্রায় $y বছর';
+    case 'pa':
+      return 'ਲਗਭਗ $y ਸਾਲ';
     default:
       return 'approx $y years';
   }
@@ -461,6 +497,16 @@ String _statusDescription(String loc, Map<String, Object?> st) {
           return 'শনি এখন আপনার চন্দ্র রাশির ($moon) পরের রাশিতে আছে। এটি শনির সাড়েসাতির শেষ পর্যায়।';
       }
       return 'এখন আপনি শনির সাড়েসাতি থেকে মুক্ত। শনি ($saturn) আপনার চন্দ্র রাশি ($moon) থেকে দূরে আছে।';
+    case 'pa':
+      switch (status) {
+        case 'rising':
+          return 'ਸ਼ਨੀ ਇਸ ਸਮੇਂ ਤੁਹਾਡੀ ਚੰਦਰ ਰਾਸ਼ੀ ($moon) ਤੋਂ ਪਿਛਲੀ ਰਾਸ਼ੀ ਵਿੱਚ ਗੋਚਰ ਕਰ ਰਿਹਾ ਹੈ। ਇਹ ਸ਼ਨੀ ਦੀ ਸਾੜ੍ਹਸਤੀ ਦਾ ਪਹਿਲਾ ਪੜਾਅ ਹੈ।';
+        case 'peak':
+          return 'ਸ਼ਨੀ ਇਸ ਸਮੇਂ ਤੁਹਾਡੀ ਚੰਦਰ ਰਾਸ਼ੀ ($moon) ਉੱਤੇ ਹੀ ਗੋਚਰ ਕਰ ਰਿਹਾ ਹੈ। ਇਹ ਸ਼ਨੀ ਦੀ ਸਾੜ੍ਹਸਤੀ ਦਾ ਸਿਖਰ ਵਾਲਾ ਦੂਜਾ ਪੜਾਅ ਹੈ।';
+        case 'setting':
+          return 'ਸ਼ਨੀ ਇਸ ਸਮੇਂ ਤੁਹਾਡੀ ਚੰਦਰ ਰਾਸ਼ੀ ($moon) ਤੋਂ ਅਗਲੀ ਰਾਸ਼ੀ ਵਿੱਚ ਹੈ। ਇਹ ਸ਼ਨੀ ਦੀ ਸਾੜ੍ਹਸਤੀ ਦਾ ਤੀਜਾ ਅਤੇ ਆਖ਼ਰੀ ਪੜਾਅ ਹੈ।';
+      }
+      return 'ਇਸ ਸਮੇਂ ਤੁਸੀਂ ਸ਼ਨੀ ਦੀ ਸਾੜ੍ਹਸਤੀ ਤੋਂ ਮੁਕਤ ਹੋ। ਸ਼ਨੀ ($saturn) ਤੁਹਾਡੀ ਚੰਦਰ ਰਾਸ਼ੀ ($moon) ਤੋਂ ਦੂਰ ਹੈ।';
     default:
       switch (status) {
         case 'rising':
@@ -474,15 +520,6 @@ String _statusDescription(String loc, Map<String, Object?> st) {
   }
 }
 
-/// JS `(signs ?? []).join(", ")`.
-String _joinSigns(Object? signs) {
-  if (signs == null) return '';
-  if (signs is List) {
-    return signs.map((e) => e == null ? '' : jsStr(e)).join(', ');
-  }
-  return jsStr(signs);
-}
-
 /// A windows table row: from / to / duration / signs.
 String _windowRow(String loc, Object? raw) {
   final w = asMap(raw);
@@ -490,7 +527,7 @@ String _windowRow(String loc, Object? raw) {
   <td>${esc(w['StartDate'])}</td>
   <td>${esc(w['EndDate'])}</td>
   <td>${esc(_durationLabel(loc, w['DurationYears']))}</td>
-  <td>${esc(_joinSigns(w['SignsTraversed']))}</td>
+  <td>${esc(listText(w['SignsTraversed']))}</td>
 </tr>''';
 }
 
@@ -516,6 +553,7 @@ String _windowsTable(String loc, Object? rows, String emptyKey) {
 
 /// Renders the Sade Sati report as a complete HTML document.
 String renderSadeSatiHtml(Map<String, Object?> data, [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final locRaw = data['Locale'] ?? '';
   final loc = jsStr(locRaw);
   final b = resolveBranding(data['Branding'], branding);
@@ -559,7 +597,7 @@ ${_windowsTable(loc, data['Past'], 'no_past')}''';
   <tbody>
     <tr class="current-window"><td>${esc(_label(loc, 'from'))}</td><td>${esc(c['StartDate'])}</td></tr>
     <tr class="current-window"><td>${esc(_label(loc, 'to'))}</td><td>${esc(c['EndDate'])}</td></tr>
-    <tr class="current-window"><td>${esc(_label(loc, 'signs_traversed'))}</td><td>${esc(_joinSigns(c['SignsTraversed']))}</td></tr>
+    <tr class="current-window"><td>${esc(_label(loc, 'signs_traversed'))}</td><td>${esc(listText(c['SignsTraversed']))}</td></tr>
   </tbody>
 </table>''';
   }

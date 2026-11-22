@@ -195,6 +195,27 @@ const _labels = {
     'sign': 'রাশি',
     'degree': 'অংশ',
   },
+  'pa': {
+    'title_varsha': 'ਵਰਸ਼ਫਲ: ਸਾਲਾਨਾ ਭਵਿੱਖਫਲ',
+    'born': 'ਜਨਮ',
+    'at': 'ਸਮਾਂ',
+    'generated': 'ਤਿਆਰ',
+    'section_solar_return': 'ਸੂਰਜ ਦੀ ਵਾਪਸੀ ਦਾ ਪਲ',
+    'section_planets_sr': 'ਸੂਰਜ ਦੀ ਵਾਪਸੀ ਵੇਲੇ ਗ੍ਰਹਿ ਸਥਿਤੀ',
+    'section_outlook': 'ਸਾਲਾਨਾ ਨਜ਼ਰੀਆ',
+    'solar_return_at': 'ਸੂਰਜ ਦੀ ਵਾਪਸੀ ਦਾ ਸਮਾਂ',
+    'ascendant': 'ਲਗਨ',
+    'nakshatra': 'ਨਛੱਤਰ',
+    'pada': 'ਪਦ',
+    'muntha': 'ਮੁੰਥਾ',
+    'varsha_lord': 'ਵਰਸ਼ ਦਾ ਸੁਆਮੀ',
+    'house': 'ਭਾਵ',
+    'from_natal_lagna': 'ਜਨਮ ਲਗਨ ਤੋਂ',
+    'hora_number': 'ਹੋਰਾ',
+    'planet': 'ਗ੍ਰਹਿ',
+    'sign': 'ਰਾਸ਼ੀ',
+    'degree': 'ਅੰਸ਼',
+  },
 };
 
 const _extraCss =
@@ -229,7 +250,7 @@ String _outlookText(String locale, String year, String band, String house) {
     }
     return 'मुन्था $house व्या स्थानात आहे — $year वर्षात मिश्र परिणाम संभाव्य. महत्त्वाच्या निर्णयांपूर्वी आपली कुंडली सखोल तपासून घ्या.';
   }
-  // te / ta / kn / ml / gu / bn are written from the Hindi; the "consult an astrologer" line
+  // te / ta / kn / ml / gu / bn / pa are written from the Hindi; the "consult an astrologer" line
   // of the mixed band became "study your chart first" in every locale
   // (2026-11-07: no astrologer referral anywhere).
   if (locale == 'te') {
@@ -286,6 +307,15 @@ String _outlookText(String locale, String year, String band, String house) {
     }
     return 'মুন্থার অবস্থান ভাব $house; $year সালে মিশ্র ফল দেখা দিতে পারে। বড় সিদ্ধান্তের আগে নিজের কুণ্ডলী ভালো করে দেখে নেবেন।';
   }
+  if (locale == 'pa') {
+    if (band == 'favorable') {
+      return 'ਮੁੰਥਾ ਦਾ ਭਾਵ $house ਵਿੱਚ ਹੋਣਾ ਸਾਲ $year ਨੂੰ ਆਮ ਤੌਰ \'ਤੇ ਅਨੁਕੂਲ ਬਣਾਉਂਦਾ ਹੈ; ਟੀਚੇ ਪੂਰੇ ਹੋਣ, ਟਿਕਾਅ ਜਾਂ ਅਧਿਆਤਮਕ ਤਰੱਕੀ ਦੀ ਸੰਭਾਵਨਾ ਵਧਦੀ ਹੈ।';
+    }
+    if (band == 'challenging') {
+      return 'ਮੁੰਥਾ ਦਾ ਭਾਵ $house ਵਿੱਚ ਹੋਣਾ ਸਾਲ $year ਨੂੰ ਕੁਝ ਚੁਣੌਤੀ ਭਰਿਆ ਬਣਾ ਸਕਦਾ ਹੈ। ਸਿਹਤ, ਖ਼ਰਚ ਜਾਂ ਕਰਜ਼ੇ ਨਾਲ ਜੁੜੇ ਮਾਮਲਿਆਂ ਵਿੱਚ ਸਾਵਧਾਨੀ ਰੱਖੋ।';
+    }
+    return 'ਮੁੰਥਾ ਭਾਵ $house ਵਿੱਚ ਹੈ; ਸਾਲ $year ਵਿੱਚ ਮਿਲੇ-ਜੁਲੇ ਨਤੀਜੇ ਆ ਸਕਦੇ ਹਨ। ਵੱਡੇ ਫ਼ੈਸਲਿਆਂ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੀ ਕੁੰਡਲੀ ਨੂੰ ਡੂੰਘਾਈ ਨਾਲ ਜਾਂਚ ਲਓ।';
+  }
   if (band == 'favorable') {
     return 'Muntha in house $house makes $year broadly favorable — increased likelihood of goal attainment, stability, or spiritual progress.';
   }
@@ -297,6 +327,7 @@ String _outlookText(String locale, String year, String band, String house) {
 
 /// Renders the Varshaphal report as a complete HTML document.
 String renderVarshaphalHtml(Map<String, Object?> data, [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final resolved = resolveBranding(data['Branding'], branding);
   final localeRaw = data['Locale'];
   final t = makeLabeler(_labels, jsStr(jsOr(localeRaw, 'en')));
@@ -324,9 +355,12 @@ String renderVarshaphalHtml(Map<String, Object?> data, [Branding? branding]) {
 </section>''';
 
   // Solar-return moment and ascendant summary.
+  // The birth zone's time when the report carries it, else readable UTC.
+  final solarReturnTime =
+      jsOr(data['SolarReturnLocal'], formatGenerated(data['SolarReturnISO']));
   final solarReturn = '''<h2>${esc(t('section_solar_return'))}</h2>
 <p>
-  <strong>${esc(t('solar_return_at'))}:</strong> ${esc(data['SolarReturnISO'])}<br>
+  <strong>${esc(t('solar_return_at'))}:</strong> ${esc(solarReturnTime)}<br>
   <strong>${esc(t('ascendant'))}:</strong>
   ${esc(asc['sign'])} (${esc(asc['dms_within'])}) —
   ${esc(t('nakshatra'))}: ${esc(asc['nakshatra'])},

@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="ta">
+<html lang="te">
 <head>
 <meta charset="utf-8">
-<title>திசா பகுப்பாய்வு, Subject</title>
+<title>దశా విశ్లేషణ, Subject</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -93,7 +85,7 @@ footer {
 .stack-row.level-3 { background: #fef9c3; border-left-color: #ca8a04; }
 .stack-row.level-4 { background: #fed7aa; border-left-color: #ea580c; }
 .stack-row.level-5 { background: #fecaca; border-left-color: #dc2626; }
-.stack-row .level-label { font-weight: 600; width: 30mm; flex-shrink: 0; }
+.stack-row .level-label { font-weight: 600; width: 40mm; padding-right: 3mm; flex-shrink: 0; }
 .stack-row .lord-name { font-weight: 700; font-size: 12pt; flex: 1; }
 .stack-row .dates { color: var(--brand-secondary); font-size: 10pt; text-align: right; }
 .prediction-block {
@@ -117,142 +109,142 @@ footer {
 <body>
 <section class="cover">
 
-  <h1>திசா பகுப்பாய்வு</h1>
-  <div class="subtitle">விம்சோத்தரி ஆழ்ந்த விளக்கம்: கடந்த, நடப்பு, வரவிருக்கும் திசைகள்</div>
+  <h1>దశా విశ్లేషణ</h1>
+  <div class="subtitle">వింశోత్తరి లోతైన వివరణ: గత, ప్రస్తుత మరియు రాబోయే దశలు</div>
   <div class="subject">Subject</div>
   <div class="meta">
-    பிறப்பு 1990-01-15 நேரம் 10:30 IST<br>
+    జననం 1990-01-15 సమయం 10:30 IST<br>
     19.0760, 72.8777
   </div>
-  <div class="generated">தயாரித்த நாள் 2026-10-17 20:44 UTC</div>
+  <div class="generated">రూపొందించిన తేదీ 2026-11-15 06:14 UTC</div>
 </section>
 <section class="section first">
-  <h2>தற்போது நடக்கும் திசை நிலைகள்</h2>
-  <p>இந்த ஐந்து திசை நிலைகளும் இப்போது ஒரே நேரத்தில் நடக்கின்றன. வெளியே உள்ள திசை பொதுவான போக்கை அமைக்கிறது; உள்ளே உள்ள ஒவ்வொரு நிலையும் இன்னும் நுட்பமான கால அறிகுறியைத் தருகிறது.</p>
+  <h2>ప్రస్తుతం నడుస్తున్న దశా స్థాయిలు</h2>
+  <p>ఈ ఐదు దశా స్థాయిలు ఇప్పుడు ఒకేసారి నడుస్తున్నాయి. బయటి మహాదశ విస్తృత భావాన్ని నిర్ణయిస్తుంది; లోపలి ప్రతి స్థాయి మరింత సూక్ష్మమైన సమయ సూచన ఇస్తుంది.</p>
 <div class="stack-row level-1">
-  <span class="level-label">திசை</span>
-  <span class="lord-name">ராகு</span>
+  <span class="level-label">మహాదశ</span>
+  <span class="lord-name">రాహువు</span>
   <span class="dates">2022-11-06 → 2040-11-06</span>
 </div>
 <div class="stack-row level-2">
-  <span class="level-label">புக்தி</span>
-  <span class="lord-name">குரு</span>
+  <span class="level-label">అంతర్దశ</span>
+  <span class="lord-name">గురువు</span>
   <span class="dates">2025-07-19 → 2027-12-13</span>
 </div>
 <div class="stack-row level-3">
-  <span class="level-label">அந்தரம்</span>
-  <span class="lord-name">சுக்கிரன்</span>
+  <span class="level-label">ప్రత్యంతర్దశ</span>
+  <span class="lord-name">శుక్రుడు</span>
   <span class="dates">2026-09-23 → 2027-02-16</span>
 </div>
 <div class="stack-row level-4">
-  <span class="level-label">சூட்சுமம்</span>
-  <span class="lord-name">சுக்கிரன்</span>
-  <span class="dates">2026-09-23 → 2026-10-18</span>
+  <span class="level-label">సూక్ష్మ దశ</span>
+  <span class="lord-name">రాహువు</span>
+  <span class="dates">2026-11-15 → 2026-12-07</span>
 </div>
 <div class="stack-row level-5">
-  <span class="level-label">பிராணம்</span>
-  <span class="lord-name">கேது</span>
-  <span class="dates">2026-10-16 → 2026-10-18</span>
+  <span class="level-label">ప్రాణ దశ</span>
+  <span class="lord-name">రాహువు</span>
+  <span class="dates">2026-11-15 → 2026-11-18</span>
 </div>
 </section>
 <section class="section">
-  <h2>நடக்கும் உப காலங்களுக்கான பலன்கள்</h2>
+  <h2>నడుస్తున్న ఉప దశల ఫలితాలు</h2>
 <div class="prediction-block">
-  <div class="lord-line">திசை: ராகு</div>
+  <div class="lord-line">మహాదశ: రాహువు</div>
   <p>Rahu&#39;s mahadasha amplifies worldly desires, foreign connections, and unconventional paths.</p>
 </div>
 <div class="prediction-block">
-  <div class="lord-line">புக்தி: குரு</div>
+  <div class="lord-line">అంతర్దశ: గురువు</div>
   <p>Jupiter&#39;s mahadasha brings wisdom, fortune, children, dharmic activities, and growth.</p>
 </div>
 </section>
 <section class="section">
-  <h2>அனைத்து 9 திசைகள் (120 ஆண்டு சுழற்சி)</h2>
+  <h2>మొత్తం 9 మహాదశలు (120 సంవత్సరాల చక్రం)</h2>
   <table>
   <thead>
     <tr>
-      <th>அதிபதி</th>
-      <th>தொடக்கம்</th>
-      <th>முடிவு</th>
-      <th>காலம்</th>
+      <th>అధిపతి</th>
+      <th>ప్రారంభం</th>
+      <th>ముగింపు</th>
+      <th>కాలం</th>
     </tr>
   </thead>
   <tbody>
 <tr>
-  <td>சுக்கிரன்</td>
+  <td>శుక్రుడు</td>
   <td>1979-11-06</td>
   <td>1999-11-06</td>
-  <td>20 ஆண்டுகள்</td>
+  <td>20 సంవత్సరాలు</td>
 </tr>
 <tr>
-  <td>சூரியன்</td>
+  <td>సూర్యుడు</td>
   <td>1999-11-06</td>
   <td>2005-11-06</td>
-  <td>6 ஆண்டுகள்</td>
+  <td>6 సంవత్సరాలు</td>
 </tr>
   </tbody>
 </table>
 </section>
 <section class="section">
-  <h2>கடந்த 20 ஆண்டுகளின் மீளாய்வு</h2>
-  <p>கடந்த 20 ஆண்டுகளில் நடந்த திசைகள்; திரும்பிப் பார்த்துப் புரிந்துகொள்ள உதவும்.</p>
+  <h2>గత 20 సంవత్సరాల సమీక్ష</h2>
+  <p>గత 20 సంవత్సరాలలో వచ్చిన మహాదశలు; వెనక్కి తిరిగి చూసుకోవడానికి ఉపయోగపడతాయి.</p>
 <div class="timeline-block">
   <div class="header">
-    <span class="lord">சந்திரன்</span>
+    <span class="lord">చంద్రుడు</span>
     <span class="dates">2005-11-06 → 2015-11-06</span>
   </div>
   <div class="body">Moon&#39;s mahadasha brings emotional depth, public visibility, mother-related matters, and creative expression.</div>
 </div>
 <div class="timeline-block">
   <div class="header">
-    <span class="lord">செவ்வாய்</span>
+    <span class="lord">కుజుడు</span>
     <span class="dates">2015-11-06 → 2022-11-06</span>
   </div>
   <div class="body">Mars&#39;s mahadasha drives action, courage, property, siblings, and physical exertion.</div>
 </div>
 </section>
 <section class="section">
-  <h2>அடுத்த 10 ஆண்டுகளின் முன்னோட்டம்</h2>
-  <p>அடுத்த 10 ஆண்டுகளில் வரும் புக்திகள்; அருகிலுள்ள காலத் திட்டமிடலுக்கு திசையை விட நுட்பமான பார்வை.</p>
+  <h2>రాబోయే 10 సంవత్సరాల ముందుచూపు</h2>
+  <p>రాబోయే 10 సంవత్సరాలలోని అంతర్దశలు; దగ్గరి కాలపు ప్రణాళికకు మహాదశ కంటే మరింత సూక్ష్మ దృష్టి.</p>
 <div class="timeline-block">
   <div class="header">
-    <span class="lord">குரு</span>
+    <span class="lord">గురువు</span>
     <span class="dates">2025-07-19 → 2027-12-13</span>
   </div>
   <div class="body">Jupiter&#39;s mahadasha brings wisdom, fortune, children, dharmic activities, and growth.</div>
 </div>
 <div class="timeline-block">
   <div class="header">
-    <span class="lord">சனி</span>
+    <span class="lord">శని</span>
     <span class="dates">2027-12-13 → 2030-10-19</span>
   </div>
   <div class="body">Saturn&#39;s mahadasha emphasizes discipline, slow growth, hard work, and karmic lessons over its 19-year span.</div>
 </div>
 </section>
 <section class="section">
-  <h2>யோகினி திசை (இரண்டாம் முறை)</h2>
-  <p>யோகினி திசை எட்டு காலங்கள் கொண்ட இரண்டாம் முறை; கால நிர்ணயத்தை உறுதிப்படுத்த விம்சோத்தரியுடன் சேர்த்துப் பயன்படுத்தப்படுகிறது.</p>
+  <h2>యోగిని దశ (రెండవ పద్ధతి)</h2>
+  <p>యోగిని దశ ఎనిమిది కాలాల రెండవ పద్ధతి; సమయ నిర్ణయాన్ని ధృవీకరించడానికి వింశోత్తరితో పాటు దీనిని ఉపయోగిస్తారు.</p>
 <table>
   <thead>
     <tr>
-      <th>அதிபதி</th>
-      <th>தொடக்கம்</th>
-      <th>முடிவு</th>
-      <th>காலம்</th>
+      <th>అధిపతి</th>
+      <th>ప్రారంభం</th>
+      <th>ముగింపు</th>
+      <th>కాలం</th>
     </tr>
   </thead>
   <tbody>
 <tr>
-  <td>உல்கா</td>
+  <td>ఉల్కా</td>
   <td>1986-12-25</td>
   <td>1992-12-25</td>
-  <td>6 ஆண்டுகள்</td>
+  <td>6 సంవత్సరాలు</td>
 </tr>
 <tr>
-  <td>சித்தா</td>
+  <td>సిద్ధా</td>
   <td>1992-12-25</td>
   <td>1999-12-25</td>
-  <td>7 ஆண்டுகள்</td>
+  <td>7 సంవత్సరాలు</td>
 </tr>
   </tbody>
 </table>

@@ -49,6 +49,11 @@ const _hiToEn = {
   'अरुण': 'Uranus',
   'वरुण': 'Neptune',
   'यम': 'Pluto',
+  'मंगळ': 'Mars',
+  'बृहस्पती': 'Jupiter',
+  'शनी': 'Saturn',
+  'राहू': 'Rahu',
+  'केतू': 'Ketu',
 };
 
 /// The glyph SVG for a planet name (English, Devanagari or a south-Indian

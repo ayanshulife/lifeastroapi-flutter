@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="kn">
+<html lang="ta">
 <head>
 <meta charset="utf-8">
-<title>ಸಾಡೇಸಾತಿ ವರದಿ</title>
+<title>ஏழரைச் சனி அறிக்கை</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -121,88 +113,76 @@ tr.current-window td { background: #fff7ed; font-weight: 600; }
 <body>
 <section class="cover">
   
-  <h1>ಸಾಡೇಸಾತಿ ವರದಿ</h1>
+  <h1>ஏழரைச் சனி அறிக்கை</h1>
   <div class="subject">Subject</div>
   <div class="meta">
-    ಜನನ 1990-01-15 ಸಮಯ 10:30 IST<br>
+    பிறப்பு 1990-01-15 நேரம் 10:30 IST<br>
     19.0760, 72.8777
   </div>
   <div class="moon-sign-badge">
-    ಚಂದ್ರ ರಾಶಿ: Leo
+    சந்திர ராசி: Leo
   </div>
   <div class="generated">
-    ತಯಾರಿಸಿದ ದಿನಾಂಕ 2026-10-17 20:44 UTC
+    தயாரித்த நாள் 2026-11-15 06:14 UTC
   </div>
 </section>
 
-<h2>ಪ್ರಸ್ತುತ ಸ್ಥಿತಿ</h2>
+<h2>தற்போதைய நிலை</h2>
 <div class="status-card clear">
-  <div class="label">ಪ್ರಸ್ತುತ ಹಂತ</div>
-  <div class="value">ಮುಕ್ತ (ಸಾಡೇಸಾತಿ ಇಲ್ಲ)</div>
-  <div class="detail">ಪ್ರಸ್ತುತ ನೀವು ಸಾಡೇಸಾತಿಯಿಂದ ಮುಕ್ತರಾಗಿದ್ದೀರಿ. ಶನಿ (Pisces) ನಿಮ್ಮ ಚಂದ್ರ ರಾಶಿಯಿಂದ (Leo) ದೂರದಲ್ಲಿದ್ದಾನೆ.</div>
+  <div class="label">நடப்புக் கட்டம்</div>
+  <div class="value">விடுபட்டது (ஏழரைச் சனி இல்லை)</div>
+  <div class="detail">தற்போது நீங்கள் ஏழரைச் சனியிலிருந்து விடுபட்டிருக்கிறீர்கள். சனி (Pisces) உங்கள் சந்திர ராசியிலிருந்து (Leo) விலகி இருக்கிறார்.</div>
 </div>
 
-<h2>ಹಿಂದಿನ ಸಾಡೇಸಾತಿ ಕಾಲಗಳು</h2>
+<h2>கடந்த ஏழரைச் சனி காலங்கள்</h2>
 <table>
   <thead>
     <tr>
-      <th>ಆರಂಭ</th>
-      <th>ಅಂತ್ಯ</th>
-      <th>ಅವಧಿ</th>
-      <th>ಗೋಚರ ರಾಶಿಗಳು</th>
+      <th>தொடக்கம்</th>
+      <th>முடிவு</th>
+      <th>காலம்</th>
+      <th>கோசார ராசிகள்</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-  <td>2006-10-17</td>
-  <td>2011-11-20</td>
-  <td>ಸುಮಾರು 5.1 ವರ್ಷಗಳು</td>
+  <td>2004-09-05</td>
+  <td>2012-08-04</td>
+  <td>சுமார் 7.9 ஆண்டுகள்</td>
   <td>Cancer, Leo</td>
-</tr>
-    <tr>
-  <td>2012-06-17</td>
-  <td>2012-08-16</td>
-  <td>ಸುಮಾರು 0.2 ವರ್ಷಗಳು</td>
-  <td>Virgo</td>
 </tr>
   </tbody>
 </table>
 
-<h2>ಮುಂಬರುವ ಕಾಲಗಳು</h2>
+<h2>வரவிருக்கும் காலங்கள்</h2>
 <table>
   <thead>
     <tr>
-      <th>ಆರಂಭ</th>
-      <th>ಅಂತ್ಯ</th>
-      <th>ಅವಧಿ</th>
-      <th>ಗೋಚರ ರಾಶಿಗಳು</th>
+      <th>தொடக்கம்</th>
+      <th>முடிவு</th>
+      <th>காலம்</th>
+      <th>கோசார ராசிகள்</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-  <td>2034-07-22</td>
-  <td>2041-01-16</td>
-  <td>ಸುಮಾರು 6.5 ವರ್ಷಗಳು</td>
+  <td>2034-07-12</td>
+  <td>2041-09-26</td>
+  <td>சுமார் 7.2 ஆண்டுகள்</td>
   <td>Cancer, Leo</td>
-</tr>
-    <tr>
-  <td>2041-03-17</td>
-  <td>2041-10-13</td>
-  <td>ಸುಮಾರು 0.6 ವರ್ಷಗಳು</td>
-  <td>Virgo</td>
 </tr>
   </tbody>
 </table>
 
-<h2>ಶಿಫಾರಸು ಮಾಡಿದ ಪರಿಹಾರಗಳು</h2>
+<h2>பரிந்துரைக்கப்பட்ட பரிகாரங்கள்</h2>
 <div class="remedies">
-  <p>ಸಾಡೇಸಾತಿಯ ಸಮಯದಲ್ಲಿ ಸಾಮಾನ್ಯವಾಗಿ ಪಾಲಿಸುವ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಹಾರಗಳು ಇವು. ಯಾವುದೇ ಪರಿಹಾರವನ್ನು ಆರಂಭಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಜಾತಕವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಿಕೊಳ್ಳಿ:</p>
+  <p>ஏழரைச் சனி காலத்தில் வழக்கமாகக் கடைப்பிடிக்கப்படும் பாரம்பரியப் பரிகாரங்கள் இவை. எந்தப் பரிகாரத்தையும் தொடங்கும் முன் உங்கள் ஜாதகத்தை முழுமையாகச் சரிபார்த்துக்கொள்ளுங்கள்:</p>
   <ul>
-    <li>ಪ್ರತಿದಿನ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಪಠಿಸಿ, ವಿಶೇಷವಾಗಿ ಮಂಗಳವಾರ ಮತ್ತು ಶನಿವಾರ.</li>
-    <li>ಶನಿವಾರ ಕಪ್ಪು ಎಳ್ಳು, ಸಾಸಿವೆ ಎಣ್ಣೆ ಅಥವಾ ಕಬ್ಬಿಣದ ವಸ್ತುಗಳನ್ನು ದಾನ ಮಾಡಿ.</li>
-    <li>ಎಳ್ಳೆಣ್ಣೆ ಮತ್ತು ನೀಲಿ ಹೂವುಗಳಿಂದ ಶನಿದೇವರನ್ನು ಪೂಜಿಸಿ.</li>
-    <li>ನೀಲಮಣಿಯನ್ನು ಜಾತಕ ಪರಿಶೀಲನೆಯ ನಂತರವೇ ಧರಿಸಿ; ಶನಿಯ ರತ್ನ ಎಲ್ಲರಿಗೂ ಹೊಂದುವುದಿಲ್ಲ.</li>
-    <li>ಶಿಸ್ತಿನ ದಿನಚರಿ ಪಾಲಿಸಿ, ನೈತಿಕವಾಗಿ ನಡೆದುಕೊಳ್ಳಿ ಮತ್ತು ಅನಗತ್ಯ ಖರ್ಚನ್ನು ತಪ್ಪಿಸಿ.</li>
+    <li>தினமும் ஹனுமான் சாலிசா பாராயணம் செய்யுங்கள், குறிப்பாகச் செவ்வாய், சனிக்கிழமைகளில்.</li>
+    <li>சனிக்கிழமை கருப்பு எள், கடுகு எண்ணெய் அல்லது இரும்புப் பொருட்களைத் தானம் செய்யுங்கள்.</li>
+    <li>நல்லெண்ணெயும் நீல மலர்களும் கொண்டு சனி பகவானை வழிபடுங்கள்.</li>
+    <li>நீலக்கல்லை ஜாதகச் சரிபார்ப்புக்குப் பிறகே அணியுங்கள்; சனியின் ரத்தினம் எல்லோருக்கும் பொருந்தாது.</li>
+    <li>ஒழுங்கான தினசரி வழக்கத்தைக் கடைப்பிடியுங்கள், நேர்மையாக நடந்துகொள்ளுங்கள், தேவையற்ற செலவைத் தவிருங்கள்.</li>
   </ul>
 </div>
 <footer>Generated using LifeAstroAPI</footer>

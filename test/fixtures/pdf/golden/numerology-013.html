@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="ta">
+<html lang="te">
 <head>
 <meta charset="utf-8">
-<title>எண் கணித அறிக்கை</title>
+<title>సంఖ్యాశాస్త్ర నివేదిక, Arjun Mehta</title>
 <style>
 :root { --brand-primary: #1a1a1a; --brand-secondary: #666666; }
 
 * { box-sizing: border-box; }
-/* Form controls and headings do not always inherit font-family in print, so
-   the Indic stack is set on them explicitly too. */
+
 h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
   font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Bengali', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Malayalam', sans-serif;
@@ -18,18 +17,19 @@ html, body {
   margin: 0;
 }
 @page { size: A4; margin: 18mm 15mm 22mm 15mm; }
-/* Print the brand colours (table headers, cards) as designed. Chromium does so
-   with printBackground; the iOS and Android print engines drop backgrounds
-   unless the page asks for exact colours. */
+
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 h2 {
   color: var(--brand-primary);
   border-bottom: 2px solid var(--brand-primary);
   padding-bottom: 2mm;
   font-size: 16pt;
-  margin-top: 8mm;
+  margin-top: 6mm;
+  padding-top: 2mm;
 }
-h3 { font-size: 12pt; margin: 6mm 0 2mm; }
+h3 { font-size: 12pt; margin: 4mm 0 2mm; padding-top: 2mm; }
+
+h2, h3 { page-break-after: avoid; }
 p { margin: 2mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0; }
 th, td { text-align: left; padding: 2mm 3mm; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
@@ -49,23 +49,15 @@ th { background: var(--brand-primary); color: #fff; font-weight: 600; font-size:
 .card { flex: 1 1 0; min-width: 40mm; border: 1px solid #e5e5e5; border-radius: 2mm; padding: 3mm; }
 .card .label { color: var(--brand-secondary); font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; }
 .card .value { font-size: 14pt; color: var(--brand-primary); font-weight: 600; margin-top: 1mm; }
-/* On screen the footer is an ordinary block after the content. In print it
-   is hidden and the same text is drawn in the page's bottom margin instead
-   (see footerCss): a position:fixed footer is laid out against the page
-   CONTENT box, so it prints on top of the last lines of body text. */
+
 footer {
   text-align: center; color: var(--brand-secondary); font-size: 8pt;
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
-/* Telugu and Kannada stack vowel signs and conjuncts above and below the
-   line and Tamil has tall marks too, so their lines get a little more height
-   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
-   typography; spacing splits Indic clusters apart, so drop it.
-   :where() keeps the specificity of a plain "body" rule, so a report's own
-   body line-height (Brihad sets 1.8) still wins. */
+
 :where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml), html:lang(gu), html:lang(bn), html:lang(pa)) * { letter-spacing: normal !important; }
 
 
 
@@ -116,6 +108,8 @@ footer {
 .factors-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
   gap: 2mm 6mm;
   padding: 4mm;
   background: #fafafa;
@@ -157,101 +151,101 @@ footer {
 <body>
 <section class="cover">
   
-  <h1>எண் கணித அறிக்கை</h1>
-  <div class="subject"></div>
-  <div class="meta">பிறப்பு 1990-01-15</div>
+  <h1>సంఖ్యాశాస్త్ర నివేదిక</h1>
+  <div class="subject">Arjun Mehta</div>
+  <div class="meta">జననం 1990-01-15</div>
   <div class="summary">
-    <div class="summary-card"><div class="number">6</div><div class="label">பிறவி எண்</div></div>
-    <div class="summary-card"><div class="number">8</div><div class="label">விதி எண்</div></div>
-    <div class="summary-card"><div class="number">4</div><div class="label">ஆன்ம எண்</div></div>
-    <div class="summary-card"><div class="number">3</div><div class="label">ஆளுமை எண்</div></div>
-    <div class="summary-card"><div class="number">7</div><div class="label">பெயர் எண்</div></div>
+    <div class="summary-card"><div class="number">6</div><div class="label">మూలాంకం</div></div>
+    <div class="summary-card"><div class="number">8</div><div class="label">భాగ్యాంకం</div></div>
+    <div class="summary-card"><div class="number">4</div><div class="label">అంతరాత్మ సంఖ్య</div></div>
+    <div class="summary-card"><div class="number">3</div><div class="label">వ్యక్తిత్వ సంఖ్య</div></div>
+    <div class="summary-card"><div class="number">7</div><div class="label">నామ సంఖ్య</div></div>
   </div>
   
 </section>
-<h2>பிறவி எண்</h2>
+<h2>మూలాంకం</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">6</span>
-    <span class="name">பிறவி எண் (பிறந்த தேதி எண்)</span>
+    <span class="name">మూలాంకం (జన్మ తేదీ సంఖ్య)</span>
   </div>
-  <p class="meaning">பொறுப்பு, இணக்கம், குடும்பம். பேணிக் காக்கும் இயல்பு; பிறரைக் கவனிப்பதிலும் அழகை உருவாக்குவதிலும் வாழ்க்கை நோக்கைக் காண்பீர்கள்.</p>
+  <p class="meaning">బాధ్యత, సామరస్యం, కుటుంబం. పోషించే స్వభావం; ఇతరుల సంరక్షణలో, సౌందర్య సృష్టిలో మీరు జీవిత లక్ష్యాన్ని కనుగొంటారు.</p>
   <dl class="factors-grid">
-  <dt>கிரகம்</dt><dd>சுக்கிரன்</dd>
-  <dt>கிழமை</dt><dd>வெள்ளிக்கிழமை</dd>
-  <dt>நிறம்</dt><dd>White / Sky Blue</dd>
-  <dt>ரத்தினம்</dt><dd>Diamond</dd>
-  <dt>தெய்வம்</dt><dd>Shukra / Lakshmi</dd>
-  <dt>திசை</dt><dd>Southeast</dd>
+  <dt>గ్రహం</dt><dd>శుక్రుడు</dd>
+  <dt>వారం</dt><dd>శుక్రవారం</dd>
+  <dt>రంగు</dt><dd>White / Sky Blue</dd>
+  <dt>రత్నం</dt><dd>Diamond</dd>
+  <dt>దేవత</dt><dd>Shukra / Lakshmi</dd>
+  <dt>దిశ</dt><dd>Southeast</dd>
 </dl>
 </div>
-<h2>விதி எண்</h2>
+<h2>భాగ్యాంకం</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">8</span>
-    <span class="name">விதி எண் (வாழ்க்கைப் பாதை)</span>
+    <span class="name">భాగ్యాంకం (జీవన మార్గం)</span>
   </div>
-  <p class="meaning">சக்தி, லட்சியம், பொருள்சார் திறமை. சாதனைக்கான வலுவான உந்துதல்; செல்வத்தையும் நிறுவனங்களையும் உருவாக்கி நிர்வகிக்கும் திறன்.</p>
+  <p class="meaning">శక్తి, ఆకాంక్ష, భౌతిక నైపుణ్యం. విజయం కోసం బలమైన తపన; సంపదను, సంస్థలను నిర్మించి నిర్వహించగల సామర్థ్యం.</p>
   <dl class="factors-grid">
-  <dt>கிரகம்</dt><dd>சனி</dd>
-  <dt>கிழமை</dt><dd>சனிக்கிழமை</dd>
-  <dt>நிறம்</dt><dd>Blue / Black</dd>
-  <dt>ரத்தினம்</dt><dd>Blue Sapphire</dd>
-  <dt>தெய்வம்</dt><dd>Shani / Hanuman</dd>
-  <dt>திசை</dt><dd>West</dd>
+  <dt>గ్రహం</dt><dd>శని</dd>
+  <dt>వారం</dt><dd>శనివారం</dd>
+  <dt>రంగు</dt><dd>Blue / Black</dd>
+  <dt>రత్నం</dt><dd>Blue Sapphire</dd>
+  <dt>దేవత</dt><dd>Shani / Hanuman</dd>
+  <dt>దిశ</dt><dd>West</dd>
 </dl>
 </div>
-<h2>ஆன்ம எண்</h2>
+<h2>అంతరాత్మ సంఖ్య</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">4</span>
-    <span class="name">ஆன்ம எண்</span>
+    <span class="name">అంతరాత్మ సంఖ్య</span>
   </div>
-  <p class="meaning">நடைமுறை அறிவு, ஒழுங்கு, உழைப்பு. முறையாகவும் ஒழுக்கத்துடனும் செயல்படுவீர்கள்; பொறுமையுடன் நிலையான அடித்தளம் அமைப்பீர்கள்.</p>
+  <p class="meaning">ఆచరణాత్మకత, క్రమబద్ధత, కష్టపడే తత్వం. పద్ధతిగా, క్రమశిక్షణతో పనిచేస్తారు; ఓర్పుతో శాశ్వత పునాదులు నిర్మిస్తారు.</p>
   <dl class="factors-grid">
-  <dt>கிரகம்</dt><dd>ராகு</dd>
-  <dt>கிழமை</dt><dd>Sunday (with caution)</dd>
-  <dt>நிறம்</dt><dd>Smoky Gray / Indigo</dd>
-  <dt>ரத்தினம்</dt><dd>Hessonite</dd>
-  <dt>தெய்வம்</dt><dd>Rahu / Saraswati</dd>
-  <dt>திசை</dt><dd>Southwest</dd>
+  <dt>గ్రహం</dt><dd>రాహువు</dd>
+  <dt>వారం</dt><dd>Sunday (with caution)</dd>
+  <dt>రంగు</dt><dd>Smoky Gray / Indigo</dd>
+  <dt>రత్నం</dt><dd>Hessonite</dd>
+  <dt>దేవత</dt><dd>Rahu / Saraswati</dd>
+  <dt>దిశ</dt><dd>Southwest</dd>
 </dl>
 </div>
-<h2>ஆளுமை எண்</h2>
+<h2>వ్యక్తిత్వ సంఖ్య</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">3</span>
-    <span class="name">ஆளுமை எண்</span>
+    <span class="name">వ్యక్తిత్వ సంఖ్య</span>
   </div>
-  <p class="meaning">வெளிப்பாடு, படைப்பாற்றல், நம்பிக்கை. பேச்சும் கற்றலும் உங்கள் இயல்பான பலம்; கற்பித்தல், எழுத்து, கலை சாதகம்.</p>
+  <p class="meaning">వ్యక్తీకరణ, సృజనాత్మకత, ఆశావాదం. సంభాషణ, అభ్యాసం మీకు సహజ బలాలు; బోధన, రచన, కళలు అనుకూలం.</p>
   <dl class="factors-grid">
-  <dt>கிரகம்</dt><dd>குரு</dd>
-  <dt>கிழமை</dt><dd>வியாழக்கிழமை</dd>
-  <dt>நிறம்</dt><dd>Yellow</dd>
-  <dt>ரத்தினம்</dt><dd>Yellow Sapphire</dd>
-  <dt>தெய்வம்</dt><dd>Brihaspati / Vishnu</dd>
-  <dt>திசை</dt><dd>Northeast</dd>
+  <dt>గ్రహం</dt><dd>గురువు</dd>
+  <dt>వారం</dt><dd>గురువారం</dd>
+  <dt>రంగు</dt><dd>Yellow</dd>
+  <dt>రత్నం</dt><dd>Yellow Sapphire</dd>
+  <dt>దేవత</dt><dd>Brihaspati / Vishnu</dd>
+  <dt>దిశ</dt><dd>Northeast</dd>
 </dl>
 </div>
-<h2>பெயர் எண்</h2>
+<h2>నామ సంఖ్య</h2>
 <div class="number-block">
   <div class="header-row">
     <span class="number">7</span>
-    <span class="name">பெயர் எண்</span>
+    <span class="name">నామ సంఖ్య</span>
   </div>
-  <p class="meaning">ஆன்மிகம், சுயபரிசோதனை, பகுப்பாய்வு. ஆழ்ந்த உண்மையைத் தேடுவீர்கள்; ஆராய்ச்சி, தத்துவம், சாதனையில் சிறப்பீர்கள்.</p>
+  <p class="meaning">ఆధ్యాత్మికత, ఆత్మపరిశీలన, విశ్లేషణ. లోతైన సత్యాన్ని అన్వేషిస్తారు; పరిశోధన, తత్త్వశాస్త్రం, సాధనలో రాణిస్తారు.</p>
   <dl class="factors-grid">
-  <dt>கிரகம்</dt><dd>கேது</dd>
-  <dt>கிழமை</dt><dd>Tuesday (calm)</dd>
-  <dt>நிறம்</dt><dd>Brown / Purple</dd>
-  <dt>ரத்தினம்</dt><dd>Cat&#39;s Eye</dd>
-  <dt>தெய்வம்</dt><dd>Ketu / Ganesha</dd>
-  <dt>திசை</dt><dd>Northwest</dd>
+  <dt>గ్రహం</dt><dd>కేతువు</dd>
+  <dt>వారం</dt><dd>Tuesday (calm)</dd>
+  <dt>రంగు</dt><dd>Brown / Purple</dd>
+  <dt>రత్నం</dt><dd>Cat&#39;s Eye</dd>
+  <dt>దేవత</dt><dd>Ketu / Ganesha</dd>
+  <dt>దిశ</dt><dd>Northwest</dd>
 </dl>
 </div>
-<h2>இணக்கமான எண்கள்</h2>
+<h2>అనుకూల సంఖ్యలు</h2>
 <div class="compatibility">
-  <div class="label">உங்கள் பிறவி எண்ணுடன் இணக்கமான எண்கள்</div>
+  <div class="label">మీ మూలాంకంతో అనుకూలమైన సంఖ్యలు</div>
   <div class="numbers">
       <span class="num-chip">3</span>
       <span class="num-chip">4</span>

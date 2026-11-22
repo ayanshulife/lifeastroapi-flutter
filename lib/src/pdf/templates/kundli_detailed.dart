@@ -205,6 +205,28 @@ const _labels = {
     'karana': 'করণ',
     'sources': 'সূত্র',
   },
+  'pa': {
+    'title_kundli': 'ਵਿਸਤ੍ਰਿਤ ਕੁੰਡਲੀ',
+    'born': 'ਜਨਮ',
+    'at': 'ਸਮਾਂ',
+    'generated': 'ਤਿਆਰ',
+    'section_ascendant': 'ਲਗਨ',
+    'section_planets': 'ਗ੍ਰਹਿ ਸਥਿਤੀ',
+    'section_panchang': 'ਜਨਮ ਪੰਚਾਂਗ',
+    'section_interpretation': 'ਵਿਆਖਿਆ',
+    'ascendant': 'ਲਗਨ',
+    'planet': 'ਗ੍ਰਹਿ',
+    'sign': 'ਰਾਸ਼ੀ',
+    'degree': 'ਅੰਸ਼',
+    'house': 'ਭਾਵ',
+    'nakshatra': 'ਨਛੱਤਰ',
+    'pada': 'ਪਦ',
+    'lord': 'ਸੁਆਮੀ',
+    'tithi': 'ਤਿਥੀ',
+    'yoga': 'ਯੋਗ',
+    'karana': 'ਕਰਣ',
+    'sources': 'ਸਰੋਤ',
+  },
 };
 
 const _midtierCss =
@@ -384,6 +406,25 @@ const _brihadLabels = {
     'dosha_severity_cancelled': 'নিবারিত',
     'dosha_severity_mild': 'অল্প',
   },
+  'pa': {
+    'in': 'ਰਾਸ਼ੀ:',
+    'section_houses': 'ਭਾਵ ਵਿਸ਼ਲੇਸ਼ਣ',
+    'section_yogas': 'ਕੁੰਡਲੀ ਦੇ ਯੋਗ',
+    'section_dashas': 'ਵਿੰਸ਼ੋਤਰੀ ਦਸ਼ਾ: ਜੀਵਨ ਕਾਲ',
+    'house': 'ਭਾਵ',
+    'lord': 'ਸੁਆਮੀ',
+    'current_dasha': 'ਮੌਜੂਦਾ ਮਹਾਦਸ਼ਾ',
+    'upcoming_dashas': 'ਆਉਣ ਵਾਲੀਆਂ ਮਹਾਦਸ਼ਾਵਾਂ',
+    'years': 'ਸਾਲ',
+    'source': 'ਸਰੋਤ',
+    'section_doshas': 'ਦੋਸ਼ ਵਿਸ਼ਲੇਸ਼ਣ',
+    'dosha_mangal': 'ਮਾਂਗਲਿਕ ਦੋਸ਼',
+    'dosha_kaalsarp': 'ਕਾਲਸਰਪ ਦੋਸ਼',
+    'dosha_pitra': 'ਪਿੱਤਰ ਦੋਸ਼',
+    'dosha_severity_present': 'ਮੌਜੂਦ',
+    'dosha_severity_cancelled': 'ਨਿਵਾਰਿਤ',
+    'dosha_severity_mild': 'ਹਲਕਾ',
+  },
 };
 
 /// `houseTopic` with the JS lookup `HOUSE_TOPICS[loc]?.[n]`: the property key
@@ -400,6 +441,7 @@ String _houseTopicOf(String loc, Object? n) {
 /// report JSON.
 String renderKundliDetailedHtml(Map<String, Object?> data,
     [Branding? branding]) {
+  data = withoutNullItems(withSafeLocale(data));
   final resolved = resolveBranding(data['Branding'], branding);
   final localeRaw = data['Locale'];
   final locale = localeRaw == null ? null : jsStr(localeRaw);
