@@ -210,16 +210,20 @@ class Transport implements ClientCore {
       }
 
       Object? body;
+      var nonJson = false;
       if (res.text.isNotEmpty) {
         try {
           body = jsonDecode(res.text);
         } on FormatException {
           body = res.text;
+          nonJson = true;
         }
       }
 
       if (res.status >= 200 && res.status < 300) {
         report(res);
+        // A 2xx that is not JSON is not an API answer (a proxy or captive page).
+        if (nonJson) throw nonJsonError(res.status, res.text);
         if (options?.raw ?? false) return body;
         // The API returns bare JSON today. A `{ data, meta }` envelope is
         // unwrapped if a response ever carries one, as the Node SDK does.
@@ -228,7 +232,9 @@ class Transport implements ClientCore {
       }
 
       final retryAfter = parseRetryAfter(res.headers['retry-after']);
-      lastError = errorFromResponse(res.status, body, retryAfter);
+      lastError = nonJson
+          ? nonJsonError(res.status, res.text, retryAfter)
+          : errorFromResponse(res.status, body, retryAfter);
       if (_retryableStatus.contains(res.status) &&
           attempt < config.maxRetries) {
         await _sleep(_backoff(attempt, retryAfter), callerAbort.future,

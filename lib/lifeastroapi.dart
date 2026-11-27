@@ -15,7 +15,7 @@
 library;
 
 export 'src/client.dart' show LifeAstro;
-export 'src/errors.dart' hide errorFromResponse;
+export 'src/errors.dart' hide errorFromResponse, nonJsonError;
 export 'src/resources/all.dart';
 export 'src/response_info.dart' show RateLimit, ResponseHook, ResponseInfo;
 export 'src/transport.dart' show ClientCore, RequestOptions;

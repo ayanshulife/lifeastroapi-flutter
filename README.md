@@ -291,6 +291,10 @@ try {
 | `ServerException` | 5xx |
 | `LifeAstroConnectionException` | network failure, timeout (`code: 'timeout'`) or cancellation (`code: 'aborted'`) |
 
+A response that is not JSON (an HTML page from a proxy or firewall in between, for example) throws
+the exception of its status with code `non_json_response`; the message carries the HTTP status and
+the start of the body.
+
 All extend `LifeAstroException`. 429, 5xx and network errors are retried `maxRetries` times with
 exponential backoff (honouring `Retry-After`) before they are thrown.
 

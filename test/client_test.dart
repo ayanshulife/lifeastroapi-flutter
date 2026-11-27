@@ -322,8 +322,9 @@ void main() {
       final err = await caught(m.client.chart.planets(birth: birth));
       expect(err, isA<ServerException>());
       err as ServerException;
-      expect(err.code, 'internal_error');
-      expect(err.message, 'HTTP 502');
+      expect(err.code, 'non_json_response');
+      expect(err.message, contains('HTTP 502'));
+      expect(err.message, contains('upstream down'));
       expect(err.body, 'upstream down');
     });
   });
@@ -717,6 +718,7 @@ void main() {
     test('an empty apiKey is not a key', () {
       environmentApiKey = () => 'dv_live_env';
       expect(() => LifeAstro(apiKey: ''), throwsArgumentError);
+      expect(() => LifeAstro(apiKey: ' \n'), throwsArgumentError);
     });
 
     test('reads the API key from the environment', () async {
@@ -880,9 +882,12 @@ void main() {
       expect(await m.client.request('/v1/raw'), {'foo': 1, 'bar': 2});
     });
 
-    test('returns a non-JSON success body as the raw string', () async {
+    test('raises non_json_response for a non-JSON success body', () async {
       final m = mock((_) => reply('plain text'));
-      expect(await m.client.request('/v1/text'), 'plain text');
+      final err = await caught(m.client.request('/v1/text'));
+      expect(err, isA<LifeAstroException>());
+      expect((err as LifeAstroException).code, 'non_json_response');
+      expect(err.status, 200);
     });
 
     test('a type argument narrows the result', () async {

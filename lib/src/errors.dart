@@ -167,6 +167,29 @@ LifeAstroException errorFromResponse(int status, Object? body,
   final requestId =
       parsed['request_id'] is String ? parsed['request_id'] as String : null;
 
+  return _build(status, message, code, requestId, body, retryAfter);
+}
+
+/// The exception for a response whose body is not JSON: it did not come from
+/// the API (an HTML page from a proxy, firewall or CDN in between). The same
+/// class per status as [errorFromResponse], with code `non_json_response`.
+LifeAstroException nonJsonError(int status, String text,
+    [Duration? retryAfter]) {
+  var snippet = text.replaceAll(RegExp(r'\s+'), ' ').trim();
+  if (snippet.length > 120) snippet = snippet.substring(0, 120);
+  return _build(
+      status,
+      'The response did not come from the API as JSON (HTTP $status). '
+          'A proxy, firewall or CDN in between may have answered. '
+          'Body starts: $snippet',
+      'non_json_response',
+      null,
+      text,
+      retryAfter);
+}
+
+LifeAstroException _build(int status, String message, String code,
+    String? requestId, Object? body, Duration? retryAfter) {
   switch (status) {
     case 400:
       return BadRequestException(message,

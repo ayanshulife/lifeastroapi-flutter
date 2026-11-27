@@ -64,7 +64,9 @@ class LifeAstro extends LifeAstroResources {
     Map<String, String> defaultHeaders = const {},
     ResponseHook? onResponse,
   }) {
-    final key = apiKey ?? environmentApiKey();
+    // Trimmed: a key read from a file or a quoted .env value often carries a
+    // space or newline.
+    final key = (apiKey ?? environmentApiKey())?.trim();
     if (key == null || key.isEmpty) {
       throw ArgumentError(
           'LifeAstro: an API key is required. Pass apiKey: or set '
