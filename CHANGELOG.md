@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.0.0 — 2026-11-27
+
+This is the first stable release. From 1.0.0 on, a change that needs a code change on your side
+only comes with a new major version.
+
+New:
+
+- The API key is trimmed of spaces and line breaks around it, so a key read from a file or a
+  quoted `.env` value works as it is. A key that is only whitespace is reported as missing.
+- A reply that is not JSON did not come from the API: a proxy, firewall or CDN in between
+  answered, usually with an HTML page. It now throws the exception of its HTTP status with code
+  `non_json_response`; the message gives the status and the start of the body.
+- README: the `non_json_response` error.
+
+Changes that may need a code change:
+
+- A 200 reply with a body that is not JSON now throws instead of returning the text.
+  Before: the call returned the body as a `String`.
+  Now: `on LifeAstroException catch (e) { if (e.code == 'non_json_response') { /* ... */ } }`
+- **Breaking:** `numerology.full` requires `dob`. The API always required it; a call without it
+  no longer compiles.
+  Before: `client.numerology.full(name: 'Arjun Mehta')` compiled and the API answered 400.
+  Now: `client.numerology.full(dob: '1990-01-15', name: 'Arjun Mehta')`
+
 ## 0.3.0 — 2026-11-22
 
 **Breaking:** a class of your own that `implements HtmlToPdfOptions` must now use

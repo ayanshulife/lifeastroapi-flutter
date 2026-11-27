@@ -198,6 +198,8 @@ function dartParams(e) {
       // one Dart parameter, sent under every wire name, as in Node.
       if (!existing.wires) throw new Error(`${e.path}: extra "${name}" collides with object parameter`);
       for (const w of wires) if (!existing.wires.includes(w)) existing.wires.push(w);
+      // An extra can make a base parameter required (numerology.full: `dob`).
+      if (x.required) existing.required = true;
       continue;
     }
     params.push({ name, type: dartType(x, name), required: !!x.required, wires, source: "extra" });

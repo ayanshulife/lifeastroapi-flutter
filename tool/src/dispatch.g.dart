@@ -929,7 +929,7 @@ final Map<String, Invoker> invokers = {
       .driver(dob: asStr(i['dob'])!, lang: asLang(i['lang']), options: o),
   'numerology.full': (c, i, [o]) => c.numerology.full(
       name: asStr(i['name']),
-      dob: asStr(i['dob']),
+      dob: asStr(i['dob'])!,
       lang: asLang(i['lang']),
       options: o),
   'numerology.personality': (c, i, [o]) => c.numerology.personality(

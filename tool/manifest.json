@@ -8869,7 +8869,7 @@
    {
     "name": "dob",
     "type": "String",
-    "required": false,
+    "required": true,
     "source": "base",
     "wires": [
      "dob"

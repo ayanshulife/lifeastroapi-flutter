@@ -106,8 +106,8 @@ class NumerologyApi {
   ///
   /// `GET /v1/numerology/full`
   Future<T> full<T>({
+    required String dob,
     String? name,
-    String? dob,
     Lang? lang,
     RequestOptions? options,
   }) {
