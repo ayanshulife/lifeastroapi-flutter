@@ -1422,13 +1422,11 @@
    "lon"
   ],
   "params": {
-   "date": "2027-01-18",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777",
-   "time": "10:30",
-   "birth_date": "2026-07-20",
-   "sex": "male"
+   "lat": "28.6139",
+   "lon": "77.209",
+   "time": "10:00"
   }
  },
  "/v1/muhurta/best-time": {
@@ -1458,11 +1456,11 @@
    "lon"
   ],
   "params": {
-   "date": "2027-01-18",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777",
-   "time": "10:30"
+   "lat": "28.6139",
+   "lon": "77.209",
+   "time": "10:00"
   }
  },
  "/v1/muhurta/chandra-bala": {
@@ -1507,12 +1505,11 @@
    "lon"
   ],
   "params": {
-   "date": "2027-01-18",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777",
-   "time": "10:30",
-   "birth_date": "2026-07-20"
+   "lat": "28.6139",
+   "lon": "77.209",
+   "time": "10:00"
   }
  },
  "/v1/muhurta/naamkaran": {
@@ -1604,11 +1601,11 @@
    "lon"
   ],
   "params": {
-   "date": "2027-01-18",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777",
-   "time": "10:30"
+   "lat": "28.6139",
+   "lon": "77.209",
+   "time": "10:00"
   }
  },
  "/v1/muhurta/vahan": {
@@ -1620,11 +1617,11 @@
    "lon"
   ],
   "params": {
-   "date": "2027-01-18",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777",
-   "time": "10:30"
+   "lat": "28.6139",
+   "lon": "77.209",
+   "time": "10:00"
   }
  },
  "/v1/muhurta/vidyarambh": {
@@ -1636,12 +1633,11 @@
    "lon"
   ],
   "params": {
-   "date": "2027-01-18",
+   "date": "2027-01-15",
    "tz": "Asia/Kolkata",
-   "lat": "19.076",
-   "lon": "72.8777",
-   "time": "10:30",
-   "birth_date": "2022-01-10"
+   "lat": "28.6139",
+   "lon": "77.209",
+   "time": "10:00"
   }
  },
  "/v1/muhurta/vivah": {

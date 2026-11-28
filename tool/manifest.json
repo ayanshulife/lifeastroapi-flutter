@@ -16501,7 +16501,7 @@
   "method": "firdaria",
   "path": "/v1/western/firdaria",
   "shape": "custom",
-  "desc": "Firdaria planetary periods (Persian time-lord cycle).",
+  "desc": "Firdaria planetary periods (Persian time-lord cycle). Day births start with the Sun, night births with the Moon: pass diurnal=false for a night birth.",
   "params": [
    {
     "name": "birthDate",
@@ -16519,6 +16519,24 @@
     "source": "extra",
     "wires": [
      "ref_date"
+    ]
+   },
+   {
+    "name": "diurnal",
+    "type": "bool",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "diurnal"
+    ]
+   },
+   {
+    "name": "includeAllMajors",
+    "type": "bool",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "include_all_majors"
     ]
    }
   ]
@@ -20220,6 +20238,15 @@
     "wires": [
      "ref_date"
     ]
+   },
+   {
+    "name": "includeAllL1",
+    "type": "bool",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "include_all_l1"
+    ]
    }
   ]
  },
@@ -20256,6 +20283,24 @@
     "source": "extra",
     "wires": [
      "lot_sign"
+    ]
+   },
+   {
+    "name": "includeAllL1",
+    "type": "bool",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "include_all_l1"
+    ]
+   },
+   {
+    "name": "fortuneSign",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "fortune_sign"
     ]
    }
   ]

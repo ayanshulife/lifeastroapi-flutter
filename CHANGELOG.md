@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0 — 2026-11-28
+
+More control over the Western time-lord methods. Nothing changes for code written against 1.1.0.
+
+- `western.firdaria` takes `diurnal`. Night births follow their own Firdaria order (Moon, Saturn, Jupiter, Mars,
+  Sun, Venus, Mercury, then the nodes), so pass `diurnal: false` for a night birth. Without it the day order is
+  used, as before. `includeAllMajors` lists every major period of the life.
+- `western.zodiacalReleasing` fortune and spirit take `includeAllL1` to list every Level 1 period. Spirit also takes
+  `fortuneSign`, so `is_angular` is counted from the Lot of Fortune.
+
+Results from the API (server side, so every SDK version gets them):
+
+- Zodiacal Releasing follows Valens: each sign has its own period (Capricorn 27 years, Aquarius 30), years are
+  360 days, `is_lb_peak` marks a period that begins with the Loosing of the Bond and `is_angular` is counted from
+  Fortune. New fields `start_utc`, `end_utc` and `fortune_sign`.
+- Firdaria sub-periods run in descending Chaldean order, and night births follow Abu Ma'shar's order.
+- Muhurta `warnings` is always a list, `[]` when there are none.
+- `muhurta.panchakaRahita` returns `dosha_type` ("Panchaka" in the requested language) while Panchaka applies.
+
 ## 1.1.0 — 2026-11-28
 
 New methods. Nothing changes for code written against 1.0.0.

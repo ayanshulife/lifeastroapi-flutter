@@ -93,17 +93,23 @@ class WesternApi {
   /// `client.western.zodiacalReleasing`.
   final WesternZodiacalReleasingApi zodiacalReleasing;
 
-  /// Firdaria planetary periods (Persian time-lord cycle).
+  /// Firdaria planetary periods (Persian time-lord cycle). Day births start
+  /// with the Sun, night births with the Moon: pass diurnal=false for a night
+  /// birth.
   ///
   /// `GET /v1/western/firdaria`
   Future<T> firdaria<T>({
     required String birthDate,
     String? refDate,
+    bool? diurnal,
+    bool? includeAllMajors,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('birth_date', birthDate)
-      ..put('ref_date', refDate);
+      ..put('ref_date', refDate)
+      ..put('diurnal', diurnal)
+      ..put('include_all_majors', includeAllMajors);
     return _c.request<T>('/v1/western/firdaria', $q, options);
   }
 
@@ -2220,12 +2226,14 @@ class WesternZodiacalReleasingApi {
     required String birthDate,
     required String lotSign,
     String? refDate,
+    bool? includeAllL1,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('birth_date', birthDate)
       ..put('lot_sign', lotSign)
-      ..put('ref_date', refDate);
+      ..put('ref_date', refDate)
+      ..put('include_all_l1', includeAllL1);
     return _c.request<T>('/v1/western/zodiacal-releasing/fortune', $q, options);
   }
 
@@ -2237,12 +2245,16 @@ class WesternZodiacalReleasingApi {
     required String birthDate,
     required String lotSign,
     String? refDate,
+    bool? includeAllL1,
+    String? fortuneSign,
     RequestOptions? options,
   }) {
     final $q = <String, Object?>{}
       ..put('birth_date', birthDate)
       ..put('ref_date', refDate)
-      ..put('lot_sign', lotSign);
+      ..put('lot_sign', lotSign)
+      ..put('include_all_l1', includeAllL1)
+      ..put('fortune_sign', fortuneSign);
     return _c.request<T>('/v1/western/zodiacal-releasing/spirit', $q, options);
   }
 }

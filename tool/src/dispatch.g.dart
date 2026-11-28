@@ -1790,6 +1790,8 @@ final Map<String, Invoker> invokers = {
   'western.firdaria': (c, i, [o]) => c.western.firdaria(
       birthDate: asStr(i['birthDate'])!,
       refDate: asStr(i['refDate']),
+      diurnal: asBool(i['diurnal']),
+      includeAllMajors: asBool(i['includeAllMajors']),
       options: o),
   'western.heliocentric.planets': (c, i, [o]) => c.western.heliocentric.planets(
       date: asStr(i['date'])!,
@@ -2185,11 +2187,14 @@ final Map<String, Invoker> invokers = {
           birthDate: asStr(i['birthDate'])!,
           lotSign: asStr(i['lotSign'])!,
           refDate: asStr(i['refDate']),
+          includeAllL1: asBool(i['includeAllL1']),
           options: o),
   'western.zodiacalReleasing.spirit': (c, i, [o]) => c.western.zodiacalReleasing
       .spirit(
           birthDate: asStr(i['birthDate'])!,
           refDate: asStr(i['refDate']),
           lotSign: asStr(i['lotSign'])!,
+          includeAllL1: asBool(i['includeAllL1']),
+          fortuneSign: asStr(i['fortuneSign']),
           options: o),
 };
