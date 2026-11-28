@@ -13,12 +13,55 @@ class MuhurtaApi {
 
   final ClientCore _c;
 
+  /// Score a proposed moment for Annaprashan (a child's first solid food) (20
+  /// credits): tithi, weekday, nakshatra, paksha, Rahu Kaal, Yamaganda,
+  /// Durmuhurta and Bhadra. result has score (0-100), grade, is_acceptable,
+  /// prohibited_by, factors and warnings; prohibited_by lists the classical
+  /// prohibitions that apply (English factor ids), and whenever it is not empty
+  /// grade is `inauspicious` and is_acceptable is false. The prohibition for
+  /// this purpose is Bhadra. result.notes holds informational sentences (age by
+  /// tradition, festival days) that never change the score. With birthDate
+  /// (YYYY-MM-DD) and sex (`male` or `female`) a note gives the child's running
+  /// month and the months tradition names. Each `factors\[\]` item has a stable
+  /// English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
+  ///
+  /// `GET /v1/muhurta/annaprashan`
+  Future<T> annaprashan<T>({
+    required num lat,
+    required num lon,
+    required String tz,
+    String? date,
+    String? time,
+    Ayanamsa? ayanamsa,
+    String? birthDate,
+    String? sex,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('lat', lat)
+      ..put('lon', lon)
+      ..put('tz', tz)
+      ..put('date', date ?? todayIn(tz))
+      ..put('time', time)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('birth_date', birthDate)
+      ..put('sex', sex)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/muhurta/annaprashan', $q, options);
+  }
+
   /// Best-scoring muhurta windows in a date range. `purpose` is `general`
-  /// (default), `vivah`, `graha_pravesh` or `naamkaran`; `topN` (1-20, default
-  /// 5) sets how many windows come back; `birthDate` (YYYY-MM-DD) weights the
-  /// windows by the person's tara bala and chandra bala. Each `factors\[\]`
-  /// item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and
-  /// `value` follow `lang`.
+  /// (default), `vivah`, `graha_pravesh`, `naamkaran`, `vyapar`, `yatra`,
+  /// `vahan` or `bhoomi_pujan`; each purpose uses the scorer of its own muhurta
+  /// method, and moments under one of its classical prohibitions are never
+  /// returned, so fewer windows (or none) can come back. `direction` (N, NE, E,
+  /// SE, S, SW, W, NW) is the direction of travel, used only with purpose
+  /// `yatra`. `topN` (1-20, default 5) sets how many windows come back;
+  /// `birthDate` (YYYY-MM-DD) weights the windows by the person's tara bala and
+  /// chandra bala. Each `factors\[\]` item has a stable English `id` (e.g.
+  /// `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
   ///
   /// `GET /v1/muhurta/best-time`
   Future<T> bestTime<T>({
@@ -31,6 +74,7 @@ class MuhurtaApi {
     int? topN,
     String? birthDate,
     Ayanamsa? ayanamsa,
+    String? direction,
     Lang? lang,
     RequestOptions? options,
   }) {
@@ -44,9 +88,45 @@ class MuhurtaApi {
       ..put('top_n', topN)
       ..put('birth_date', birthDate)
       ..put('ayanamsa', ayanamsa?.wire)
+      ..put('direction', direction)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/muhurta/best-time', $q, options);
+  }
+
+  /// Score a proposed moment for Bhoomi Pujan (ground-breaking, laying a
+  /// foundation) (20 credits): tithi, weekday, nakshatra, solar month, Rahu
+  /// Kaal, Yamaganda, Durmuhurta, Bhadra, paksha, Jupiter and Venus set, adhika
+  /// masa. result has score (0-100), grade, is_acceptable, prohibited_by,
+  /// factors and warnings; prohibited_by lists the classical prohibitions that
+  /// apply (English factor ids), and whenever it is not empty grade is
+  /// `inauspicious` and is_acceptable is false. The prohibitions for this
+  /// purpose are Bhadra, GuruShukraAsta and AdhikaMasa. result.direction
+  /// (informational, never scored) gives rahu_mukha and start_digging for the
+  /// solar month. Each `factors\[\]` item has a stable English `id` (e.g.
+  /// `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
+  ///
+  /// `GET /v1/muhurta/bhoomi-pujan`
+  Future<T> bhoomiPujan<T>({
+    required num lat,
+    required num lon,
+    required String tz,
+    String? date,
+    String? time,
+    Ayanamsa? ayanamsa,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('lat', lat)
+      ..put('lon', lon)
+      ..put('tz', tz)
+      ..put('date', date ?? todayIn(tz))
+      ..put('time', time)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/muhurta/bhoomi-pujan', $q, options);
   }
 
   /// Compute Chandra Bala — the Moon's strength relative to a person's natal
@@ -74,8 +154,10 @@ class MuhurtaApi {
 
   /// Find auspicious Griha Pravesh (housewarming) muhurta windows in a date
   /// range — checks tithi, nakshatra, vara, Sun position, and lagna for the
-  /// ceremony. Each `factors\[\]` item has a stable English `id` (e.g. `Tithi`,
-  /// `RahuKaal`); `name` and `value` follow `lang`.
+  /// ceremony. result.prohibited_by lists the classical prohibitions that apply
+  /// (English factor ids); whenever it is not empty grade is `inauspicious` and
+  /// is_acceptable is false. Each `factors\[\]` item has a stable English `id`
+  /// (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
   ///
   /// `GET /v1/muhurta/graha-pravesh`
   Future<T> grahaPravesh<T>({
@@ -100,9 +182,49 @@ class MuhurtaApi {
     return _c.request<T>('/v1/muhurta/graha-pravesh', $q, options);
   }
 
-  /// Naamkaran (naming ceremony) muhurta windows. Each `factors\[\]` item has a
-  /// stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow
-  /// `lang`.
+  /// Score a proposed moment for Karnavedha (ear piercing) (20 credits): tithi,
+  /// weekday, nakshatra, the Sun's sign, Hari Shayana, Jupiter and Venus set,
+  /// Rahu Kaal, Yamaganda, Durmuhurta, Bhadra and adhika masa. result has score
+  /// (0-100), grade, is_acceptable, prohibited_by, factors and warnings;
+  /// prohibited_by lists the classical prohibitions that apply (English factor
+  /// ids), and whenever it is not empty grade is `inauspicious` and
+  /// is_acceptable is false. The prohibitions for this purpose are
+  /// GuruShukraAsta, AdhikaMasa, HariShayana and Bhadra. result.notes holds
+  /// informational sentences (age by tradition, festival days) that never
+  /// change the score. With birthDate (YYYY-MM-DD) a note gives the child's
+  /// running day, month and year. Each `factors\[\]` item has a stable English
+  /// `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
+  ///
+  /// `GET /v1/muhurta/karnavedha`
+  Future<T> karnavedha<T>({
+    required num lat,
+    required num lon,
+    required String tz,
+    String? date,
+    String? time,
+    Ayanamsa? ayanamsa,
+    String? birthDate,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('lat', lat)
+      ..put('lon', lon)
+      ..put('tz', tz)
+      ..put('date', date ?? todayIn(tz))
+      ..put('time', time)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('birth_date', birthDate)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/muhurta/karnavedha', $q, options);
+  }
+
+  /// Naamkaran (naming ceremony) muhurta windows. result.prohibited_by lists
+  /// the classical prohibitions that apply (English factor ids); whenever it is
+  /// not empty grade is `inauspicious` and is_acceptable is false. Each
+  /// `factors\[\]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`);
+  /// `name` and `value` follow `lang`.
   ///
   /// `GET /v1/muhurta/naamkaran`
   Future<T> naamkaran<T>({
@@ -233,9 +355,115 @@ class MuhurtaApi {
     return _c.request<T>('/v1/muhurta/tara-bala', $q, options);
   }
 
-  /// Auspicious wedding (vivah) muhurta windows in a date range. Each
-  /// `factors\[\]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`);
-  /// `name` and `value` follow `lang`.
+  /// Score a proposed moment for the Upanayan (sacred thread) ceremony (20
+  /// credits): tithi, weekday, nakshatra, the Sun's course, part of the day,
+  /// Jupiter and Venus set, Rahu Kaal, Yamaganda, Durmuhurta, Bhadra and adhika
+  /// masa. result has score (0-100), grade, is_acceptable, prohibited_by,
+  /// factors and warnings; prohibited_by lists the classical prohibitions that
+  /// apply (English factor ids), and whenever it is not empty grade is
+  /// `inauspicious` and is_acceptable is false. The prohibitions for this
+  /// purpose are GuruShukraAsta, AdhikaMasa, Ayana (Dakshinayana) and Bhadra.
+  /// result.notes holds informational sentences (age by tradition, festival
+  /// days) that never change the score. Each `factors\[\]` item has a stable
+  /// English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
+  ///
+  /// `GET /v1/muhurta/upanayan`
+  Future<T> upanayan<T>({
+    required num lat,
+    required num lon,
+    required String tz,
+    String? date,
+    String? time,
+    Ayanamsa? ayanamsa,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('lat', lat)
+      ..put('lon', lon)
+      ..put('tz', tz)
+      ..put('date', date ?? todayIn(tz))
+      ..put('time', time)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/muhurta/upanayan', $q, options);
+  }
+
+  /// Score a proposed moment for buying a vehicle or its first use (20
+  /// credits): tithi, weekday, nakshatra, Rahu Kaal, Yamaganda, Durmuhurta and
+  /// Bhadra. result has score (0-100), grade, is_acceptable, prohibited_by,
+  /// factors and warnings; prohibited_by lists the classical prohibitions that
+  /// apply (English factor ids), and whenever it is not empty grade is
+  /// `inauspicious` and is_acceptable is false. The prohibition for this
+  /// purpose is Bhadra. Each `factors\[\]` item has a stable English `id` (e.g.
+  /// `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
+  ///
+  /// `GET /v1/muhurta/vahan`
+  Future<T> vahan<T>({
+    required num lat,
+    required num lon,
+    required String tz,
+    String? date,
+    String? time,
+    Ayanamsa? ayanamsa,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('lat', lat)
+      ..put('lon', lon)
+      ..put('tz', tz)
+      ..put('date', date ?? todayIn(tz))
+      ..put('time', time)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/muhurta/vahan', $q, options);
+  }
+
+  /// Score a proposed moment for Vidyarambh (a child's first letters) (20
+  /// credits): tithi, weekday, nakshatra, the Sun's course, Rahu Kaal,
+  /// Yamaganda, Durmuhurta, Bhadra and adhika masa. result has score (0-100),
+  /// grade, is_acceptable, prohibited_by, factors and warnings; prohibited_by
+  /// lists the classical prohibitions that apply (English factor ids), and
+  /// whenever it is not empty grade is `inauspicious` and is_acceptable is
+  /// false. The prohibitions for this purpose are AdhikaMasa and Bhadra.
+  /// result.notes holds informational sentences (age by tradition, festival
+  /// days) that never change the score. With birthDate (YYYY-MM-DD) a note
+  /// gives the child's running year. Each `factors\[\]` item has a stable
+  /// English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
+  ///
+  /// `GET /v1/muhurta/vidyarambh`
+  Future<T> vidyarambh<T>({
+    required num lat,
+    required num lon,
+    required String tz,
+    String? date,
+    String? time,
+    Ayanamsa? ayanamsa,
+    String? birthDate,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('lat', lat)
+      ..put('lon', lon)
+      ..put('tz', tz)
+      ..put('date', date ?? todayIn(tz))
+      ..put('time', time)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('birth_date', birthDate)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/muhurta/vidyarambh', $q, options);
+  }
+
+  /// Auspicious wedding (vivah) muhurta windows in a date range.
+  /// result.prohibited_by lists the classical prohibitions that apply (English
+  /// factor ids); whenever it is not empty grade is `inauspicious` and
+  /// is_acceptable is false. Each `factors\[\]` item has a stable English `id`
+  /// (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
   ///
   /// `GET /v1/muhurta/vivah`
   Future<T> vivah<T>({
@@ -262,8 +490,10 @@ class MuhurtaApi {
 
   /// Find auspicious Vyapar (business/trade) muhurta windows — suitable for
   /// starting a business, signing contracts, launching a product, or opening a
-  /// shop. Each `factors\[\]` item has a stable English `id` (e.g. `Tithi`,
-  /// `RahuKaal`); `name` and `value` follow `lang`.
+  /// shop. result.prohibited_by lists the classical prohibitions that apply
+  /// (English factor ids); whenever it is not empty grade is `inauspicious` and
+  /// is_acceptable is false. Each `factors\[\]` item has a stable English `id`
+  /// (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.
   ///
   /// `GET /v1/muhurta/vyapar`
   Future<T> vyapar<T>({
@@ -290,9 +520,14 @@ class MuhurtaApi {
 
   /// Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha
   /// Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours
-  /// Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. Each `factors\[\]`
-  /// item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and
-  /// `value` follow `lang`.
+  /// Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. `direction` (N, NE,
+  /// E, SE, S, SW, W, NW; full names such as north are also accepted) is the
+  /// direction of travel: when it is sent the weekday's Disha Shool is checked;
+  /// without it there is no direction check. result.prohibited_by lists the
+  /// classical prohibitions that apply (English factor ids); whenever it is not
+  /// empty grade is `inauspicious` and is_acceptable is false. Each
+  /// `factors\[\]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`);
+  /// `name` and `value` follow `lang`.
   ///
   /// `GET /v1/muhurta/yatra`
   Future<T> yatra<T>({
@@ -302,6 +537,7 @@ class MuhurtaApi {
     String? date,
     String? time,
     Ayanamsa? ayanamsa,
+    String? direction,
     Lang? lang,
     RequestOptions? options,
   }) {
@@ -312,6 +548,7 @@ class MuhurtaApi {
       ..put('date', date ?? todayIn(tz))
       ..put('time', time)
       ..put('ayanamsa', ayanamsa?.wire)
+      ..put('direction', direction)
       ..put('lang', lang?.code)
       ..put('locale', lang?.code);
     return _c.request<T>('/v1/muhurta/yatra', $q, options);

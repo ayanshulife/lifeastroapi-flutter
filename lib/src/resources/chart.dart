@@ -14,6 +14,78 @@ class ChartApi {
 
   final ClientCore _c;
 
+  /// Argala and virodha argala on every house, or on one `house` (1-12) (10
+  /// credits): argala from the 2nd, 4th, 11th and 5th, obstructed from the
+  /// 12th, 10th, 3rd and 9th, each pair with its grahas and a status (none,
+  /// unobstructed, prevails, obstructed, tied), plus vipareeta argala.
+  /// includeEighth adds the 8th-place argala (default false); nodeReversal:
+  /// `ketu` (default), `rahu_ketu` or `none`; vipareetaMinMalefics: malefics in
+  /// the 3rd needed for vipareeta argala (default 3). Display names follow
+  /// `lang`; \*_idx, \*_id and status values stay the same in every language.
+  ///
+  /// `GET /v1/chart/argala`
+  Future<T> argala<T>({
+    required BirthInput birth,
+    Ayanamsa? ayanamsa,
+    HouseSystem? houseSystem,
+    int? house,
+    bool? includeEighth,
+    String? nodeReversal,
+    int? vipareetaMinMalefics,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('date', birth.date)
+      ..put('time', birth.time)
+      ..put('tz', birth.tz)
+      ..put('lat', birth.lat)
+      ..put('lon', birth.lon)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('house_system', houseSystem?.wire)
+      ..put('house', house)
+      ..put('include_eighth', includeEighth)
+      ..put('node_reversal', nodeReversal)
+      ..put('vipareeta_min_malefics', vipareetaMinMalefics)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/chart/argala', $q, options);
+  }
+
+  /// Arudha padas A1 to A12 with the working (10 credits): bhava sign, lord and
+  /// its sign, count, exception_applied and the arudha sign and house (A1 is
+  /// also AL, A12 also UL). exception: `parashari` (default) or `none`;
+  /// scorpioLord: `mars` (default) or `ketu`; aquariusLord: `saturn` (default)
+  /// or `rahu`. Display names follow `lang`; \*_idx, \*_id and status values
+  /// stay the same in every language.
+  ///
+  /// `GET /v1/chart/arudha-padas`
+  Future<T> arudhaPadas<T>({
+    required BirthInput birth,
+    Ayanamsa? ayanamsa,
+    HouseSystem? houseSystem,
+    String? exception,
+    String? scorpioLord,
+    String? aquariusLord,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('date', birth.date)
+      ..put('time', birth.time)
+      ..put('tz', birth.tz)
+      ..put('lat', birth.lat)
+      ..put('lon', birth.lon)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('house_system', houseSystem?.wire)
+      ..put('exception', exception)
+      ..put('scorpio_lord', scorpioLord)
+      ..put('aquarius_lord', aquariusLord)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/chart/arudha-padas', $q, options);
+  }
+
   /// Ascendant (Lagna): sign, degree, nakshatra, pada and lord.
   ///
   /// `GET /v1/chart/ascendant`
@@ -654,6 +726,39 @@ class ChartApi {
         buildPath('/v1/chart/shadbala/{component}', {'component': component}),
         $q,
         options);
+  }
+
+  /// Upapada Lagna (UL, the arudha of the 12th house) (10 credits): the A12
+  /// working, the UL sign and house, its lord with sign, house and place from
+  /// the UL, occupants, graha drishti and rashi drishti on it. Facts only, no
+  /// judgement. Same options as chart.arudhaPadas. Display names follow `lang`;
+  /// \*_idx, \*_id and status values stay the same in every language.
+  ///
+  /// `GET /v1/chart/upapada`
+  Future<T> upapada<T>({
+    required BirthInput birth,
+    Ayanamsa? ayanamsa,
+    HouseSystem? houseSystem,
+    String? exception,
+    String? scorpioLord,
+    String? aquariusLord,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('date', birth.date)
+      ..put('time', birth.time)
+      ..put('tz', birth.tz)
+      ..put('lat', birth.lat)
+      ..put('lon', birth.lon)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('house_system', houseSystem?.wire)
+      ..put('exception', exception)
+      ..put('scorpio_lord', scorpioLord)
+      ..put('aquarius_lord', aquariusLord)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/chart/upapada', $q, options);
   }
 
   /// Yogas present in a birth chart as data (20 credits), from the same

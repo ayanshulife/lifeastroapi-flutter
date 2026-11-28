@@ -512,6 +512,191 @@
   ]
  },
  {
+  "key": "chart.argala",
+  "ns": "chart",
+  "method": "argala",
+  "path": "/v1/chart/argala",
+  "shape": "birth",
+  "desc": "Argala and virodha argala on every house, or on one `house` (1-12) (10 credits): argala from the 2nd, 4th, 11th and 5th, obstructed from the 12th, 10th, 3rd and 9th, each pair with its grahas and a status (none, unobstructed, prevails, obstructed, tied), plus vipareeta argala. includeEighth adds the 8th-place argala (default false); nodeReversal: `ketu` (default), `rahu_ketu` or `none`; vipareetaMinMalefics: malefics in the 3rd needed for vipareeta argala (default 3). Display names follow `lang`; *_idx, *_id and status values stay the same in every language.",
+  "params": [
+   {
+    "name": "birth",
+    "type": "BirthInput",
+    "required": true,
+    "source": "base",
+    "fields": {
+     "date": [
+      "date"
+     ],
+     "time": [
+      "time"
+     ],
+     "tz": [
+      "tz"
+     ],
+     "lat": [
+      "lat"
+     ],
+     "lon": [
+      "lon"
+     ]
+    }
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "house_system"
+    ]
+   },
+   {
+    "name": "house",
+    "type": "int",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "house"
+    ]
+   },
+   {
+    "name": "includeEighth",
+    "type": "bool",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "include_eighth"
+    ]
+   },
+   {
+    "name": "nodeReversal",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "node_reversal"
+    ]
+   },
+   {
+    "name": "vipareetaMinMalefics",
+    "type": "int",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "vipareeta_min_malefics"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "chart.arudhaPadas",
+  "ns": "chart",
+  "method": "arudhaPadas",
+  "path": "/v1/chart/arudha-padas",
+  "shape": "birth",
+  "desc": "Arudha padas A1 to A12 with the working (10 credits): bhava sign, lord and its sign, count, exception_applied and the arudha sign and house (A1 is also AL, A12 also UL). exception: `parashari` (default) or `none`; scorpioLord: `mars` (default) or `ketu`; aquariusLord: `saturn` (default) or `rahu`. Display names follow `lang`; *_idx, *_id and status values stay the same in every language.",
+  "params": [
+   {
+    "name": "birth",
+    "type": "BirthInput",
+    "required": true,
+    "source": "base",
+    "fields": {
+     "date": [
+      "date"
+     ],
+     "time": [
+      "time"
+     ],
+     "tz": [
+      "tz"
+     ],
+     "lat": [
+      "lat"
+     ],
+     "lon": [
+      "lon"
+     ]
+    }
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "house_system"
+    ]
+   },
+   {
+    "name": "exception",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "exception"
+    ]
+   },
+   {
+    "name": "scorpioLord",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "scorpio_lord"
+    ]
+   },
+   {
+    "name": "aquariusLord",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "aquarius_lord"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
   "key": "chart.ascendant",
   "ns": "chart",
   "method": "ascendant",
@@ -2125,6 +2310,94 @@
   ]
  },
  {
+  "key": "chart.upapada",
+  "ns": "chart",
+  "method": "upapada",
+  "path": "/v1/chart/upapada",
+  "shape": "birth",
+  "desc": "Upapada Lagna (UL, the arudha of the 12th house) (10 credits): the A12 working, the UL sign and house, its lord with sign, house and place from the UL, occupants, graha drishti and rashi drishti on it. Facts only, no judgement. Same options as chart.arudhaPadas. Display names follow `lang`; *_idx, *_id and status values stay the same in every language.",
+  "params": [
+   {
+    "name": "birth",
+    "type": "BirthInput",
+    "required": true,
+    "source": "base",
+    "fields": {
+     "date": [
+      "date"
+     ],
+     "time": [
+      "time"
+     ],
+     "tz": [
+      "tz"
+     ],
+     "lat": [
+      "lat"
+     ],
+     "lon": [
+      "lon"
+     ]
+    }
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "house_system"
+    ]
+   },
+   {
+    "name": "exception",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "exception"
+    ]
+   },
+   {
+    "name": "scorpioLord",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "scorpio_lord"
+    ]
+   },
+   {
+    "name": "aquariusLord",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "aquarius_lord"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
   "key": "chart.yogas",
   "ns": "chart",
   "method": "yogas",
@@ -2189,6 +2462,182 @@
     "source": "extra",
     "wires": [
      "gender"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "dasha.ashtottari",
+  "ns": "dasha",
+  "method": "ashtottari",
+  "path": "/v1/dasha/ashtottari",
+  "shape": "birth",
+  "desc": "Full Ashtottari dasha tree (10 credits): the 108-year cycle of 8 lords from the Moon's nakshatra at birth, with balance at birth and applicability (the Rahu and paksha conditions, information only). depth: 1 mahadashas (default), 2 with antardashas, 3 with pratyantardashas. scheme: 28 (default, with Abhijit) or 27. antarStart: `maha_lord` (default) or `next_lord`.",
+  "params": [
+   {
+    "name": "birth",
+    "type": "BirthInput",
+    "required": true,
+    "source": "base",
+    "fields": {
+     "date": [
+      "date"
+     ],
+     "time": [
+      "time"
+     ],
+     "tz": [
+      "tz"
+     ],
+     "lat": [
+      "lat"
+     ],
+     "lon": [
+      "lon"
+     ]
+    }
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "house_system"
+    ]
+   },
+   {
+    "name": "depth",
+    "type": "int",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "depth"
+    ]
+   },
+   {
+    "name": "scheme",
+    "type": "int",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "scheme"
+    ]
+   },
+   {
+    "name": "antarStart",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "antar_start"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "dasha.ashtottariCurrent",
+  "ns": "dasha",
+  "method": "ashtottariCurrent",
+  "path": "/v1/dasha/ashtottari/current",
+  "shape": "birth",
+  "desc": "Ashtottari mahadasha and antardasha running at `at` (UTC, RFC 3339 or YYYY-MM-DD; now when left out) (10 credits). Same scheme and antarStart options as dasha.ashtottari; a moment outside the chart's 108 years is a 400 invalid_param.",
+  "params": [
+   {
+    "name": "birth",
+    "type": "BirthInput",
+    "required": true,
+    "source": "base",
+    "fields": {
+     "date": [
+      "date"
+     ],
+     "time": [
+      "time"
+     ],
+     "tz": [
+      "tz"
+     ],
+     "lat": [
+      "lat"
+     ],
+     "lon": [
+      "lon"
+     ]
+    }
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "houseSystem",
+    "type": "HouseSystem",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "house_system"
+    ]
+   },
+   {
+    "name": "at",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "at"
+    ]
+   },
+   {
+    "name": "scheme",
+    "type": "int",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "scheme"
+    ]
+   },
+   {
+    "name": "antarStart",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "antar_start"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
     ]
    }
   ]
@@ -5359,12 +5808,104 @@
   ]
  },
  {
+  "key": "muhurta.annaprashan",
+  "ns": "muhurta",
+  "method": "annaprashan",
+  "path": "/v1/muhurta/annaprashan",
+  "shape": "moment",
+  "desc": "Score a proposed moment for Annaprashan (a child's first solid food) (20 credits): tithi, weekday, nakshatra, paksha, Rahu Kaal, Yamaganda, Durmuhurta and Bhadra. result has score (0-100), grade, is_acceptable, prohibited_by, factors and warnings; prohibited_by lists the classical prohibitions that apply (English factor ids), and whenever it is not empty grade is `inauspicious` and is_acceptable is false. The prohibition for this purpose is Bhadra. result.notes holds informational sentences (age by tradition, festival days) that never change the score. With birthDate (YYYY-MM-DD) and sex (`male` or `female`) a note gives the child's running month and the months tradition names. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "params": [
+   {
+    "name": "lat",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lat"
+    ]
+   },
+   {
+    "name": "lon",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lon"
+    ]
+   },
+   {
+    "name": "tz",
+    "type": "String",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "tz"
+    ]
+   },
+   {
+    "name": "date",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "date"
+    ]
+   },
+   {
+    "name": "time",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "time"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "birthDate",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "birth_date"
+    ]
+   },
+   {
+    "name": "sex",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "sex"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
   "key": "muhurta.bestTime",
   "ns": "muhurta",
   "method": "bestTime",
   "path": "/v1/muhurta/best-time",
   "shape": "muhurta",
-  "desc": "Best-scoring muhurta windows in a date range. `purpose` is `general` (default), `vivah`, `graha_pravesh` or `naamkaran`; `topN` (1-20, default 5) sets how many windows come back; `birthDate` (YYYY-MM-DD) weights the windows by the person's tara bala and chandra bala. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "desc": "Best-scoring muhurta windows in a date range. `purpose` is `general` (default), `vivah`, `graha_pravesh`, `naamkaran`, `vyapar`, `yatra`, `vahan` or `bhoomi_pujan`; each purpose uses the scorer of its own muhurta method, and moments under one of its classical prohibitions are never returned, so fewer windows (or none) can come back. `direction` (N, NE, E, SE, S, SW, W, NW) is the direction of travel, used only with purpose `yatra`. `topN` (1-20, default 5) sets how many windows come back; `birthDate` (YYYY-MM-DD) weights the windows by the person's tara bala and chandra bala. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "params": [
    {
     "name": "lat",
@@ -5448,6 +5989,89 @@
     ]
    },
    {
+    "name": "direction",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "direction"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "muhurta.bhoomiPujan",
+  "ns": "muhurta",
+  "method": "bhoomiPujan",
+  "path": "/v1/muhurta/bhoomi-pujan",
+  "shape": "moment",
+  "desc": "Score a proposed moment for Bhoomi Pujan (ground-breaking, laying a foundation) (20 credits): tithi, weekday, nakshatra, solar month, Rahu Kaal, Yamaganda, Durmuhurta, Bhadra, paksha, Jupiter and Venus set, adhika masa. result has score (0-100), grade, is_acceptable, prohibited_by, factors and warnings; prohibited_by lists the classical prohibitions that apply (English factor ids), and whenever it is not empty grade is `inauspicious` and is_acceptable is false. The prohibitions for this purpose are Bhadra, GuruShukraAsta and AdhikaMasa. result.direction (informational, never scored) gives rahu_mukha and start_digging for the solar month. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "params": [
+   {
+    "name": "lat",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lat"
+    ]
+   },
+   {
+    "name": "lon",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lon"
+    ]
+   },
+   {
+    "name": "tz",
+    "type": "String",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "tz"
+    ]
+   },
+   {
+    "name": "date",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "date"
+    ]
+   },
+   {
+    "name": "time",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "time"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
     "name": "lang",
     "type": "Lang",
     "required": false,
@@ -5525,7 +6149,7 @@
   "method": "grahaPravesh",
   "path": "/v1/muhurta/graha-pravesh",
   "shape": "moment",
-  "desc": "Find auspicious Griha Pravesh (housewarming) muhurta windows in a date range — checks tithi, nakshatra, vara, Sun position, and lagna for the ceremony. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "desc": "Find auspicious Griha Pravesh (housewarming) muhurta windows in a date range — checks tithi, nakshatra, vara, Sun position, and lagna for the ceremony. result.prohibited_by lists the classical prohibitions that apply (English factor ids); whenever it is not empty grade is `inauspicious` and is_acceptable is false. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "params": [
    {
     "name": "lat",
@@ -5594,12 +6218,95 @@
   ]
  },
  {
+  "key": "muhurta.karnavedha",
+  "ns": "muhurta",
+  "method": "karnavedha",
+  "path": "/v1/muhurta/karnavedha",
+  "shape": "moment",
+  "desc": "Score a proposed moment for Karnavedha (ear piercing) (20 credits): tithi, weekday, nakshatra, the Sun's sign, Hari Shayana, Jupiter and Venus set, Rahu Kaal, Yamaganda, Durmuhurta, Bhadra and adhika masa. result has score (0-100), grade, is_acceptable, prohibited_by, factors and warnings; prohibited_by lists the classical prohibitions that apply (English factor ids), and whenever it is not empty grade is `inauspicious` and is_acceptable is false. The prohibitions for this purpose are GuruShukraAsta, AdhikaMasa, HariShayana and Bhadra. result.notes holds informational sentences (age by tradition, festival days) that never change the score. With birthDate (YYYY-MM-DD) a note gives the child's running day, month and year. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "params": [
+   {
+    "name": "lat",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lat"
+    ]
+   },
+   {
+    "name": "lon",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lon"
+    ]
+   },
+   {
+    "name": "tz",
+    "type": "String",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "tz"
+    ]
+   },
+   {
+    "name": "date",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "date"
+    ]
+   },
+   {
+    "name": "time",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "time"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "birthDate",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "birth_date"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
   "key": "muhurta.naamkaran",
   "ns": "muhurta",
   "method": "naamkaran",
   "path": "/v1/muhurta/naamkaran",
   "shape": "moment",
-  "desc": "Naamkaran (naming ceremony) muhurta windows. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "desc": "Naamkaran (naming ceremony) muhurta windows. result.prohibited_by lists the classical prohibitions that apply (English factor ids); whenever it is not empty grade is `inauspicious` and is_acceptable is false. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "params": [
    {
     "name": "lat",
@@ -5959,12 +6666,243 @@
   ]
  },
  {
+  "key": "muhurta.upanayan",
+  "ns": "muhurta",
+  "method": "upanayan",
+  "path": "/v1/muhurta/upanayan",
+  "shape": "moment",
+  "desc": "Score a proposed moment for the Upanayan (sacred thread) ceremony (20 credits): tithi, weekday, nakshatra, the Sun's course, part of the day, Jupiter and Venus set, Rahu Kaal, Yamaganda, Durmuhurta, Bhadra and adhika masa. result has score (0-100), grade, is_acceptable, prohibited_by, factors and warnings; prohibited_by lists the classical prohibitions that apply (English factor ids), and whenever it is not empty grade is `inauspicious` and is_acceptable is false. The prohibitions for this purpose are GuruShukraAsta, AdhikaMasa, Ayana (Dakshinayana) and Bhadra. result.notes holds informational sentences (age by tradition, festival days) that never change the score. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "params": [
+   {
+    "name": "lat",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lat"
+    ]
+   },
+   {
+    "name": "lon",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lon"
+    ]
+   },
+   {
+    "name": "tz",
+    "type": "String",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "tz"
+    ]
+   },
+   {
+    "name": "date",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "date"
+    ]
+   },
+   {
+    "name": "time",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "time"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "muhurta.vahan",
+  "ns": "muhurta",
+  "method": "vahan",
+  "path": "/v1/muhurta/vahan",
+  "shape": "moment",
+  "desc": "Score a proposed moment for buying a vehicle or its first use (20 credits): tithi, weekday, nakshatra, Rahu Kaal, Yamaganda, Durmuhurta and Bhadra. result has score (0-100), grade, is_acceptable, prohibited_by, factors and warnings; prohibited_by lists the classical prohibitions that apply (English factor ids), and whenever it is not empty grade is `inauspicious` and is_acceptable is false. The prohibition for this purpose is Bhadra. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "params": [
+   {
+    "name": "lat",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lat"
+    ]
+   },
+   {
+    "name": "lon",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lon"
+    ]
+   },
+   {
+    "name": "tz",
+    "type": "String",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "tz"
+    ]
+   },
+   {
+    "name": "date",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "date"
+    ]
+   },
+   {
+    "name": "time",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "time"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "muhurta.vidyarambh",
+  "ns": "muhurta",
+  "method": "vidyarambh",
+  "path": "/v1/muhurta/vidyarambh",
+  "shape": "moment",
+  "desc": "Score a proposed moment for Vidyarambh (a child's first letters) (20 credits): tithi, weekday, nakshatra, the Sun's course, Rahu Kaal, Yamaganda, Durmuhurta, Bhadra and adhika masa. result has score (0-100), grade, is_acceptable, prohibited_by, factors and warnings; prohibited_by lists the classical prohibitions that apply (English factor ids), and whenever it is not empty grade is `inauspicious` and is_acceptable is false. The prohibitions for this purpose are AdhikaMasa and Bhadra. result.notes holds informational sentences (age by tradition, festival days) that never change the score. With birthDate (YYYY-MM-DD) a note gives the child's running year. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "params": [
+   {
+    "name": "lat",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lat"
+    ]
+   },
+   {
+    "name": "lon",
+    "type": "num",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "lon"
+    ]
+   },
+   {
+    "name": "tz",
+    "type": "String",
+    "required": true,
+    "source": "base",
+    "wires": [
+     "tz"
+    ]
+   },
+   {
+    "name": "date",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "date"
+    ]
+   },
+   {
+    "name": "time",
+    "type": "String",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "time"
+    ]
+   },
+   {
+    "name": "ayanamsa",
+    "type": "Ayanamsa",
+    "required": false,
+    "source": "base",
+    "wires": [
+     "ayanamsa"
+    ]
+   },
+   {
+    "name": "birthDate",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "birth_date"
+    ]
+   },
+   {
+    "name": "lang",
+    "type": "Lang",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "lang",
+     "locale"
+    ]
+   }
+  ]
+ },
+ {
   "key": "muhurta.vivah",
   "ns": "muhurta",
   "method": "vivah",
   "path": "/v1/muhurta/vivah",
   "shape": "moment",
-  "desc": "Auspicious wedding (vivah) muhurta windows in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "desc": "Auspicious wedding (vivah) muhurta windows in a date range. result.prohibited_by lists the classical prohibitions that apply (English factor ids); whenever it is not empty grade is `inauspicious` and is_acceptable is false. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "params": [
    {
     "name": "lat",
@@ -6038,7 +6976,7 @@
   "method": "vyapar",
   "path": "/v1/muhurta/vyapar",
   "shape": "moment",
-  "desc": "Find auspicious Vyapar (business/trade) muhurta windows — suitable for starting a business, signing contracts, launching a product, or opening a shop. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "desc": "Find auspicious Vyapar (business/trade) muhurta windows — suitable for starting a business, signing contracts, launching a product, or opening a shop. result.prohibited_by lists the classical prohibitions that apply (English factor ids); whenever it is not empty grade is `inauspicious` and is_acceptable is false. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "params": [
    {
     "name": "lat",
@@ -6112,7 +7050,7 @@
   "method": "yatra",
   "path": "/v1/muhurta/yatra",
   "shape": "moment",
-  "desc": "Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
+  "desc": "Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. `direction` (N, NE, E, SE, S, SW, W, NW; full names such as north are also accepted) is the direction of travel: when it is sent the weekday's Disha Shool is checked; without it there is no direction check. result.prohibited_by lists the classical prohibitions that apply (English factor ids); whenever it is not empty grade is `inauspicious` and is_acceptable is false. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "params": [
    {
     "name": "lat",
@@ -6166,6 +7104,15 @@
     "source": "base",
     "wires": [
      "ayanamsa"
+    ]
+   },
+   {
+    "name": "direction",
+    "type": "String",
+    "required": false,
+    "source": "extra",
+    "wires": [
+     "direction"
     ]
    },
    {

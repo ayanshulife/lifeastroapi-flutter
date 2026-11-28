@@ -5,7 +5,7 @@ Official **Dart and Flutter SDK** for [LifeAstroAPI](https://lifeastroapi.com), 
 kundli, muhurat and Western charts, with location-aware calculations and pay-per-call billing.
 Free tier: 1,500 credits a month, no card. [Get a key](https://lifeastroapi.com/signup/).
 
-- **Every endpoint**: all 322 endpoints (323 methods, with a shortcut for the navamsa chart) in 23 groups: panchang, charts, dashas, matching, transits,
+- **Every endpoint**: all 333 endpoints (334 methods, with a shortcut for the navamsa chart) in 23 groups: panchang, charts, dashas, matching, transits,
   horoscopes, numerology, Lal Kitab, remedies, muhurta, narrative readings, JSON reports, tarot and
   a complete Western (tropical) module.
 - **Pure Dart**, one dependency (`http`): Flutter (Android, iOS, web, desktop) and Dart servers.
@@ -143,7 +143,7 @@ under the wire names each endpoint expects (`date`, `birth.date`, `boy.date`, `p
 | **Western pair** | `western.synastry.*`, `western.composite.*`, `western.davison.*` | `personA:`, `personB:` |
 | **Rashi** | `horoscope.*`, `reports.horoscope*` | `rashi`, `date?`, `lang?` |
 | **Date range** | `eclipses.*`, `western.ingresses` | `startDate`, `endDate` |
-| **Muhurta search** | `muhurta.bestTime` | `lat`, `lon`, `tz`, `startDate`, `endDate` |
+| **Muhurta search** | `muhurta.bestTime` | `lat`, `lon`, `tz`, `startDate`, `endDate`, `purpose?`, `topN?`, `birthDate?`, `direction?` |
 | **Natal + window** | `transit.sadeSatiWindows`, `transit.windows` (`birth` optional) | `birth: NatalWindowBirth`, `from?`, `tz?` |
 | **Natal + transit** | `transit.tarabala`, `transit.vedha`, `transit.smallPanoti`, `ashtakavarga.kaksha`, `ashtakavarga.transitScore`, `western.transits.toNatal`, `narrative.transitPhal`, `narrative.dashaPhal`, `narrative.transitDouble`, `narrative.sadeSati*` | `birth:`, `date`, `time`, `tz` |
 
@@ -213,7 +213,9 @@ The enum is called `Lang`, not `Locale`, so it does not clash with Flutter's `Lo
 - **English only:** `western.*`, `tarot.*`, `geo.*` and `meta.*`. The `western.narrative.*`
   methods take `lang` for `en`, `hi` and `mr`.
 - **Stable keys under a language.** Muhurta `factors[]` items carry an English `id` (`Tithi`,
-  `RahuKaal`, ...) next to the localized `name`, so match on `id`.
+  `RahuKaal`, ...) next to the localized `name`, so match on `id`. Muhurta `result.prohibited_by`
+  lists the classical prohibitions that apply as English ids (`Bhadra`, `GuruShukraAsta`,
+  `AdhikaMasa`, ...); when it is not empty, `grade` is `inauspicious` and `is_acceptable` is false.
 
 ## Groups
 
@@ -222,13 +224,13 @@ The enum is called `Lang`, not `Locale`, so it does not clash with Flutter's `Lo
 | Group | What it covers |
 |-------|----------------|
 | `panchang` | tithi, nakshatra, yoga, karana, vara, sunrise/sunset, rahu kaal, choghadiya, hora, muhurtas, monthly calendar, composite `basic` / `advanced` |
-| `chart` | planets, ascendant, houses, divisional (D1-D60), dignity, aspects, shadbala, ashtakvarga, avakhada, KP (sub lords, ruling planets, significators, 4-step chain); data bundles `kundliFacts`, `yogas`, `doshas`, `sensitivity` |
-| `dasha` | Vimshottari (5 levels), Yogini, Chara |
+| `chart` | planets, ascendant, houses, divisional (D1-D60), dignity, aspects, shadbala, ashtakvarga, avakhada, KP (sub lords, ruling planets, significators, 4-step chain); Jaimini `arudhaPadas`, `upapada`, `argala`; data bundles `kundliFacts`, `yogas`, `doshas`, `sensitivity` |
+| `dasha` | Vimshottari (5 levels), Yogini, Chara, Ashtottari (`ashtottari`, `ashtottariCurrent`) |
 | `milan` | Ashtakoota (total, full, per koota), mangal / nadi / shani dosha, navamsa and dasha compatibility, `overlay`, `summary` |
 | `transit` | positions, sade sati, small panoti, tarabala, vedha, double transit, dated `sadeSatiWindows` and `windows` |
 | `horoscope` | daily, weekly, monthly by rashi |
 | `numerology` | driver, conductor, soul, personality, destiny, full, advanced, challenges, personal periods |
-| `muhurta` | vivah, naamkaran, griha pravesh, vyapar, yatra, best time, chandra / tara bala |
+| `muhurta` | score a moment: vivah, naamkaran, griha pravesh, vyapar, yatra, vahan, bhoomi pujan, upanayan, annaprashan, vidyarambh, karnavedha; best time windows in a date range; chandra / tara bala |
 | `varshaphal` | annual chart, lord, muntha, mudda dasha, harsha bala, tajika yogas |
 | `prashna` | horary answer, chart, arudha, significators, KP horary (1-249) |
 | `eclipses` | solar, lunar, all (date range; local contact times and sutak with a place) |
@@ -615,7 +617,7 @@ on the machine that prints.
 
 ## Contributing
 
-The 323 methods are generated from the endpoint manifest that the Node SDK also uses, so both SDKs
+The 334 methods are generated from the endpoint manifest that the Node SDK also uses, so both SDKs
 stay in step. The generator imports the Node SDK's `scripts/manifest.mjs` (endpoint list, method
 names, `lang` rules) from a sibling checkout:
 

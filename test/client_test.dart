@@ -1353,6 +1353,228 @@ void main() {
     });
   });
 
+  group('Ashtottari, Jaimini and muhurta rites endpoints (1.1.0)', () {
+    Future<Uri> query(Future<Object?> Function(LifeAstro) call) async {
+      final m = mock((_) => reply({}));
+      await call(m.client);
+      return m.calls.single.url;
+    }
+
+    void expectBirth(Map<String, String> q) {
+      expect(q['date'], '1990-01-15');
+      expect(q['time'], '10:30');
+      expect(q['tz'], 'Asia/Kolkata');
+      expect(q['lat'], '19.076');
+      expect(q['lon'], '72.8777');
+      expect(q.containsKey('birth.date'), isFalse);
+    }
+
+    test('dasha.ashtottari sends depth, scheme and antar_start', () async {
+      final u = await query((c) => c.dasha.ashtottari(
+          birth: birth,
+          depth: 2,
+          scheme: 27,
+          antarStart: 'next_lord',
+          lang: Lang.hi));
+      expect(u.path, '/v1/dasha/ashtottari');
+      final q = u.queryParameters;
+      expectBirth(q);
+      expect(q['depth'], '2');
+      expect(q['scheme'], '27');
+      expect(q['antar_start'], 'next_lord');
+      expect(q['lang'], 'hi');
+      expect(q['locale'], 'hi');
+    });
+
+    test('dasha.ashtottariCurrent sends at, scheme and antar_start', () async {
+      final u = await query((c) => c.dasha.ashtottariCurrent(
+          birth: birth,
+          at: '2027-01-15T00:00:00Z',
+          scheme: 28,
+          antarStart: 'maha_lord'));
+      expect(u.path, '/v1/dasha/ashtottari/current');
+      final q = u.queryParameters;
+      expectBirth(q);
+      expect(q['at'], '2027-01-15T00:00:00Z');
+      expect(q['scheme'], '28');
+      expect(q['antar_start'], 'maha_lord');
+    });
+
+    test('chart.arudhaPadas / upapada send exception and the sign lords',
+        () async {
+      final cases = <(String, Future<Object?> Function(LifeAstro))>[
+        (
+          '/v1/chart/arudha-padas',
+          (c) => c.chart.arudhaPadas(
+              birth: birth,
+              exception: 'none',
+              scorpioLord: 'ketu',
+              aquariusLord: 'rahu')
+        ),
+        (
+          '/v1/chart/upapada',
+          (c) => c.chart.upapada(
+              birth: birth,
+              exception: 'none',
+              scorpioLord: 'ketu',
+              aquariusLord: 'rahu')
+        ),
+      ];
+      for (final (path, call) in cases) {
+        final u = await query(call);
+        expect(u.path, path);
+        final q = u.queryParameters;
+        expectBirth(q);
+        expect(q['exception'], 'none');
+        expect(q['scorpio_lord'], 'ketu');
+        expect(q['aquarius_lord'], 'rahu');
+      }
+    });
+
+    test('chart.argala sends house and the rule options', () async {
+      var u = await query((c) => c.chart.argala(
+          birth: birth,
+          house: 7,
+          includeEighth: true,
+          nodeReversal: 'rahu_ketu',
+          vipareetaMinMalefics: 2));
+      expect(u.path, '/v1/chart/argala');
+      var q = u.queryParameters;
+      expectBirth(q);
+      expect(q['house'], '7');
+      expect(q['include_eighth'], 'true');
+      expect(q['node_reversal'], 'rahu_ketu');
+      expect(q['vipareeta_min_malefics'], '2');
+      u = await query((c) => c.chart.argala(birth: birth));
+      q = u.queryParameters;
+      expect(q.containsKey('house'), isFalse);
+      expect(q.containsKey('include_eighth'), isFalse);
+    });
+
+    test('muhurta.vahan / bhoomiPujan / upanayan score one moment', () async {
+      final cases = <(String, Future<Object?> Function(LifeAstro))>[
+        (
+          '/v1/muhurta/vahan',
+          (c) => c.muhurta.vahan(
+              lat: 19.076,
+              lon: 72.8777,
+              tz: 'Asia/Kolkata',
+              date: '2027-01-18',
+              time: '10:30')
+        ),
+        (
+          '/v1/muhurta/bhoomi-pujan',
+          (c) => c.muhurta.bhoomiPujan(
+              lat: 19.076,
+              lon: 72.8777,
+              tz: 'Asia/Kolkata',
+              date: '2027-01-18',
+              time: '10:30')
+        ),
+        (
+          '/v1/muhurta/upanayan',
+          (c) => c.muhurta.upanayan(
+              lat: 19.076,
+              lon: 72.8777,
+              tz: 'Asia/Kolkata',
+              date: '2027-01-18',
+              time: '10:30',
+              lang: Lang.mr)
+        ),
+      ];
+      for (final (path, call) in cases) {
+        final u = await query(call);
+        expect(u.path, path);
+        final q = u.queryParameters;
+        expect(q['date'], '2027-01-18');
+        expect(q['time'], '10:30');
+        expect(q['lat'], '19.076');
+        expect(q['tz'], 'Asia/Kolkata');
+        expect(q.containsKey('start_date'), isFalse);
+      }
+    });
+
+    test('muhurta.annaprashan / vidyarambh / karnavedha send birth_date',
+        () async {
+      var u = await query((c) => c.muhurta.annaprashan(
+          lat: 19.076,
+          lon: 72.8777,
+          tz: 'Asia/Kolkata',
+          date: '2027-01-18',
+          time: '10:30',
+          birthDate: '2026-07-01',
+          sex: 'female'));
+      expect(u.path, '/v1/muhurta/annaprashan');
+      expect(u.queryParameters['birth_date'], '2026-07-01');
+      expect(u.queryParameters['sex'], 'female');
+      u = await query((c) => c.muhurta.vidyarambh(
+          lat: 19.076,
+          lon: 72.8777,
+          tz: 'Asia/Kolkata',
+          date: '2027-01-18',
+          birthDate: '2022-03-10'));
+      expect(u.path, '/v1/muhurta/vidyarambh');
+      expect(u.queryParameters['birth_date'], '2022-03-10');
+      u = await query((c) => c.muhurta.karnavedha(
+          lat: 19.076,
+          lon: 72.8777,
+          tz: 'Asia/Kolkata',
+          date: '2027-01-18',
+          birthDate: '2026-11-01'));
+      expect(u.path, '/v1/muhurta/karnavedha');
+      expect(u.queryParameters['birth_date'], '2026-11-01');
+      u = await query((c) => c.muhurta.annaprashan(
+          lat: 19.076, lon: 72.8777, tz: 'Asia/Kolkata', date: '2027-01-18'));
+      expect(u.queryParameters.containsKey('birth_date'), isFalse);
+      expect(u.queryParameters.containsKey('sex'), isFalse);
+    });
+
+    test('muhurta.bestTime sends the new purposes and direction', () async {
+      var u = await query((c) => c.muhurta.bestTime(
+          lat: 19.076,
+          lon: 72.8777,
+          tz: 'Asia/Kolkata',
+          startDate: '2027-01-01',
+          endDate: '2027-01-31',
+          purpose: 'yatra',
+          direction: 'NE'));
+      expect(u.path, '/v1/muhurta/best-time');
+      expect(u.queryParameters['purpose'], 'yatra');
+      expect(u.queryParameters['direction'], 'NE');
+      for (final purpose in ['vyapar', 'vahan', 'bhoomi_pujan']) {
+        u = await query((c) => c.muhurta.bestTime(
+            lat: 19.076,
+            lon: 72.8777,
+            tz: 'Asia/Kolkata',
+            startDate: '2027-01-01',
+            endDate: '2027-01-31',
+            purpose: purpose));
+        expect(u.queryParameters['purpose'], purpose);
+        expect(u.queryParameters.containsKey('direction'), isFalse);
+      }
+    });
+
+    test('muhurta.yatra sends direction only when given (no East default)',
+        () async {
+      var u = await query((c) => c.muhurta.yatra(
+          lat: 19.076,
+          lon: 72.8777,
+          tz: 'Asia/Kolkata',
+          date: '2027-01-18',
+          time: '07:00',
+          direction: 'W'));
+      expect(u.path, '/v1/muhurta/yatra');
+      expect(u.queryParameters['direction'], 'W');
+      u = await query((c) => c.muhurta.yatra(
+          lat: 19.076,
+          lon: 72.8777,
+          tz: 'Asia/Kolkata',
+          date: '2027-01-18',
+          time: '07:00'));
+      expect(u.queryParameters.containsKey('direction'), isFalse);
+    });
+  });
+
   group('onResponse (credits, rate limit, request id)', () {
     const headers = {
       'X-Request-ID': '52a520f261d3db37',

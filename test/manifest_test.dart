@@ -45,8 +45,8 @@ void main() {
     return null;
   }
 
-  test('one method per manifest entry, same count as the Node SDK (323)', () {
-    expect(manifest.length, 323);
+  test('one method per manifest entry, same count as the Node SDK (334)', () {
+    expect(manifest.length, 334);
     expect(invokers.length, manifest.length);
     expect(manifest.map((e) => e.key).toSet().length, manifest.length);
     for (final e in manifest) {

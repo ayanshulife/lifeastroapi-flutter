@@ -12,6 +12,72 @@ class DashaApi {
 
   final ClientCore _c;
 
+  /// Full Ashtottari dasha tree (10 credits): the 108-year cycle of 8 lords
+  /// from the Moon's nakshatra at birth, with balance at birth and
+  /// applicability (the Rahu and paksha conditions, information only). depth: 1
+  /// mahadashas (default), 2 with antardashas, 3 with pratyantardashas. scheme:
+  /// 28 (default, with Abhijit) or 27. antarStart: `maha_lord` (default) or
+  /// `next_lord`.
+  ///
+  /// `GET /v1/dasha/ashtottari`
+  Future<T> ashtottari<T>({
+    required BirthInput birth,
+    Ayanamsa? ayanamsa,
+    HouseSystem? houseSystem,
+    int? depth,
+    int? scheme,
+    String? antarStart,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('date', birth.date)
+      ..put('time', birth.time)
+      ..put('tz', birth.tz)
+      ..put('lat', birth.lat)
+      ..put('lon', birth.lon)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('house_system', houseSystem?.wire)
+      ..put('depth', depth)
+      ..put('scheme', scheme)
+      ..put('antar_start', antarStart)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/dasha/ashtottari', $q, options);
+  }
+
+  /// Ashtottari mahadasha and antardasha running at `at` (UTC, RFC 3339 or
+  /// YYYY-MM-DD; now when left out) (10 credits). Same scheme and antarStart
+  /// options as dasha.ashtottari; a moment outside the chart's 108 years is a
+  /// 400 invalid_param.
+  ///
+  /// `GET /v1/dasha/ashtottari/current`
+  Future<T> ashtottariCurrent<T>({
+    required BirthInput birth,
+    Ayanamsa? ayanamsa,
+    HouseSystem? houseSystem,
+    String? at,
+    int? scheme,
+    String? antarStart,
+    Lang? lang,
+    RequestOptions? options,
+  }) {
+    final $q = <String, Object?>{}
+      ..put('date', birth.date)
+      ..put('time', birth.time)
+      ..put('tz', birth.tz)
+      ..put('lat', birth.lat)
+      ..put('lon', birth.lon)
+      ..put('ayanamsa', ayanamsa?.wire)
+      ..put('house_system', houseSystem?.wire)
+      ..put('at', at)
+      ..put('scheme', scheme)
+      ..put('antar_start', antarStart)
+      ..put('lang', lang?.code)
+      ..put('locale', lang?.code);
+    return _c.request<T>('/v1/dasha/ashtottari/current', $q, options);
+  }
+
   /// Full Char Dasha (Jaimini sign-based dasha) schedule — every mahadasha sign
   /// period with start/end dates.
   ///
